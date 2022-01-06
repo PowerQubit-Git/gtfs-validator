@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "StopTimeIntendedOffer")
@@ -19,12 +20,12 @@ public class GtfsStopTimeIntendedOffer {
     private String tripId;
 
     @Column(name = "ArrivalTime")
-    private GtfsTime arrivalTime;
+//    private GtfsTime arrivalTime;
+    private LocalTime arrivalTime;
 
     @Column(name = "DepartureTime")
-    private GtfsTime departureTime;
+    private LocalTime departureTime;
 
-    @Id
     @Column(name = "StopId")
     private String stopId;
 
@@ -53,17 +54,17 @@ public class GtfsStopTimeIntendedOffer {
         this.tripId = tripId;
     }
 
-    public GtfsTime getArrivalTime() {
+    public LocalTime getArrivalTime() {
         return arrivalTime;
     }
-    public void setArrivalTime(GtfsTime arrivalTime) {
+    public void setArrivalTime(LocalTime arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
-    public GtfsTime getDepartureTime() {
+    public LocalTime getDepartureTime() {
         return departureTime;
     }
-    public void setDepartureTime(GtfsTime departureTime) {
+    public void setDepartureTime(LocalTime departureTime) {
         this.departureTime = departureTime;
     }
 

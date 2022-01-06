@@ -12,21 +12,19 @@ import javax.persistence.Table;
 @Table(name = "RouteIntendedOffer")
 public class GtfsRouteIntendedOffer {
 
-    @Id
     @Column(name = "LineId")
     private String lineId;
 
     @Column(name = "LineShortName")
     private String LineShortName;
 
-    @Column(name = "LineShortName")
+    @Column(name = "LineLongName")
     private String lineLongName;
 
     @Id
     @Column(name = "RouteId")
     private String routeId;
 
-    @Id
     @Column(name = "AgencyId")
     private String agencyId;
 

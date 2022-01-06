@@ -1,5 +1,6 @@
 package tml.centralapi.validatormain.model;
 
+import org.mobilitydata.gtfsvalidator.notice.NoticeContainer;
 import org.mobilitydata.gtfsvalidator.table.GtfsFeedContainer;
 
 public class ValidationResult {
@@ -8,11 +9,12 @@ public class ValidationResult {
     double validationTime;
     GtfsFeedContainer feedContainer;
     String err;
+    NoticeContainer noticeContainer;
 
     public ValidationResult() {
     }
 
-    public ValidationResult(boolean success, String tableTotals, double validationTime, GtfsFeedContainer feedContainer) {
+    public ValidationResult(boolean success, String tableTotals, double validationTime, GtfsFeedContainer feedContainer, NoticeContainer noticeContainer) {
         this.success = success;
         this.tableTotals = tableTotals;
         this.validationTime = validationTime;
@@ -58,4 +60,13 @@ public class ValidationResult {
     public void setErr(String err) {
         this.err = err;
     }
+
+    public NoticeContainer getNoticeContainer() {
+        return noticeContainer;
+    }
+
+    public void setNoticeContainer(NoticeContainer noticeContainer) {
+        this.noticeContainer = noticeContainer;
+    }
+
 }

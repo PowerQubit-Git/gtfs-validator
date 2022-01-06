@@ -28,7 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import tml.centralapi.validatormain.model.Arguments;
 import tml.centralapi.validatormain.model.ResponseMessage;
+import tml.centralapi.validatormain.model.UploadHistoric;
 import tml.centralapi.validatormain.model.ValidationResult;
+import tml.centralapi.validatormain.repository.UploadHistoricRepository;
 import tml.centralapi.validatormain.services.FileStorageService;
 
 import java.io.File;
@@ -40,6 +42,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin("*")
@@ -48,22 +51,23 @@ public class FileController {
     @Autowired
     FileStorageService storageService;
 
-    private static final FluentLogger logger = FluentLogger.forEnclosingClass();
-    private static final String GTFS_ZIP_FILENAME = "gtfs.zip";
-    private static final String NOTICE_SCHEMA_JSON = "notice_schema.json";
+    @Autowired
+    UploadHistoricRepository uploadHistoricRepository;
 
+    private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
     @PostMapping("/upload")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         String message = "";
         try {
-            String fName = storageService.save(file);
+            UUID fName = storageService.save(file);
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
 
+            String filePath = "c:\\Java Projects\\gtfs-validator\\uploads\\" + fName + ".zip";
             Arguments arg = new Arguments(
-                    fName
+                    filePath
                     ,"output"
-                    ,1
+                    ,3
                     ,"feed"
                     ,"pt"
                     ,"x"
@@ -76,6 +80,17 @@ public class FileController {
 
             ValidatorController vc = new ValidatorController();
             ValidationResult vr = vc.loadFeed(arg);
+
+            if (vr.isSuccess()) {
+                try {
+                    UploadHistoric uh = new UploadHistoric( "NameTeste", "2022-01-06 22:00", fName + ".zip");
+                    uploadHistoricRepository.save(uh);
+                    System.out.println("##################################### " + uh.getId());
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+
             Gson gson = new Gson();
             String jsonString = gson.toJson(vr);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(jsonString));

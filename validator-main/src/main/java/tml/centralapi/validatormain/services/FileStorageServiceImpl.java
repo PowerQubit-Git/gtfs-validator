@@ -29,16 +29,16 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public String save(MultipartFile file) {
+    public UUID save(MultipartFile file) {
         UUID randomUuid = UUID.randomUUID();
-        String fileName = randomUuid.toString() + ".zip";
+        String fileName = randomUuid.toString();
         try {
 
-            Files.copy(file.getInputStream(), this.root.resolve(fileName));
+            Files.copy(file.getInputStream(), this.root.resolve(fileName + ".zip"));
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
-        return "c:\\Java Projects\\gtfs-validator\\uploads\\" + fileName;
+        return randomUuid;
     }
 
     @Override

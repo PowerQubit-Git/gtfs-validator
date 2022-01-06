@@ -5,12 +5,18 @@ import org.mobilitydata.gtfsvalidator.type.GtfsDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.util.Locale;
 
 @Entity
 @Table(name = "FeedInfoIntendedOffer")
 public class GtfsFeedInfoIntendedOffer {
+
+    @Id
+    @Column(name = "FeedInfoId")
+    private Long feedInfoId;
 
     @Column(name = "FeedPublisherName")
     private String feedPublisherName;
@@ -22,10 +28,10 @@ public class GtfsFeedInfoIntendedOffer {
     private Locale feedLang;
 
     @Column(name = "FeedStartDate")
-    private GtfsDate feedStartDate;
+    private LocalDate feedStartDate;
 
     @Column(name = "FeedEndDate")
-    private GtfsDate feedEndDate;
+    private LocalDate feedEndDate;
 
     @Column(name = "FeedVersion")
     private String feedVersion;
@@ -60,19 +66,19 @@ public class GtfsFeedInfoIntendedOffer {
         this.feedLang = feedLang;
     }
 
-    public GtfsDate getFeedStartDate() {
+    public LocalDate getFeedStartDate() {
         return feedStartDate;
     }
 
-    public void setFeedStartDate(GtfsDate feedStartDate) {
+    public void setFeedStartDate(LocalDate feedStartDate) {
         this.feedStartDate = feedStartDate;
     }
 
-    public GtfsDate getFeedEndDate() {
+    public LocalDate getFeedEndDate() {
         return feedEndDate;
     }
 
-    public void setFeedEndDate(GtfsDate feedEndDate) {
+    public void setFeedEndDate(LocalDate feedEndDate) {
         this.feedEndDate = feedEndDate;
     }
 
@@ -98,6 +104,14 @@ public class GtfsFeedInfoIntendedOffer {
 
     public void setFeedRemarks(String feedRemarks) {
         this.feedRemarks = feedRemarks;
+    }
+
+    public Long getFeedInfoId() {
+        return feedInfoId;
+    }
+
+    public void setFeedInfoId(Long feedInfoId) {
+        this.feedInfoId = feedInfoId;
     }
 
 }

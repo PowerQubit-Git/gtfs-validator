@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "FrequencyIntendedOffer")
@@ -21,10 +22,10 @@ public class GtfsFrequencyIntendedOffer {
     private String tripId;
 
     @Column(name = "StartTime")
-    private GtfsTime startTime;
+    private LocalTime startTime;
 
     @Column(name = "EndTime")
-    private GtfsTime endTime;
+    private LocalTime endTime;
 
     @Column(name = "Frequency")
     private int frequency;
@@ -51,19 +52,19 @@ public class GtfsFrequencyIntendedOffer {
         this.tripId = tripId;
     }
 
-    public GtfsTime getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(GtfsTime startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public GtfsTime getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(GtfsTime endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 

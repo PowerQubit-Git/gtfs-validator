@@ -56,7 +56,7 @@ public class ValidatorController {
 
         final long startNanos = System.nanoTime();
         // Input.
-        feedLoader.setNumThreads(1);
+        feedLoader.setNumThreads(arg.getNumThreads());
         NoticeContainer noticeContainer = new NoticeContainer();
         GtfsFeedContainer feedContainer;
         GtfsInput gtfsInput = null;
@@ -98,7 +98,7 @@ public class ValidatorController {
 
         // Output
         exportReport(noticeContainer, arg);
-        return printSummary(startNanos, feedContainer);
+        return printSummary(startNanos, feedContainer, noticeContainer);
     }
 
 
@@ -109,7 +109,7 @@ public class ValidatorController {
      * @param startNanos start time as nanoseconds
      * @param feedContainer the {@code GtfsFeedContainer}
      */
-    public static ValidationResult printSummary(long startNanos, GtfsFeedContainer feedContainer) {
+    public static ValidationResult printSummary(long startNanos, GtfsFeedContainer feedContainer, NoticeContainer noticeContainer) {
         final long endNanos = System.nanoTime();
         if (!feedContainer.isParsedSuccessfully()) {
             System.out.println(" ----------------------------------------- ");
@@ -122,7 +122,7 @@ public class ValidatorController {
         System.out.printf("Validation took %.3f seconds%n", t);
         System.out.println(feedContainer.tableTotals());
 
-        ValidationResult vr = new ValidationResult(feedContainer.isParsedSuccessfully(), feedContainer.tableTotals(), t, feedContainer);
+        ValidationResult vr = new ValidationResult(feedContainer.isParsedSuccessfully(), feedContainer.tableTotals(), t, feedContainer, noticeContainer);
         return vr;
     }
 
@@ -169,31 +169,6 @@ public class ValidatorController {
                         new DefaultValidatorProvider(validationContext, validatorLoader),
                         noticeContainer);
         return feedContainer;
-    }
-
-    /**
-     * Performs parsing and sanity checks on CLI arguments.
-     *
-     * @param argv the CLI arguments
-     * @return the {@code Arguments} generated after parsing the command line
-     */
-    private static Arguments parseArguments(String[] argv) {
-        Arguments args = new Arguments();
-        JCommander jCommander = new JCommander(args);
-        jCommander.parse(argv);
-        if (args.isHelp()) {
-            jCommander.usage();
-            System.out.println(
-                    "⚠️ Note that parameters marked with an asterisk (*) in the help menu are mandatory.");
-            return null;
-        }
-        if (args.isExportNoticeSchema()) {
-            exportNoticeSchema(args);
-        }
-        if (args.abortAfterNoticeSchemaExport()) {
-            return null;
-        }
-        return args;
     }
 
     private static Gson createGson(boolean pretty) {

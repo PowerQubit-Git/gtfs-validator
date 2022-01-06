@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "CalendarDateIntendedOffer")
@@ -29,7 +30,7 @@ public class GtfsCalendarDateIntendedOffer {
     private GtfsPeriod period;
 
     @Column(name = "Date")
-    private GtfsDate date;
+    private LocalDate date;
 
     private GtfsCalendarDateExceptionType exceptionType;
 
@@ -65,11 +66,11 @@ public class GtfsCalendarDateIntendedOffer {
         this.period = period;
     }
 
-    public GtfsDate getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(GtfsDate date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

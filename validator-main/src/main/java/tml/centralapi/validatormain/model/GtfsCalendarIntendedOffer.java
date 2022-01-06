@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "CalendarIntendedOffer")
@@ -45,10 +46,10 @@ public class GtfsCalendarIntendedOffer {
     private GtfsCalendarService sunday;
 
     @Column(name = "StartDate")
-    private GtfsDate startDate;
+    private LocalDate startDate;
 
     @Column(name = "EndDate")
-    private GtfsDate endDate;
+    private LocalDate endDate;
 
     public String getServiceId() {
         return serviceId;
@@ -130,19 +131,19 @@ public class GtfsCalendarIntendedOffer {
         this.sunday = sunday;
     }
 
-    public GtfsDate getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(GtfsDate startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public GtfsDate getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(GtfsDate endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 }

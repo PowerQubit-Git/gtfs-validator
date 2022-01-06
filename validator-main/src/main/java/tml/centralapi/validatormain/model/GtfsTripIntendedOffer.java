@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "TripIntendedOffer")
@@ -19,19 +20,17 @@ public class GtfsTripIntendedOffer {
     @Column(name = "RouteId")
     private String routeId;
 
-    @Id
     @Column(name = "ServiceId")
     private String serviceId;
 
-    @Id
     @Column(name = "TripId")
     private String tripId;
 
-    @Column(name = "TripFirt")
-    private GtfsTime tripFirt;
+    @Column(name = "TripFirst")
+    private LocalTime tripFirst;
 
     @Column(name = "TripLast")
-    private GtfsTime tripLast;
+    private LocalTime tripLast;
 
     @Column(name = "TripHeadsign")
     private String tripHeadsign;
@@ -39,7 +38,6 @@ public class GtfsTripIntendedOffer {
     @Column(name = "DirectionId")
     private GtfsTripDirectionId directionId;
 
-    @Id
     @Column(name = "ShapeId")
     private String shapeId;
 
@@ -70,17 +68,17 @@ public class GtfsTripIntendedOffer {
         this.tripId = tripId;
     }
 
-    public GtfsTime getTripFirt() {
-        return tripFirt;
+    public LocalTime getTripFirst() {
+        return tripFirst;
     }
-    public void setTripFirt(GtfsTime tripFirt) {
-        this.tripFirt = tripFirt;
+    public void setTripFirt(LocalTime tripFirst) {
+        this.tripFirst = tripFirst;
     }
 
-    public GtfsTime getTripLast() {
+    public LocalTime getTripLast() {
         return tripLast;
     }
-    public void setTripLast(GtfsTime tripLast) {
+    public void setTripLast(LocalTime tripLast) {
         this.tripLast = tripLast;
     }
 

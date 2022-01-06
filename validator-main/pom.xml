@@ -87,9 +87,6 @@
                     <execution>
                         <id>lneves</id>
                         <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
                         <configuration>
                             <sources>
                                 <source>

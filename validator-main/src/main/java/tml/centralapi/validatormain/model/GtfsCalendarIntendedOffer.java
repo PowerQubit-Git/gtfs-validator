@@ -4,19 +4,50 @@ import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.GtfsCalendarService;
 import org.mobilitydata.gtfsvalidator.type.GtfsDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "CalendarIntendedOffer")
 public class GtfsCalendarIntendedOffer {
 
+    @Id
+    @Column(name = "ServiceId")
     private String serviceId;
+
+    @Column(name = "CalendarName")
     private String calendarName;
+
+    @Column(name = "Period")
     private String period;
+
+    @Column(name = "Monday")
     private GtfsCalendarService monday;
+
+    @Column(name = "Tuesday")
     private GtfsCalendarService tuesday;
+
+    @Column(name = "Wednesday")
     private GtfsCalendarService wednesday;
+
+    @Column(name = "Thursday")
     private GtfsCalendarService thursday;
+
+    @Column(name = "Friday")
     private GtfsCalendarService friday;
+
+    @Column(name = "Saturday")
     private GtfsCalendarService saturday;
+
+    @Column(name = "Sunday")
     private GtfsCalendarService sunday;
+
+    @Column(name = "StartDate")
     private GtfsDate startDate;
+
+    @Column(name = "EndDate")
     private GtfsDate endDate;
 
     public String getServiceId() {

@@ -6,13 +6,31 @@ import org.mobilitydata.gtfsvalidator.table.GtfsHoliday;
 import org.mobilitydata.gtfsvalidator.table.GtfsPeriod;
 import org.mobilitydata.gtfsvalidator.type.GtfsDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "CalendarDateIntendedOffer")
 public class GtfsCalendarDateIntendedOffer {
 
+    @Id
+    @Column(name = "ServiceId")
     private String serviceId;
+
+    @Column(name = "CalendarName")
     private String calendarName;
+
+    @Column(name = "Holiday")
     private GtfsHoliday holiday;
+
+    @Column(name = "Period")
     private GtfsPeriod period;
+
+    @Column(name = "Date")
     private GtfsDate date;
+
     private GtfsCalendarDateExceptionType exceptionType;
 
     public String getServiceId() {

@@ -1,13 +1,11 @@
 package tml.centralapi.validatormain.model;
 
-import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.ZoneId;
 
 @Entity
 @Table(name = "StopIntendedOffer")

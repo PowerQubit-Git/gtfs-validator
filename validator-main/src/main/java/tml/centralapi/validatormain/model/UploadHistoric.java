@@ -1,7 +1,6 @@
 package tml.centralapi.validatormain.model;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name = "intended_offer_uploads")

@@ -1,9 +1,7 @@
 package tml.centralapi.validatormain.model;
 
-import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.GtfsContinuousPickupDropOff;
 import org.mobilitydata.gtfsvalidator.table.GtfsStopTimeTimepoint;
-import org.mobilitydata.gtfsvalidator.type.GtfsTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -16,8 +16,6 @@
 
 package tml.centralapi.validatormain.model;
 
-import com.beust.jcommander.Parameter;
-
 /** Command-line arguments for GTFS Validator CLI. */
 public class Arguments {
   private String input;

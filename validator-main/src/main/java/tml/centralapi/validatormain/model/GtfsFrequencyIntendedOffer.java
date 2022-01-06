@@ -1,11 +1,9 @@
 package tml.centralapi.validatormain.model;
 
-import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.GtfsPassengerCounting;
 import org.mobilitydata.gtfsvalidator.table.GtfsPropulsion;
 import org.mobilitydata.gtfsvalidator.table.GtfsTypology;
 import org.mobilitydata.gtfsvalidator.table.GtfsVideoSurveillance;
-import org.mobilitydata.gtfsvalidator.type.GtfsTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

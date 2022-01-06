@@ -1,10 +1,8 @@
 package tml.centralapi.validatormain.model;
 
-import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.GtfsCalendarDateExceptionType;
 import org.mobilitydata.gtfsvalidator.table.GtfsHoliday;
 import org.mobilitydata.gtfsvalidator.table.GtfsPeriod;
-import org.mobilitydata.gtfsvalidator.type.GtfsDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

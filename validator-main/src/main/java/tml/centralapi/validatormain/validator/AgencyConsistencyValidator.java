@@ -27,8 +27,6 @@ import org.mobilitydata.gtfsvalidator.table.GtfsAgencyTableLoader;
 import org.mobilitydata.gtfsvalidator.validator.FileValidator;
 
 import javax.inject.Inject;
-import java.time.ZoneId;
-import java.util.Locale;
 
 /**
  * Validates that all agencies have the same timezone and language and that agency_id field is set

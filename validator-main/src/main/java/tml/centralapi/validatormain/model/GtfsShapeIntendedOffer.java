@@ -2,12 +2,29 @@ package tml.centralapi.validatormain.model;
 
 import org.mobilitydata.gtfsvalidator.annotation.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ShapeIntendedOffer")
 public class GtfsShapeIntendedOffer {
 
+    @Id
+    @Column(name = "LineId")
     private String shapeId;
+
+    @Column(name = "ShapePtLat")
     private double shapePtLat;
+
+    @Column(name = "ShapePtLon")
     private double shapePtLon;
+
+    @Column(name = "ShapePtSequence")
     private int shapePtSequence;
+
+    @Column(name = "ShapeDistTraveled")
     private double shapeDistTraveled;
 
     public String getShapeId() {

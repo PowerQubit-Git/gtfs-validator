@@ -6,17 +6,47 @@ import org.mobilitydata.gtfsvalidator.table.GtfsTripDirectionId;
 import org.mobilitydata.gtfsvalidator.table.GtfsWheelchairBoarding;
 import org.mobilitydata.gtfsvalidator.type.GtfsTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "TripIntendedOffer")
 public class GtfsTripIntendedOffer {
 
+    @Id
+    @Column(name = "RouteId")
     private String routeId;
+
+    @Id
+    @Column(name = "ServiceId")
     private String serviceId;
+
+    @Id
+    @Column(name = "TripId")
     private String tripId;
+
+    @Column(name = "TripFirt")
     private GtfsTime tripFirt;
+
+    @Column(name = "TripLast")
     private GtfsTime tripLast;
+
+    @Column(name = "TripHeadsign")
     private String tripHeadsign;
+
+    @Column(name = "DirectionId")
     private GtfsTripDirectionId directionId;
+
+    @Id
+    @Column(name = "ShapeId")
     private String shapeId;
+
+    @Column(name = "WheelchairAccessible")
     private GtfsWheelchairBoarding wheelchairAccessible;
+
+    @Column(name = "BikesAllowed")
     private GtfsBikesAllowed bikesAllowed;
 
     public String getRouteId() {

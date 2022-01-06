@@ -3,25 +3,70 @@ package tml.centralapi.validatormain.model;
 import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "RouteIntendedOffer")
 public class GtfsRouteIntendedOffer {
 
+    @Id
+    @Column(name = "LineId")
     private String lineId;
+
+    @Column(name = "LineShortName")
     private String LineShortName;
+
+    @Column(name = "LineShortName")
     private String lineLongName;
+
+    @Id
+    @Column(name = "RouteId")
     private String routeId;
+
+    @Id
+    @Column(name = "AgencyId")
     private String agencyId;
+
+    @Column(name = "RouteOrigin")
     private String routeOrigin;
+
+    @Column(name = "RouteDestination")
     private String routeDestination;
+
+    @Column(name = "RouteShortName")
     private String routeShortName;
+
+    @Column(name = "RouteLongName")
     private String routeLongName;
+
+    @Column(name = "RouteDesc")
     private String routeDesc;
+
+    @Column(name = "RouteRemarks")
     private String routeRemarks;
+
+    @Column(name = "RouteType")
     private GtfsRouteType routeType;
+
+    @Column(name = "Contract")
     private String contract;
+
+    @Column(name = "PathType")
     private GtfsPathType pathType;
+
+    @Column(name = "Circular")
     private GtfsCircular circular;
+
+    @Column(name = "School")
     private GtfsSchool school;
+
+    @Column(name = "ContinuousPickup")
     private GtfsContinuousPickupDropOff continuousPickup;
+
+    @Column(name = "ContinuousDropOff")
     private GtfsContinuousPickupDropOff continuousDropOff;
 
     public String getLineId() {

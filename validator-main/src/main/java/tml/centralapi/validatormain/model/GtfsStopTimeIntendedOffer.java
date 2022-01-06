@@ -5,17 +5,45 @@ import org.mobilitydata.gtfsvalidator.table.GtfsContinuousPickupDropOff;
 import org.mobilitydata.gtfsvalidator.table.GtfsStopTimeTimepoint;
 import org.mobilitydata.gtfsvalidator.type.GtfsTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "StopTimeIntendedOffer")
 public class GtfsStopTimeIntendedOffer {
 
+    @Id
+    @Column(name = "TripId")
     private String tripId;
+
+    @Column(name = "ArrivalTime")
     private GtfsTime arrivalTime;
+
+    @Column(name = "DepartureTime")
     private GtfsTime departureTime;
+
+    @Id
+    @Column(name = "StopId")
     private String stopId;
+
+    @Column(name = "StopSequence")
     private int stopSequence;
+
+    @Column(name = "StopHeadsign")
     private String stopHeadsign;
+
+    @Column(name = "ContinuousPickup")
     private GtfsContinuousPickupDropOff continuousPickup;
+
+    @Column(name = "ContinuousDropOff")
     private GtfsContinuousPickupDropOff continuousDropOff;
+
+    @Column(name = "ShapeDistTraveled")
     private double shapeDistTraveled;
+
+    @Column(name = "Timepoint")
     private GtfsStopTimeTimepoint timepoint;
 
     public String getTripId() {

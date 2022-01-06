@@ -3,40 +3,107 @@ package tml.centralapi.validatormain.model;
 import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.ZoneId;
 
+@Entity
+@Table(name = "StopIntendedOffer")
 public class GtfsStopIntendedOffer {
 
+    @Id
+    @Column(name = "StopId")
     private String stopId;
+
+    @Column(name = "StopIdSteep")
     private String stopIdSteep;
+
+    @Column(name = "StopCode")
     private String stopCode;
+
+    @Column(name = "StopName")
     private String stopName;
+
+    @Column(name = "StopDesc")
     private String stopDesc;
+
+    @Column(name = "StopRemarks")
     private String stopRemarks;
+
+    @Column(name = "StopLat")
     private double stopLat;
+
+    @Column(name = "StopLon")
     private double stopLon;
+
+    @Column(name = "ZoneShift")
     private GtfsZoneShift zoneShift;
+
+    @Column(name = "LocationType")
     private GtfsLocationType locationType;
+
+    @Column(name = "ParentStation")
     private String parentStation;
+
+    @Column(name = "WheelchairBoarding")
     private GtfsWheelchairBoarding wheelchairBoarding;
+
+    @Column(name = "PlatformCode")
     private String platformCode;
+
+    @Column(name = "EntranceRestriction")
     private GtfsEntranceRestriction entranceRestriction;
+
+    @Column(name = "ExitRestriction")
     private GtfsExitRestriction exitRestriction;
+
+    @Column(name = "Slot")
     private GtfsSlot slot;
+
+    @Column(name = "Signalling")
     private GtfsSignalling signalling;
+
+    @Column(name = "Shelter")
     private GtfsShelter shelter;
+
+    @Column(name = "Bench")
     private GtfsBench bench;
+
+    @Column(name = "NetworkMap")
     private GtfsNetworkMap networkMap;
+
+    @Column(name = "Schedule")
     private GtfsSchedule schedule;
+
+    @Column(name = "RealTimeInformation")
     private GtfsRealTimeInformation realTimeInformation;
+
+    @Column(name = "Tariff")
     private GtfsTariff tariff;
+
+    @Column(name = "PreservationState")
     private GtfsPreservationState preservationState;
+
+    @Column(name = "Equipment")
     private String equipment;
+
+    @Column(name = "Observations")
     private String observations;
+
+    @Column(name = "Region")
     private GtfsRegion region;
+
+    @Column(name = "Municipality")
     private GtfsMunicipality municipality;
+
+    @Column(name = "MunicipalityFare1")
     private GtfsMunicipalityFare1 municipalityFare1;
+
+    @Column(name = "MunicipalityFare2")
     private GtfsMunicipalityFare2 municipalityFare2;
+
 
     public String getStopId() {
         return stopId;

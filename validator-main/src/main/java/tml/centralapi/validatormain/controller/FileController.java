@@ -188,7 +188,7 @@ public class FileController {
                                 });
                                 break;
 
-                            case "shpes.txt":
+                            case "shapes.txt":
                                 List<GtfsShape> shapes = (List<GtfsShape>) v.getEntities();
 
                                 shapes.forEach( (shape) ->{

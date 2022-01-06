@@ -87,4 +87,8 @@ public class GtfsFeedContainer {
     Collections.sort(totalList);
     return String.join("\n", totalList);
   }
+
+  public Map<String, GtfsTableContainer<?>> getTables() {
+    return tables;
+  }
 }

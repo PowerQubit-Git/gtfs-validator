@@ -30,7 +30,7 @@ import tml.centralapi.validatormain.model.Arguments;
 import tml.centralapi.validatormain.model.ResponseMessage;
 import tml.centralapi.validatormain.model.UploadHistoric;
 import tml.centralapi.validatormain.model.ValidationResult;
-import tml.centralapi.validatormain.repository.UploadHistoricRepository;
+import tml.centralapi.validatormain.repository.*;
 import tml.centralapi.validatormain.services.FileStorageService;
 
 import java.io.File;
@@ -53,6 +53,25 @@ public class FileController {
 
     @Autowired
     UploadHistoricRepository uploadHistoricRepository;
+
+    @Autowired
+    AgencyRepository agencyRepository;
+    @Autowired
+    CalendarDateRepository calendarDateRepository;
+    @Autowired
+    FeedInfoRepository feedInfoRepository;
+    @Autowired
+    FrequencyRepository frequencyRepository;
+    @Autowired
+    RouteRepository routeRepository;
+    @Autowired
+    ShapeRepository shapeRepository;
+    @Autowired
+    StopRepository stopRepository;
+    @Autowired
+    StopTimeRepository stopTimeRepository;
+    @Autowired
+    TripRepository tripRepository;
 
     private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 

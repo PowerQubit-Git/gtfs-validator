@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface UploadHistoricRepository extends JpaRepository<UploadHistoric, Long> {
-    List<UploadHistoric> findByFileName(String fileName);
-    List<UploadHistoric> findById(long id);
+//    List<UploadHistoric> findByFileName(String fileName);
+//    List<UploadHistoric> findById(long id);
 }

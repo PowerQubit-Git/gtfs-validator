@@ -19,6 +19,7 @@ import org.mobilitydata.gtfsvalidator.validator.ValidationContext;
 import org.mobilitydata.gtfsvalidator.validator.ValidatorLoader;
 import org.mobilitydata.gtfsvalidator.validator.ValidatorLoaderException;
 import tml.centralapi.validatormain.model.Arguments;
+import tml.centralapi.validatormain.model.ValidationResult;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class ValidatorController {
 
     }
 
-    public String loadFeed(Arguments arg) {
+    public ValidationResult loadFeed(Arguments arg) {
         ValidatorLoader validatorLoader = null;
         try {
             validatorLoader = new ValidatorLoader();
@@ -85,17 +86,19 @@ public class ValidatorController {
             feedContainer =
                     loadAndValidate(
                             validatorLoader, feedLoader, noticeContainer, gtfsInput, validationContext);
+
         } catch (InterruptedException e) {
             String err3 = "Validation was interrupted";
             logger.atSevere().withCause(e).log(err3);
-            return err3;
+            ValidationResult vr3 = new ValidationResult();
+            vr3.setErr(err3);
+            return vr3;
         }
         closeGtfsInput(gtfsInput, noticeContainer);
 
         // Output
         exportReport(noticeContainer, arg);
-        printSummary(startNanos, feedContainer);
-        return "sumário";
+        return printSummary(startNanos, feedContainer);
     }
 
 
@@ -106,7 +109,7 @@ public class ValidatorController {
      * @param startNanos start time as nanoseconds
      * @param feedContainer the {@code GtfsFeedContainer}
      */
-    public static void printSummary(long startNanos, GtfsFeedContainer feedContainer) {
+    public static ValidationResult printSummary(long startNanos, GtfsFeedContainer feedContainer) {
         final long endNanos = System.nanoTime();
         if (!feedContainer.isParsedSuccessfully()) {
             System.out.println(" ----------------------------------------- ");
@@ -115,8 +118,12 @@ public class ValidatorController {
             System.out.println("|   Please see report.json for details.   |");
             System.out.println(" ----------------------------------------- ");
         }
-        System.out.printf("Validation took %.3f seconds%n", (endNanos - startNanos) / 1e9);
+        double t = (endNanos - startNanos) / 1e9;
+        System.out.printf("Validation took %.3f seconds%n", t);
         System.out.println(feedContainer.tableTotals());
+
+        ValidationResult vr = new ValidationResult(feedContainer.isParsedSuccessfully(), feedContainer.tableTotals(), t, feedContainer);
+        return vr;
     }
 
     /**

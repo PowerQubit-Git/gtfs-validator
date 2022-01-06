@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import tml.centralapi.validatormain.model.Arguments;
 import tml.centralapi.validatormain.model.ResponseMessage;
+import tml.centralapi.validatormain.model.ValidationResult;
 import tml.centralapi.validatormain.services.FileStorageService;
 
 import java.io.File;
@@ -74,9 +75,10 @@ public class FileController {
                     ,false);
 
             ValidatorController vc = new ValidatorController();
-            vc.loadFeed(arg);
-
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+            ValidationResult vr = vc.loadFeed(arg);
+            Gson gson = new Gson();
+            String jsonString = gson.toJson(vr);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(jsonString));
         } catch (Exception e) {
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));

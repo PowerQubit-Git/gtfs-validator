@@ -1,13 +1,29 @@
 package tml.centralapi.validatormain.model;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.ZoneId;
 import java.util.Locale;
 
+@Entity
+@Table(name = "AgencyIntendedOffer")
 public class GtfsAgencyIntendedOffer {
 
+    @Id
+    @Column(name = "AgencyId")
     private String agencyId;
+
+    @Column(name = "AgencyName")
     private String agencyName;
+
+    @Column(name = "AgencyUrl")
     private String agencyUrl;
+
+    @Column(name = "AgencyTimezone")
     private ZoneId agencyTimezone;
+
+    @Column(name = "AgencyLang")
     private Locale agencyLang;
 
     public String getAgencyName() {

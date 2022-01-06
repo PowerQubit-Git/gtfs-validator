@@ -3,17 +3,37 @@ package tml.centralapi.validatormain.model;
 import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.type.GtfsDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Locale;
 
+@Entity
+@Table(name = "FeedInfoIntendedOffer")
 public class GtfsFeedInfoIntendedOffer {
 
+    @Column(name = "FeedPublisherName")
     private String feedPublisherName;
+
+    @Column(name = "FeedPublisherUrl")
     private String feedPublisherUrl;
+
+    @Column(name = "FeedLang")
     private Locale feedLang;
+
+    @Column(name = "FeedStartDate")
     private GtfsDate feedStartDate;
+
+    @Column(name = "FeedEndDate")
     private GtfsDate feedEndDate;
+
+    @Column(name = "FeedVersion")
     private String feedVersion;
+
+    @Column(name = "FeedDesc")
     private String feedDesc;
+
+    @Column(name = "FeedRemarks")
     private String feedRemarks;
 
     public String getFeedPublisherName() {

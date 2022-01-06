@@ -7,16 +7,41 @@ import org.mobilitydata.gtfsvalidator.table.GtfsTypology;
 import org.mobilitydata.gtfsvalidator.table.GtfsVideoSurveillance;
 import org.mobilitydata.gtfsvalidator.type.GtfsTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "FrequencyIntendedOffer")
 public class GtfsFrequencyIntendedOffer {
 
+    @Id
+    @Column(name = "TripId")
     private String tripId;
+
+    @Column(name = "StartTime")
     private GtfsTime startTime;
+
+    @Column(name = "EndTime")
     private GtfsTime endTime;
+
+    @Column(name = "Frequency")
     private int frequency;
+
+    @Column(name = "Typology")
     private GtfsTypology typology;
+
+    @Column(name = "Propulsion")
     private GtfsPropulsion propulsion;
+
+    @Column(name = "PassengerCounting")
     private GtfsPassengerCounting passengerCounting;
+
+    @Column(name = "VideoSurveillance")
     private GtfsVideoSurveillance videoSurveillance;
+
+
 
     public String getTripId() {
         return tripId;

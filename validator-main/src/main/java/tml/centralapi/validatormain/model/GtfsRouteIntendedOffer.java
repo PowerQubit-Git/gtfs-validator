@@ -1,6 +1,5 @@
 package tml.centralapi.validatormain.model;
 
-import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.*;
 
 import javax.persistence.Column;

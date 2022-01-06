@@ -16,6 +16,7 @@
     <properties>
         <java.version>11</java.version>
     </properties>
+    <packaging>jar</packaging>
     <dependencies>
 
 
@@ -81,13 +82,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${project.parent.version} </version>
                 <executions>
                     <execution>
                         <id>lneves</id>
                         <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
                         <configuration>
                             <sources>
                                 <source>

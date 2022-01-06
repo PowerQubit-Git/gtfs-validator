@@ -19,9 +19,6 @@ package tml.centralapi.validatormain.table;
 import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
 
-import java.time.ZoneId;
-import java.util.Locale;
-
 @GtfsTable("agency.txt")
 @Required
 public interface GtfsAgencySchema extends GtfsEntity {

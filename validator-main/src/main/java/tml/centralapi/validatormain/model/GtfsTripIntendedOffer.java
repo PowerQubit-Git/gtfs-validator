@@ -1,10 +1,8 @@
 package tml.centralapi.validatormain.model;
 
-import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.GtfsBikesAllowed;
 import org.mobilitydata.gtfsvalidator.table.GtfsTripDirectionId;
 import org.mobilitydata.gtfsvalidator.table.GtfsWheelchairBoarding;
-import org.mobilitydata.gtfsvalidator.type.GtfsTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

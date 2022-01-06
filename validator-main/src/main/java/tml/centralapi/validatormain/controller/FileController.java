@@ -82,7 +82,7 @@ public class FileController {
             UUID fName = storageService.save(file);
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
 
-            String filePath = "c:\\Java Projects\\gtfs-validator\\uploads\\" + fName + ".zip";
+            String filePath = "c:\\Users\\Danud\\Desktop\\gtfs-validator\\uploads\\" + fName + ".zip";
             Arguments arg = new Arguments(
                     filePath
                     ,"output"

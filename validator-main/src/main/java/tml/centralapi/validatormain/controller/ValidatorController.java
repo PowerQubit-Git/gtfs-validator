@@ -4,9 +4,14 @@ import com.google.common.base.Strings;
 import com.google.common.flogger.FluentLogger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
+import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.apache.commons.compress.utils.SeekableInMemoryByteChannel;
 import org.mobilitydata.gtfsvalidator.input.CountryCode;
 import org.mobilitydata.gtfsvalidator.input.CurrentDateTime;
 import org.mobilitydata.gtfsvalidator.input.GtfsInput;
+import org.mobilitydata.gtfsvalidator.input.GtfsZipFileInput;
 import org.mobilitydata.gtfsvalidator.notice.IOError;
 import org.mobilitydata.gtfsvalidator.notice.NoticeContainer;
 import org.mobilitydata.gtfsvalidator.notice.NoticeSchemaGenerator;
@@ -20,6 +25,7 @@ import org.mobilitydata.gtfsvalidator.validator.ValidatorLoaderException;
 import tml.centralapi.validatormain.model.Arguments;
 import tml.centralapi.validatormain.model.ValidationResult;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -29,6 +35,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.zip.ZipOutputStream;
 
 public class ValidatorController {
     private static final FluentLogger logger = FluentLogger.forEnclosingClass();
@@ -219,7 +226,7 @@ public class ValidatorController {
      * @throws URISyntaxException in case of error in the {@code URL} syntax
      */
     public static GtfsInput createGtfsInput(Arguments args) throws IOException, URISyntaxException {
-        if (args.getInput() == null) {
+       /* if (args.getInput() == null) {
             if (Strings.isNullOrEmpty(args.getStorageDirectory())) {
                 return GtfsInput.createFromUrlInMemory(new URL(args.getUrl()));
             } else {
@@ -227,7 +234,25 @@ public class ValidatorController {
                         new URL(args.getUrl()), Paths.get(args.getStorageDirectory(), GTFS_ZIP_FILENAME));
             }
         } else {
-            return GtfsInput.createFromPath(Paths.get(args.getInput()));
-        }
+            if(args.getZipFile().length > 0 ){
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ZipArchiveOutputStream za = new ZipArchiveOutputStream(baos);
+                ZipFile zip = new ZipFile("input.zip");
+                ZipArchiveEntry entry = new ZipArchiveEntry("input.zip");
+
+                entry.setSize(args.getZipFile().length);
+
+                za.putArchiveEntry(entry);
+
+                za.write(args.getZipFile());
+
+                za.closeArchiveEntry();
+                baos.close();
+            */
+                return new GtfsZipFileInput(new ZipFile(new SeekableInMemoryByteChannel(args.getZipFile())));
+            /*}
+            return GtfsInput.createFromPath(Paths.get(args.getInput()));*/
+        //}
     }
 }

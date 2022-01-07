@@ -23,7 +23,6 @@ public class UploadHistoric {
     @Column(name = "notices")
     private String notices;
 
-    @Lob
     @Column(name = "gtfs_input")
     private byte[] gtfsInput;
 

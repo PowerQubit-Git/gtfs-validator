@@ -59,9 +59,9 @@ public class FileController {
             UUID fName = storageService.save(file);
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
 
-            String filePath = "C:\\Users\\dgxcs\\Documents\\Git\\uploads\\" + fName + ".zip";
             Arguments arg = new Arguments(
-                    filePath
+                    file.getBytes()
+                    ,null
                     ,"output"
                     ,3
                     ,"feed"
@@ -79,7 +79,7 @@ public class FileController {
 
             if (vr.isSuccess()) {
                 try {
-                    UploadHistoric uh = new UploadHistoric( "NameTeste", "2022-01-06 22:00", fName + ".zip");
+                    UploadHistoric uh = new UploadHistoric( "NameTeste", "2022-01-06 22:00", fName + ".zip",file.getBytes());
                     uploadHistoricRepository.save(uh);
                     System.out.println("##################################### " + uh.getId());
 
@@ -96,12 +96,30 @@ public class FileController {
 
                             /*case "stops.txt":
                                 List<GtfsStop> stops = (List<GtfsStop>) v.getEntities();
+
+                                stops.forEach((stop) ->{
+                                    GtfsStopIntendedOffer s = new GtfsStopIntendedOffer();
+
+                                    s.setStopId(stop.stopId());
+                                    s.setStopCode(stop.stopCode());
+                                    s.setStopName(stop.stopName());
+                                    s.setStopDesc(stop.stopDesc());
+                                    s.setStopLat(stop.stopLat());
+                                    s.setStopLon(stop.stopLon());
+                                    s.setLocationType(stop.locationType());
+                                    s.setParentStation(stop.parentStation());
+                                    s.setWheelchairBoarding(stop.wheelchairBoarding());
+                                    s.setPlatformCode(stop.platformCode());
+
+
+                                    stopRepository.save(s);
+                                });
                                 break;*/
 
-                            case "agency.txt":
+                           case "agency.txt":
                                 List<GtfsAgency> agencies = (List<GtfsAgency>) v.getEntities();
 
-                                agencies.forEach( (agency) ->{
+                                agencies.forEach((agency) ->{
                                     GtfsAgencyIntendedOffer a = new GtfsAgencyIntendedOffer();
 
                                     a.setAgencyId(agency.agencyId());
@@ -110,10 +128,10 @@ public class FileController {
                                 });
                                 break;
 
-                            case "calendar_dates.txt":
+                            /*case "calendar_dates.txt":
                                 List<GtfsCalendarDate> calendarDates = (List<GtfsCalendarDate>) v.getEntities();
 
-                                calendarDates.forEach( (calendarDate) ->{
+                                calendarDates.forEach((calendarDate) ->{
                                     GtfsCalendarDateIntendedOffer cd = new GtfsCalendarDateIntendedOffer();
 
                                     cd.setServiceId(calendarDate.serviceId());
@@ -128,7 +146,7 @@ public class FileController {
                             case "stop_times.txt":
                                 List<GtfsStopTime> stopTimes = (List<GtfsStopTime>) v.getEntities();
 
-                                stopTimes.forEach( (stopTime) ->{
+                                stopTimes.forEach((stopTime) ->{
                                     GtfsStopTimeIntendedOffer st = new GtfsStopTimeIntendedOffer();
 
                                     st.setTripId(stopTime.tripId());
@@ -147,7 +165,7 @@ public class FileController {
                             case "calendar.txt":
                                 List<GtfsCalendar> calendars = (List<GtfsCalendar>) v.getEntities();
 
-                                calendars.forEach( (calendar) ->{
+                                calendars.forEach((calendar) ->{
                                     GtfsCalendarIntendedOffer c = new GtfsCalendarIntendedOffer();
 
                                     c.setServiceId(calendar.serviceId());
@@ -168,7 +186,7 @@ public class FileController {
                             case "shapes.txt":
                                 List<GtfsShape> shapes = (List<GtfsShape>) v.getEntities();
 
-                                shapes.forEach( (shape) ->{
+                                shapes.forEach((shape) ->{
                                     GtfsShapeIntendedOffer sh = new GtfsShapeIntendedOffer();
 
                                     sh.setShapeId(shape.shapeId());
@@ -180,6 +198,62 @@ public class FileController {
                                     shapeRepository.save(sh);
                                 });
                                 break;
+
+                            case "feed_info.txt":
+                                List<GtfsFeedInfo> feedInfos = (List<GtfsFeedInfo>) v.getEntities();
+
+                                feedInfos.forEach((feedInfo) ->{
+                                    GtfsFeedInfoIntendedOffer fi = new GtfsFeedInfoIntendedOffer();
+
+                                    fi.setFeedPublisherName(feedInfo.feedPublisherName());
+                                    fi.setFeedPublisherUrl(feedInfo.feedPublisherUrl());
+                                    fi.setFeedLang(feedInfo.feedLang());
+                                    fi.setFeedVersion(feedInfo.feedVersion());
+                                    fi.setFeedDesc(feedInfo.feedDesc());
+                                    fi.setFeedRemarks(feedInfo.feedRemarks());
+
+                                    feedInfoRepository.save(fi);
+                                });
+                                break;
+
+                            case "routes.txt":
+                                List<GtfsRoute> routes = (List<GtfsRoute>) v.getEntities();
+
+                                routes.forEach((route) ->{
+                                    GtfsRouteIntendedOffer r = new GtfsRouteIntendedOffer();
+
+                                    r.setRouteId(route.routeId());
+                                    r.setAgencyId(route.agencyId());
+                                    r.setRouteShortName(route.routeShortName());
+                                    r.setRouteLongName(route.routeLongName());
+                                    r.setRouteDesc(route.routeDesc());
+                                    r.setRouteType(route.routeType());
+                                    r.setContinuousPickup(route.continuousPickup());
+                                    r.setContinuousDropOff(route.continuousDropOff());
+
+                                    routeRepository.save(r);
+                                });
+                                break;
+
+                            case "trips.txt":
+                                List<GtfsTrip> trips = (List<GtfsTrip>) v.getEntities();
+
+                                trips.forEach((trip) ->{
+                                    GtfsTripIntendedOffer t = new GtfsTripIntendedOffer();
+
+                                    t.setRouteId(trip.routeId());
+                                    t.setTripId(trip.tripId());
+                                    t.setServiceId(trip.serviceId());
+                                    t.setTripHeadsign(trip.tripHeadsign());
+                                    t.setDirectionId(trip.directionId());
+                                    t.setShapeId(trip.shapeId());
+                                    t.setWheelchairAccessible(trip.wheelchairAccessible());
+                                    t.setBikesAllowed(trip.bikesAllowed());
+
+                                    tripRepository.save(t);
+                                });
+                                break;*/
+
                         }
                     });
 

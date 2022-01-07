@@ -16,8 +16,15 @@
 
 package tml.centralapi.validatormain.model;
 
+import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.mobilitydata.gtfsvalidator.input.GtfsZipFileInput;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 /** Command-line arguments for GTFS Validator CLI. */
 public class Arguments {
+  private byte[] zipFile;
   private String input;
   private String outputBase;
   private int numThreads = 1;
@@ -34,7 +41,8 @@ public class Arguments {
   public Arguments() {
   }
 
-  public Arguments(String input, String outputBase, int numThreads, String feedName, String countryCode, String url, String storageDirectory, String validationReportName, String systemErrorsReportName, boolean help, boolean pretty, boolean exportNoticeSchema) {
+  public Arguments(byte[] zipFile, String input, String outputBase, int numThreads, String feedName, String countryCode, String url, String storageDirectory, String validationReportName, String systemErrorsReportName, boolean help, boolean pretty, boolean exportNoticeSchema) {
+    this.zipFile = zipFile;
     this.input = input;
     this.outputBase = outputBase;
     this.numThreads = numThreads;
@@ -143,6 +151,14 @@ public class Arguments {
 
   public void setExportNoticeSchema(boolean exportNoticeSchema) {
     this.exportNoticeSchema = exportNoticeSchema;
+  }
+
+  public byte[] getZipFile() {
+    return zipFile;
+  }
+
+  public void setZipFile(byte[] zipFile) {
+    this.zipFile = zipFile;
   }
 
   public boolean abortAfterNoticeSchemaExport() {

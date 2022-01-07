@@ -23,14 +23,19 @@ public class UploadHistoric {
     @Column(name = "notices")
     private String notices;
 
+    @Lob
+    @Column(name = "gtfs_input")
+    private byte[] gtfsInput;
+
     public UploadHistoric() {
 
     }
 
-    public UploadHistoric(String publisherName, String uploadDate, String fileName) {
+    public UploadHistoric(String publisherName, String uploadDate, String fileName, byte[] gtfsInput) {
         this.publisherName = publisherName;
         this.uploadDate = uploadDate;
         this.fileName = fileName;
+        this.gtfsInput = gtfsInput;
     }
 
     public Long getId() {
@@ -71,5 +76,13 @@ public class UploadHistoric {
 
     public void setNotices(String notices) {
         this.notices = notices;
+    }
+
+    public byte[] getGtfsInput() {
+        return gtfsInput;
+    }
+
+    public void setGtfsInput(byte[] gtfsInput) {
+        this.gtfsInput = gtfsInput;
     }
 }

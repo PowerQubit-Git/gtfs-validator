@@ -1,23 +1,8 @@
 package tml.centralapi.validatormain.controller;
 
-import com.beust.jcommander.JCommander;
-import com.google.common.base.Strings;
 import com.google.common.flogger.FluentLogger;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.mobilitydata.gtfsvalidator.input.CountryCode;
-import org.mobilitydata.gtfsvalidator.input.CurrentDateTime;
-import org.mobilitydata.gtfsvalidator.input.GtfsInput;
-import org.mobilitydata.gtfsvalidator.notice.IOError;
-import org.mobilitydata.gtfsvalidator.notice.NoticeContainer;
-import org.mobilitydata.gtfsvalidator.notice.NoticeSchemaGenerator;
-import org.mobilitydata.gtfsvalidator.notice.URISyntaxError;
-import org.mobilitydata.gtfsvalidator.table.GtfsFeedContainer;
-import org.mobilitydata.gtfsvalidator.table.GtfsFeedLoader;
-import org.mobilitydata.gtfsvalidator.validator.DefaultValidatorProvider;
-import org.mobilitydata.gtfsvalidator.validator.ValidationContext;
-import org.mobilitydata.gtfsvalidator.validator.ValidatorLoader;
-import org.mobilitydata.gtfsvalidator.validator.ValidatorLoaderException;
+import org.mobilitydata.gtfsvalidator.table.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,33 +11,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import tml.centralapi.validatormain.model.Arguments;
-import tml.centralapi.validatormain.model.ResponseMessage;
-import tml.centralapi.validatormain.model.UploadHistoric;
-import tml.centralapi.validatormain.model.ValidationResult;
+import tml.centralapi.validatormain.model.*;
 import tml.centralapi.validatormain.repository.*;
 import tml.centralapi.validatormain.services.FileStorageService;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
 @CrossOrigin("*")
 public class FileController {
-
-    @Autowired
-    FileStorageService storageService;
-
-    @Autowired
-    UploadHistoricRepository uploadHistoricRepository;
 
     @Autowired
     AgencyRepository agencyRepository;
@@ -72,6 +41,14 @@ public class FileController {
     StopTimeRepository stopTimeRepository;
     @Autowired
     TripRepository tripRepository;
+    @Autowired
+    CalendarRepository calendarRepository;
+
+    @Autowired
+    FileStorageService storageService;
+
+    @Autowired
+    UploadHistoricRepository uploadHistoricRepository;
 
     private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
@@ -82,9 +59,9 @@ public class FileController {
             UUID fName = storageService.save(file);
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
 
-            String filePath = "c:\\Users\\Danud\\Desktop\\gtfs-validator\\uploads\\" + fName + ".zip";
             Arguments arg = new Arguments(
-                    filePath
+                    file.getBytes()
+                    ,null
                     ,"output"
                     ,3
                     ,"feed"
@@ -102,9 +79,184 @@ public class FileController {
 
             if (vr.isSuccess()) {
                 try {
-                    UploadHistoric uh = new UploadHistoric( "NameTeste", "2022-01-06 22:00", fName + ".zip");
+                    UploadHistoric uh = new UploadHistoric( "NameTeste", "2022-01-06 22:00", fName + ".zip",file.getBytes());
                     uploadHistoricRepository.save(uh);
                     System.out.println("##################################### " + uh.getId());
+
+                    GtfsFeedContainer x = vr.getFeedContainer();
+
+                    Map<String, GtfsTableContainer<?>> map;
+
+                    map = x.getTables();
+
+                    map.forEach( (k,v) ->{
+                        System.out.println("Key: " + k + ": Value: " + v);
+
+                        switch (k){
+
+                            /*case "stops.txt":
+                                List<GtfsStop> stops = (List<GtfsStop>) v.getEntities();
+
+                                stops.forEach((stop) ->{
+                                    GtfsStopIntendedOffer s = new GtfsStopIntendedOffer();
+
+                                    s.setStopId(stop.stopId());
+                                    s.setStopCode(stop.stopCode());
+                                    s.setStopName(stop.stopName());
+                                    s.setStopDesc(stop.stopDesc());
+                                    s.setStopLat(stop.stopLat());
+                                    s.setStopLon(stop.stopLon());
+                                    s.setLocationType(stop.locationType());
+                                    s.setParentStation(stop.parentStation());
+                                    s.setWheelchairBoarding(stop.wheelchairBoarding());
+                                    s.setPlatformCode(stop.platformCode());
+
+
+                                    stopRepository.save(s);
+                                });
+                                break;*/
+
+                           case "agency.txt":
+                                List<GtfsAgency> agencies = (List<GtfsAgency>) v.getEntities();
+
+                                agencies.forEach((agency) ->{
+                                    GtfsAgencyIntendedOffer a = new GtfsAgencyIntendedOffer();
+
+                                    a.setAgencyId(agency.agencyId());
+
+                                    agencyRepository.save(a);
+                                });
+                                break;
+
+                            /*case "calendar_dates.txt":
+                                List<GtfsCalendarDate> calendarDates = (List<GtfsCalendarDate>) v.getEntities();
+
+                                calendarDates.forEach((calendarDate) ->{
+                                    GtfsCalendarDateIntendedOffer cd = new GtfsCalendarDateIntendedOffer();
+
+                                    cd.setServiceId(calendarDate.serviceId());
+                                    cd.setCalendarName(calendarDate.CalendarName());
+                                    cd.setHoliday(calendarDate.holiday());
+                                    cd.setPeriod(calendarDate.period());
+
+                                    calendarDateRepository.save(cd);
+                                });
+                                break;
+
+                            case "stop_times.txt":
+                                List<GtfsStopTime> stopTimes = (List<GtfsStopTime>) v.getEntities();
+
+                                stopTimes.forEach((stopTime) ->{
+                                    GtfsStopTimeIntendedOffer st = new GtfsStopTimeIntendedOffer();
+
+                                    st.setTripId(stopTime.tripId());
+                                    st.setStopId(stopTime.stopId());
+                                    st.setStopSequence(stopTime.stopSequence());
+                                    st.setStopHeadsign(stopTime.stopHeadsign());
+                                    st.setContinuousPickup(stopTime.continuousPickup());
+                                    st.setContinuousDropOff(stopTime.continuousDropOff());
+                                    st.setShapeDistTraveled(stopTime.shapeDistTraveled());
+                                    st.setTimepoint(stopTime.timepoint());
+
+                                    stopTimeRepository.save(st);
+                                });
+                                break;
+
+                            case "calendar.txt":
+                                List<GtfsCalendar> calendars = (List<GtfsCalendar>) v.getEntities();
+
+                                calendars.forEach((calendar) ->{
+                                    GtfsCalendarIntendedOffer c = new GtfsCalendarIntendedOffer();
+
+                                    c.setServiceId(calendar.serviceId());
+                                    c.setCalendarName(calendar.calendarName());
+                                    c.setPeriod(calendar.period());
+                                    c.setMonday(calendar.monday());
+                                    c.setTuesday(calendar.tuesday());
+                                    c.setWednesday(calendar.wednesday());
+                                    c.setThursday(calendar.thursday());
+                                    c.setFriday(calendar.friday());
+                                    c.setSaturday(calendar.saturday());
+                                    c.setSunday(calendar.sunday());
+
+                                    calendarRepository.save(c);
+                                });
+                                break;
+
+                            case "shapes.txt":
+                                List<GtfsShape> shapes = (List<GtfsShape>) v.getEntities();
+
+                                shapes.forEach((shape) ->{
+                                    GtfsShapeIntendedOffer sh = new GtfsShapeIntendedOffer();
+
+                                    sh.setShapeId(shape.shapeId());
+                                    sh.setShapePtLat(shape.shapePtLat());
+                                    sh.setShapePtLon(shape.shapePtLon());
+                                    sh.setShapePtSequence(shape.shapePtSequence());
+                                    sh.setShapeDistTraveled(shape.shapeDistTraveled());
+
+                                    shapeRepository.save(sh);
+                                });
+                                break;
+
+                            case "feed_info.txt":
+                                List<GtfsFeedInfo> feedInfos = (List<GtfsFeedInfo>) v.getEntities();
+
+                                feedInfos.forEach((feedInfo) ->{
+                                    GtfsFeedInfoIntendedOffer fi = new GtfsFeedInfoIntendedOffer();
+
+                                    fi.setFeedPublisherName(feedInfo.feedPublisherName());
+                                    fi.setFeedPublisherUrl(feedInfo.feedPublisherUrl());
+                                    fi.setFeedLang(feedInfo.feedLang());
+                                    fi.setFeedVersion(feedInfo.feedVersion());
+                                    fi.setFeedDesc(feedInfo.feedDesc());
+                                    fi.setFeedRemarks(feedInfo.feedRemarks());
+
+                                    feedInfoRepository.save(fi);
+                                });
+                                break;
+
+                            case "routes.txt":
+                                List<GtfsRoute> routes = (List<GtfsRoute>) v.getEntities();
+
+                                routes.forEach((route) ->{
+                                    GtfsRouteIntendedOffer r = new GtfsRouteIntendedOffer();
+
+                                    r.setRouteId(route.routeId());
+                                    r.setAgencyId(route.agencyId());
+                                    r.setRouteShortName(route.routeShortName());
+                                    r.setRouteLongName(route.routeLongName());
+                                    r.setRouteDesc(route.routeDesc());
+                                    r.setRouteType(route.routeType());
+                                    r.setContinuousPickup(route.continuousPickup());
+                                    r.setContinuousDropOff(route.continuousDropOff());
+
+                                    routeRepository.save(r);
+                                });
+                                break;
+
+                            case "trips.txt":
+                                List<GtfsTrip> trips = (List<GtfsTrip>) v.getEntities();
+
+                                trips.forEach((trip) ->{
+                                    GtfsTripIntendedOffer t = new GtfsTripIntendedOffer();
+
+                                    t.setRouteId(trip.routeId());
+                                    t.setTripId(trip.tripId());
+                                    t.setServiceId(trip.serviceId());
+                                    t.setTripHeadsign(trip.tripHeadsign());
+                                    t.setDirectionId(trip.directionId());
+                                    t.setShapeId(trip.shapeId());
+                                    t.setWheelchairAccessible(trip.wheelchairAccessible());
+                                    t.setBikesAllowed(trip.bikesAllowed());
+
+                                    tripRepository.save(t);
+                                });
+                                break;*/
+
+                        }
+                    });
+
                 } catch (Exception e) {
                     System.out.println(e);
                 }

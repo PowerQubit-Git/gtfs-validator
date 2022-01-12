@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,31 +16,8 @@
 
 package tml.centralapi.validatormain.table;
 
-import org.mobilitydata.gtfsvalidator.annotation.*;
-import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
+import org.mobilitydata.gtfsvalidator.annotation.GtfsEnumValue;
 
-@GtfsTable("shapes.txt")
-@ConditionallyRequired
-public interface GtfsShapeSchema extends GtfsEntity {
-  @FieldType(FieldTypeEnum.ID)
-  @Required
-  @FirstKey
-  String shapeId();
-
-  @FieldType(FieldTypeEnum.LATITUDE)
-  @Required
-  double shapePtLat();
-
-  @FieldType(FieldTypeEnum.LONGITUDE)
-  @Required
-  double shapePtLon();
-
-  @NonNegative
-  @SequenceKey
-  @Required
-  int shapePtSequence();
-
-  @NonNegative
-  @Required
-  double shapeDistTraveled();
-}
+@GtfsEnumValue(name = "UNIDIRECTIONAL", value = 0)
+@GtfsEnumValue(name = "BIDIRECTIONAL", value = 1)
+public interface GtfsPathwayIsBidirectionalEnum {}

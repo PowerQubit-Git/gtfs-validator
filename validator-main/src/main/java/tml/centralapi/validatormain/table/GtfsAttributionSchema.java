@@ -17,90 +17,69 @@
 package tml.centralapi.validatormain.table;
 
 import org.mobilitydata.gtfsvalidator.annotation.*;
-import org.mobilitydata.gtfsvalidator.table.*;
-import org.mobilitydata.gtfsvalidator.type.GtfsColor;
+import org.mobilitydata.gtfsvalidator.table.GtfsAttributionRole;
+import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
 
-@GtfsTable("routes.txt")
-@Required
-public interface GtfsRouteSchema extends GtfsEntity {
+import java.time.ZoneId;
+import java.util.Locale;
 
-  @Required
-  String lineId();
+@GtfsTable("attributions.txt")
+@ConditionallyRequired
+public interface GtfsAttributionSchema extends GtfsEntity {
 
-  @Required
-  String LineShortName();
-
-  @Required
-  String lineLongName();
-
+  //OMITTED
   @FieldType(FieldTypeEnum.ID)
   @PrimaryKey
-  @Required
-  String routeId();
+  @ConditionallyRequired
+  String attributionId();
 
+  //OMITTED
   @FieldType(FieldTypeEnum.ID)
   @ForeignKey(table = "agency.txt", field = "agency_id")
-  @Required
+  @ConditionallyRequired
   String agencyId();
 
-  @Required
-  String routeOrigin();
-
-  @Required
-  String routeDestination();
-
+  //OMITTED
+  @FieldType(FieldTypeEnum.ID)
+  @ForeignKey(table = "routes.txt", field = "route_id")
   @ConditionallyRequired
-  String routeShortName();
-
-  @ConditionallyRequired
-  String routeLongName();
-
-  @ConditionallyRequired
-  String routeDesc();
-
-  @ConditionallyRequired
-  String routeRemarks();
-
-  @Required
-  GtfsRouteType routeType();
-
-  @ConditionallyRequired
-  String contract();
-
-  @ConditionallyRequired
-  GtfsPathType pathType();
-
-  @ConditionallyRequired
-  GtfsCircular circular();
-
-  @ConditionallyRequired
-  GtfsSchool school();
+  String routeId();
 
   //OMITTED
+  @FieldType(FieldTypeEnum.ID)
+  @ForeignKey(table = "trips.txt", field = "trip_id")
+  @ConditionallyRequired
+  String tripId();
+
+  //OMITTED
+  @ConditionallyRequired
+  String organizationName();
+
+  //OMITTED
+  @ConditionallyRequired
+  GtfsAttributionRole isProducer();
+
+  //OMITTED
+  @ConditionallyRequired
+  GtfsAttributionRole isOperator();
+
+  //OMITTED
+  @ConditionallyRequired
+  GtfsAttributionRole isAuthority();
+
+  //OMITTED
+  @ConditionallyRequired
   @FieldType(FieldTypeEnum.URL)
-  @ConditionallyRequired
-  String routeUrl();
+  String attributionUrl();
 
   //OMITTED
-  @DefaultValue("FFFFFF")
   @ConditionallyRequired
-  GtfsColor routeColor();
+  @FieldType(FieldTypeEnum.EMAIL)
+  String attributionEmail();
 
   //OMITTED
-  @DefaultValue("000000")
   @ConditionallyRequired
-  GtfsColor routeTextColor();
+  @FieldType(FieldTypeEnum.PHONE_NUMBER)
+  String attributionPhone();
 
-  //OMITTED
-  @NonNegative
-  @ConditionallyRequired
-  int routeSortOrder();
-
-  @DefaultValue("1")
-  @ConditionallyRequired
-  GtfsContinuousPickupDropOff continuousPickup();
-
-  @DefaultValue("1")
-  @ConditionallyRequired
-  GtfsContinuousPickupDropOff continuousDropOff();
 }

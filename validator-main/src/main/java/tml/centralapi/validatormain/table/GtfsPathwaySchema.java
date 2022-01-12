@@ -18,55 +18,74 @@ package tml.centralapi.validatormain.table;
 
 import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
-import org.mobilitydata.gtfsvalidator.type.GtfsDate;
+import org.mobilitydata.gtfsvalidator.table.GtfsPathwayIsBidirectional;
+import org.mobilitydata.gtfsvalidator.table.GtfsPathwayMode;
 
+import java.time.ZoneId;
 import java.util.Locale;
 
-@GtfsTable(value = "feed_info.txt", singleRow = true)
-public interface GtfsFeedInfoSchema extends GtfsEntity {
+@GtfsTable("pathways.txt")
+@ConditionallyRequired
+public interface GtfsPathwaySchema extends GtfsEntity {
+
+  //OMITTED
+  @FieldType(FieldTypeEnum.ID)
+  @PrimaryKey
+  @ConditionallyRequired
+  String pathwayId();
+
+  //OMITTED
+  @FieldType(FieldTypeEnum.ID)
+  @Index
+  @ForeignKey(table = "stops.txt", field = "stop_id")
+  @ConditionallyRequired
+  String fromStopId();
+
+  //OMITTED
+  @FieldType(FieldTypeEnum.ID)
+  @Index
+  @ForeignKey(table = "stops.txt", field = "stop_id")
+  @ConditionallyRequired
+  String toStopId();
 
   //OMITTED
   @ConditionallyRequired
-  String feedPublisherName();
-
-  //OMITTED
-  @FieldType(FieldTypeEnum.URL)
-  @ConditionallyRequired
-  String feedPublisherUrl();
+  GtfsPathwayMode pathwayMode();
 
   //OMITTED
   @ConditionallyRequired
-  Locale feedLang();
+  GtfsPathwayIsBidirectional isBidirectional();
+
+  //OMITTED
+  @NonNegative
+  @ConditionallyRequired
+  double length();
+
+  //OMITTED
+  @Positive
+  @ConditionallyRequired
+  int traversalTime();
+
+  //OMITTED
+  @NonZero
+  @ConditionallyRequired
+  int stairCount();
 
   //OMITTED
   @ConditionallyRequired
-  Locale defaultLang();
-
-
-  @EndRange(field = "feed_end_date", allowEqual = true)
-  @ConditionallyRequired
-  GtfsDate feedStartDate();
-
-  @ConditionallyRequired
-  GtfsDate feedEndDate();
-
-  @ConditionallyRequired
-  String feedVersion();
-
-  @ConditionallyRequired
-  String feedDesc();
-
-  @ConditionallyRequired
-  String feedRemarks();
+  double maxSlope();
 
   //OMITTED
-  @FieldType(FieldTypeEnum.EMAIL)
+  @Positive
   @ConditionallyRequired
-  String feedContactEmail();
+  double minWidth();
 
   //OMITTED
-  @FieldType(FieldTypeEnum.URL)
   @ConditionallyRequired
-  String feedContactUrl();
+  String signpostedAs();
+
+  //OMITTED
+  @ConditionallyRequired
+  String reversedSignpostedAs();
 
 }

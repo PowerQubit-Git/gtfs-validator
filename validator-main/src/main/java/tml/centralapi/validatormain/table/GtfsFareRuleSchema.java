@@ -22,37 +22,38 @@ import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
 import java.time.ZoneId;
 import java.util.Locale;
 
-@GtfsTable("agency.txt")
-@Required
-public interface GtfsAgencySchema extends GtfsEntity {
+@GtfsTable("fare_rules.txt")
+@ConditionallyRequired
+public interface GtfsFareRuleSchema extends GtfsEntity {
+
+  //OMITTED
   @FieldType(FieldTypeEnum.ID)
-  @PrimaryKey
   @ConditionallyRequired
-  String agencyId();
+  @ForeignKey(table = "fare_attributes.txt", field = "fare_id")
+  String fareId();
 
-  @Required
-  String agencyName();
-
-  @FieldType(FieldTypeEnum.URL)
-  @Required
-  String agencyUrl();
-
-  @Required
-  ZoneId agencyTimezone();
-
+  //OMITTED
+  @FieldType(FieldTypeEnum.ID)
+  @ForeignKey(table = "routes.txt", field = "route_id")
   @ConditionallyRequired
-  Locale agencyLang();
+  String routeId();
 
-  @FieldType(FieldTypeEnum.PHONE_NUMBER)
+  //OMITTED
+  @FieldType(FieldTypeEnum.ID)
+  @ForeignKey(table = "stops.txt", field = "zone_id")
   @ConditionallyRequired
-  String agencyPhone();
+  String originId();
 
-  @FieldType(FieldTypeEnum.URL)
+  //OMITTED
+  @FieldType(FieldTypeEnum.ID)
+  @ForeignKey(table = "stops.txt", field = "zone_id")
   @ConditionallyRequired
-  String agencyFareUrl();
+  String destinationId();
 
-  @FieldType(FieldTypeEnum.EMAIL)
+  //OMITTED
+  @FieldType(FieldTypeEnum.ID)
+  @ForeignKey(table = "stops.txt", field = "zone_id")
   @ConditionallyRequired
-  String agencyEmail();
+  String containsId();
 
 }

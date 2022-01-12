@@ -20,56 +20,56 @@ import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.*;
 import org.mobilitydata.gtfsvalidator.type.GtfsTime;
 
-@GtfsTable("stop_times.txt")
-@Required
-public interface GtfsStopTimeSchema extends GtfsEntity {
-  @FieldType(FieldTypeEnum.ID)
-  @FirstKey
-  @Required
+import java.time.ZoneId;
+import java.util.Locale;
+
+@GtfsTable("frequencies.txt")
+@ConditionallyRequired
+public interface GtfsFrequencieSchema extends GtfsEntity {
+
+  //OMITTED
   @ForeignKey(table = "trips.txt", field = "trip_id")
+  @Index
+  @ConditionallyRequired
   String tripId();
 
-  @Required
-  @EndRange(field = "departure_time", allowEqual = true)
-  GtfsTime arrivalTime();
-
-  @Required
-  GtfsTime departureTime();
-
-  @FieldType(FieldTypeEnum.ID)
-  @Index
-  @Required
-  @ForeignKey(table = "stops.txt", field = "stop_id")
-  String stopId();
-
-  @SequenceKey
-  @Required
-  @NonNegative
-  int stopSequence();
-
+  //OMITTED
+  @EndRange(field = "end_time", allowEqual = false)
   @ConditionallyRequired
-  @CachedField
-  String stopHeadsign();
+  GtfsTime startTime();
 
   //OMITTED
   @ConditionallyRequired
-  GtfsPickupType pickupType();
+  GtfsTime endTime();
+
+  //OMITTED
+  @Positive
+  @ConditionallyRequired
+  int headwaySecs();
+
+  //OMITTED
+  @NonNegative
+  @ConditionallyRequired
+  int frequency();
 
   //OMITTED
   @ConditionallyRequired
-  GtfsDropOffType dropOffType();
+  GtfsFrequencyExactTimes exactTimes();
 
+  //OMITTED
   @ConditionallyRequired
-  GtfsContinuousPickupDropOff continuousPickup();
+  GtfsTypology typology();
 
+  //OMITTED
   @ConditionallyRequired
-  GtfsContinuousPickupDropOff continuousDropOff();
+  GtfsPropulsion propulsion();
 
-  @Required
-  @NonNegative
-  double shapeDistTraveled();
+  //OMITTED
+  @ConditionallyRequired
+  GtfsPassengerCounting passengerCounting();
 
-  @Required
-  @DefaultValue("1")
-  GtfsStopTimeTimepoint timepoint();
+  //OMITTED
+  @ConditionallyRequired
+  GtfsVideoSurveillance videoSurveillance();
+
 }

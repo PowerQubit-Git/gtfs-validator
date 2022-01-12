@@ -22,37 +22,41 @@ import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
 import java.time.ZoneId;
 import java.util.Locale;
 
-@GtfsTable("agency.txt")
-@Required
-public interface GtfsAgencySchema extends GtfsEntity {
-  @FieldType(FieldTypeEnum.ID)
-  @PrimaryKey
+@GtfsTable("translations.txt")
+@ConditionallyRequired
+public interface GtfsTranslationSchema extends GtfsEntity {
+
+  //OMITTED
   @ConditionallyRequired
-  String agencyId();
+  @CachedField
+  String tableName();
 
-  @Required
-  String agencyName();
-
-  @FieldType(FieldTypeEnum.URL)
-  @Required
-  String agencyUrl();
-
-  @Required
-  ZoneId agencyTimezone();
-
+  //OMITTED
   @ConditionallyRequired
-  Locale agencyLang();
+  @CachedField
+  String fieldName();
 
-  @FieldType(FieldTypeEnum.PHONE_NUMBER)
+  //OMITTED
   @ConditionallyRequired
-  String agencyPhone();
+  Locale language();
 
-  @FieldType(FieldTypeEnum.URL)
+  //OMITTED
   @ConditionallyRequired
-  String agencyFareUrl();
+  String translation();
 
-  @FieldType(FieldTypeEnum.EMAIL)
+  //OMITTED
   @ConditionallyRequired
-  String agencyEmail();
+  @CachedField
+  String recordId();
+
+  //OMITTED
+  @ConditionallyRequired
+  @CachedField
+  String recordSubId();
+
+  //OMITTED
+  @ConditionallyRequired
+  @CachedField
+  String fieldValue();
 
 }

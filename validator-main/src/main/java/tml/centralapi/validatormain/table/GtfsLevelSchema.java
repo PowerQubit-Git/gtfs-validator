@@ -22,37 +22,23 @@ import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
 import java.time.ZoneId;
 import java.util.Locale;
 
-@GtfsTable("agency.txt")
-@Required
-public interface GtfsAgencySchema extends GtfsEntity {
+@GtfsTable("levels.txt")
+@ConditionallyRequired
+public interface GtfsLevelSchema extends GtfsEntity {
+
+  //OMITTED
   @FieldType(FieldTypeEnum.ID)
   @PrimaryKey
   @ConditionallyRequired
-  String agencyId();
+  String levelId();
 
+  //OMITTED
   @Required
-  String agencyName();
-
-  @FieldType(FieldTypeEnum.URL)
-  @Required
-  String agencyUrl();
-
-  @Required
-  ZoneId agencyTimezone();
-
   @ConditionallyRequired
-  Locale agencyLang();
+  double levelIndex();
 
-  @FieldType(FieldTypeEnum.PHONE_NUMBER)
+  //OMITTED
   @ConditionallyRequired
-  String agencyPhone();
-
-  @FieldType(FieldTypeEnum.URL)
-  @ConditionallyRequired
-  String agencyFareUrl();
-
-  @FieldType(FieldTypeEnum.EMAIL)
-  @ConditionallyRequired
-  String agencyEmail();
+  String levelName();
 
 }

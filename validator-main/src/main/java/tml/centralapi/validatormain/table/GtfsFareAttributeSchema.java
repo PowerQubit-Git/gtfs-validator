@@ -18,41 +18,50 @@ package tml.centralapi.validatormain.table;
 
 import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
+import org.mobilitydata.gtfsvalidator.table.GtfsFareAttributePaymentMethod;
+import org.mobilitydata.gtfsvalidator.table.GtfsFareAttributeTransfers;
 
+import java.math.BigDecimal;
 import java.time.ZoneId;
+import java.util.Currency;
 import java.util.Locale;
 
-@GtfsTable("agency.txt")
-@Required
-public interface GtfsAgencySchema extends GtfsEntity {
+@GtfsTable("fare_attributes.txt")
+@ConditionallyRequired
+public interface GtfsFareAttributeSchema extends GtfsEntity {
+
+  //OMITTED
   @FieldType(FieldTypeEnum.ID)
   @PrimaryKey
   @ConditionallyRequired
+  String fareId();
+
+  //OMITTED
+  @NonNegative
+  @ConditionallyRequired
+  BigDecimal price();
+
+  //OMITTED
+  @ConditionallyRequired
+  Currency currencyType();
+
+  //OMITTED
+  @ConditionallyRequired
+  GtfsFareAttributePaymentMethod paymentMethod();
+
+  //OMITTED
+  @ConditionallyRequired
+  GtfsFareAttributeTransfers transfers();
+
+  //OMITTED
+  @FieldType(FieldTypeEnum.ID)
+  @ForeignKey(table = "agency.txt", field = "agency_id")
+  @ConditionallyRequired
   String agencyId();
 
-  @Required
-  String agencyName();
-
-  @FieldType(FieldTypeEnum.URL)
-  @Required
-  String agencyUrl();
-
-  @Required
-  ZoneId agencyTimezone();
-
+  //OMITTED
+  @NonNegative
   @ConditionallyRequired
-  Locale agencyLang();
-
-  @FieldType(FieldTypeEnum.PHONE_NUMBER)
-  @ConditionallyRequired
-  String agencyPhone();
-
-  @FieldType(FieldTypeEnum.URL)
-  @ConditionallyRequired
-  String agencyFareUrl();
-
-  @FieldType(FieldTypeEnum.EMAIL)
-  @ConditionallyRequired
-  String agencyEmail();
+  int transferDuration();
 
 }

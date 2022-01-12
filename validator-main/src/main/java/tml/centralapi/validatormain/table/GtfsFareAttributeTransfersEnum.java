@@ -16,31 +16,9 @@
 
 package tml.centralapi.validatormain.table;
 
-import org.mobilitydata.gtfsvalidator.annotation.*;
-import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
+import org.mobilitydata.gtfsvalidator.annotation.GtfsEnumValue;
 
-@GtfsTable("shapes.txt")
-@ConditionallyRequired
-public interface GtfsShapeSchema extends GtfsEntity {
-  @FieldType(FieldTypeEnum.ID)
-  @Required
-  @FirstKey
-  String shapeId();
-
-  @FieldType(FieldTypeEnum.LATITUDE)
-  @Required
-  double shapePtLat();
-
-  @FieldType(FieldTypeEnum.LONGITUDE)
-  @Required
-  double shapePtLon();
-
-  @NonNegative
-  @SequenceKey
-  @Required
-  int shapePtSequence();
-
-  @NonNegative
-  @Required
-  double shapeDistTraveled();
-}
+@GtfsEnumValue(name = "NO_TRANSFER", value = 0)
+@GtfsEnumValue(name = "ONE_TRANSFER", value = 1)
+@GtfsEnumValue(name = "TWO_TRANSFERS", value = 2)
+public interface GtfsFareAttributeTransfersEnum {}

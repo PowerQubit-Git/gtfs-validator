@@ -18,41 +18,34 @@ package tml.centralapi.validatormain.table;
 
 import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
+import org.mobilitydata.gtfsvalidator.table.GtfsTransferType;
 
 import java.time.ZoneId;
 import java.util.Locale;
 
-@GtfsTable("agency.txt")
-@Required
-public interface GtfsAgencySchema extends GtfsEntity {
+@GtfsTable("transfers.txt")
+@ConditionallyRequired
+public interface GtfsTransferSchema extends GtfsEntity {
+
+  //OMITTED
   @FieldType(FieldTypeEnum.ID)
-  @PrimaryKey
+  @ForeignKey(table = "stops.txt", field = "stop_id")
   @ConditionallyRequired
-  String agencyId();
+  String fromStopId();
 
-  @Required
-  String agencyName();
-
-  @FieldType(FieldTypeEnum.URL)
-  @Required
-  String agencyUrl();
-
-  @Required
-  ZoneId agencyTimezone();
-
+  //OMITTED
+  @FieldType(FieldTypeEnum.ID)
+  @ForeignKey(table = "stops.txt", field = "stop_id")
   @ConditionallyRequired
-  Locale agencyLang();
+  String toStopId();
 
-  @FieldType(FieldTypeEnum.PHONE_NUMBER)
+  //OMITTED
   @ConditionallyRequired
-  String agencyPhone();
+  GtfsTransferType transferType();
 
-  @FieldType(FieldTypeEnum.URL)
+  //OMITTED
+  @NonNegative
   @ConditionallyRequired
-  String agencyFareUrl();
-
-  @FieldType(FieldTypeEnum.EMAIL)
-  @ConditionallyRequired
-  String agencyEmail();
+  int minTransferTime();
 
 }

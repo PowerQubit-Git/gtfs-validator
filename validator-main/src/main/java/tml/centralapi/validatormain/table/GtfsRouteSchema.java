@@ -17,14 +17,21 @@
 package tml.centralapi.validatormain.table;
 
 import org.mobilitydata.gtfsvalidator.annotation.*;
-import org.mobilitydata.gtfsvalidator.table.GtfsContinuousPickupDropOff;
-import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
-import org.mobilitydata.gtfsvalidator.table.GtfsRouteType;
+import org.mobilitydata.gtfsvalidator.table.*;
 import org.mobilitydata.gtfsvalidator.type.GtfsColor;
 
 @GtfsTable("routes.txt")
 @Required
 public interface GtfsRouteSchema extends GtfsEntity {
+  @Required
+  String lineId();
+
+  @Required
+  String LineShortName();
+
+  @Required
+  String lineLongName();
+
   @FieldType(FieldTypeEnum.ID)
   @PrimaryKey
   @Required
@@ -32,8 +39,15 @@ public interface GtfsRouteSchema extends GtfsEntity {
 
   @FieldType(FieldTypeEnum.ID)
   @ForeignKey(table = "agency.txt", field = "agency_id")
-  @ConditionallyRequired
+  @Required
   String agencyId();
+
+  @Required
+  String routeOrigin();
+
+  @Required
+  String routeDestination();
+
 
   @ConditionallyRequired
   String routeShortName();
@@ -41,26 +55,32 @@ public interface GtfsRouteSchema extends GtfsEntity {
   @ConditionallyRequired
   String routeLongName();
 
+  @ConditionallyRequired
   String routeDesc();
+
+  @ConditionallyRequired
+  String routeRemarks();
 
   @Required
   GtfsRouteType routeType();
 
-  @FieldType(FieldTypeEnum.URL)
-  String routeUrl();
+  @ConditionallyRequired
+  String contract();
 
-  @DefaultValue("FFFFFF")
-  GtfsColor routeColor();
+  @ConditionallyRequired
+  GtfsPathType pathType();
 
-  @DefaultValue("000000")
-  GtfsColor routeTextColor();
+  @ConditionallyRequired
+  GtfsCircular circular();
 
-  @NonNegative
-  int routeSortOrder();
+  @ConditionallyRequired
+  GtfsSchool school();
 
+  @ConditionallyRequired
   @DefaultValue("1")
   GtfsContinuousPickupDropOff continuousPickup();
 
+  @ConditionallyRequired
   @DefaultValue("1")
   GtfsContinuousPickupDropOff continuousDropOff();
 }

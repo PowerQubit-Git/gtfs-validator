@@ -31,10 +31,13 @@ public interface GtfsCalendarDateSchema extends GtfsEntity {
   @Index
   String serviceId();
 
-  String CalendarName();
+  @ConditionallyRequired
+  String calendarName();
 
+  @ConditionallyRequired
   GtfsHoliday holiday();
 
+  @ConditionallyRequired
   GtfsPeriod period();
 
   @Required

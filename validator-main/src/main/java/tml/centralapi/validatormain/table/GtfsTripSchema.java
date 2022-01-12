@@ -27,35 +27,35 @@ import org.mobilitydata.gtfsvalidator.table.GtfsWheelchairBoarding;
 public interface GtfsTripSchema extends GtfsEntity {
   @FieldType(FieldTypeEnum.ID)
   @Required
-  @PrimaryKey
-  String tripId();
-
-  @FieldType(FieldTypeEnum.ID)
-  @Required
   @ForeignKey(table = "routes.txt", field = "route_id")
   String routeId();
 
   @FieldType(FieldTypeEnum.ID)
   @Required
+  @ForeignKey(table = "calendar.txt", field = "service_id")
   String serviceId();
 
-  String tripHeadsign();
-
-  String tripShortName();
-
-  GtfsTripDirectionId directionId();
 
   @FieldType(FieldTypeEnum.ID)
-  @Index
-  String blockId();
+  @Required
+  @PrimaryKey
+  String tripId();
+
+  @ConditionallyRequired
+  String tripHeadsign();
+
+  @ConditionallyRequired
+  GtfsTripDirectionId directionId();
 
   @FieldType(FieldTypeEnum.ID)
   @ForeignKey(table = "shapes.txt", field = "shape_id")
   @Index
-  @ConditionallyRequired
+  @Required
   String shapeId();
 
+  @ConditionallyRequired
   GtfsWheelchairBoarding wheelchairAccessible();
 
+  @ConditionallyRequired
   GtfsBikesAllowed bikesAllowed();
 }

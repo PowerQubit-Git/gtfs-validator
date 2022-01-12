@@ -64,24 +64,24 @@ public class BlockTripsWithOverlappingStopTimesValidator extends FileValidator {
         new ServiceIdIntersectionCache(
             CalendarUtil.servicePeriodToServiceDatesMap(
                 CalendarUtil.buildServicePeriodMap(calendarTable, calendarDateTable)));
-    for (List<GtfsTrip> tripsInBlock : Multimaps.asMap(tripTable.byBlockIdMap()).values()) {
-      // We don't care about trips without a block id.
-      if (!tripsInBlock.get(0).hasBlockId()) {
-        continue;
-      }
-      // We need a first arrival time and a last departure time for each trip in the block to
-      // properly judge trip
-      // overlap.
-      for (GtfsTripOverlap overlap :
-          findOverlapIntervals(
-              constructOrderedTripIntervals(tripsInBlock), serviceIdIntersectionCache)) {
-        final GtfsTrip tripA = overlap.getTripA();
-        final GtfsTrip tripB = overlap.getTripB();
-        noticeContainer.addValidationNotice(
-            new BlockTripsWithOverlappingStopTimesNotice(
-                tripA, tripB, GtfsDate.fromLocalDate(overlap.intersection)));
-      }
-    }
+//    for (List<GtfsTrip> tripsInBlock : Multimaps.asMap(tripTable.byBlockIdMap()).values()) {
+//      // We don't care about trips without a block id.
+//      if (!tripsInBlock.get(0).hasBlockId()) {
+//        continue;
+//      }
+//      // We need a first arrival time and a last departure time for each trip in the block to
+//      // properly judge trip
+//      // overlap.
+//      for (GtfsTripOverlap overlap :
+//          findOverlapIntervals(
+//              constructOrderedTripIntervals(tripsInBlock), serviceIdIntersectionCache)) {
+//        final GtfsTrip tripA = overlap.getTripA();
+//        final GtfsTrip tripB = overlap.getTripB();
+//        noticeContainer.addValidationNotice(
+//            new BlockTripsWithOverlappingStopTimesNotice(
+//                tripA, tripB, GtfsDate.fromLocalDate(overlap.intersection)));
+//      }
+//    }
   }
 
   /**
@@ -253,7 +253,7 @@ public class BlockTripsWithOverlappingStopTimesValidator extends FileValidator {
     private final long csvRowNumberB;
     private final String tripIdB;
     private final String serviceIdB;
-    private final String blockId;
+    //private final String blockId;
     private final GtfsDate intersection;
 
     BlockTripsWithOverlappingStopTimesNotice(
@@ -265,7 +265,7 @@ public class BlockTripsWithOverlappingStopTimesValidator extends FileValidator {
       this.csvRowNumberB = tripB.csvRowNumber();
       this.tripIdB = tripB.tripId();
       this.serviceIdB = tripB.serviceId();
-      this.blockId = tripA.blockId();
+      //this.blockId = tripA.blockId();
       this.intersection = intersection;
     }
   }

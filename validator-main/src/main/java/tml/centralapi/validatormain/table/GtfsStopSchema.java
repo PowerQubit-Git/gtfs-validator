@@ -17,9 +17,7 @@
 package tml.centralapi.validatormain.table;
 
 import org.mobilitydata.gtfsvalidator.annotation.*;
-import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
-import org.mobilitydata.gtfsvalidator.table.GtfsLocationType;
-import org.mobilitydata.gtfsvalidator.table.GtfsWheelchairBoarding;
+import org.mobilitydata.gtfsvalidator.table.*;
 
 import java.time.ZoneId;
 
@@ -31,31 +29,34 @@ public interface GtfsStopSchema extends GtfsEntity {
   @Required
   String stopId();
 
+  @FieldType(FieldTypeEnum.ID)
+  @ConditionallyRequired
+  String stop_id_stepp();
+
+  @ConditionallyRequired
   String stopCode();
 
-  @ConditionallyRequired
+  @Required
   String stopName();
 
-  String ttsStopName();
-
+  @ConditionallyRequired
   String stopDesc();
 
-  @FieldType(FieldTypeEnum.LATITUDE)
   @ConditionallyRequired
+  String stop_remarks();
+
+  @FieldType(FieldTypeEnum.LATITUDE)
+  @Required
   double stopLat();
 
   @FieldType(FieldTypeEnum.LONGITUDE)
-  @ConditionallyRequired
+  @Required
   double stopLon();
 
-  @FieldType(FieldTypeEnum.ID)
-  @Index
   @ConditionallyRequired
-  String zoneId();
+  GtfsZoneShift zone_shift();
 
-  @FieldType(FieldTypeEnum.URL)
-  String stopUrl();
-
+  @ConditionallyRequired
   GtfsLocationType locationType();
 
   @FieldType(FieldTypeEnum.ID)
@@ -64,14 +65,62 @@ public interface GtfsStopSchema extends GtfsEntity {
   @ForeignKey(table = "stops.txt", field = "stop_id")
   String parentStation();
 
-  @FieldType(FieldTypeEnum.TIMEZONE)
-  ZoneId stopTimezone();
-
+  @ConditionallyRequired
   GtfsWheelchairBoarding wheelchairBoarding();
 
-  @FieldType(FieldTypeEnum.ID)
-  @ForeignKey(table = "levels.txt", field = "level_id")
-  String levelId();
-
+  @ConditionallyRequired
   String platformCode();
+
+
+  @ConditionallyRequired
+  GtfsEntranceRestriction entranceRestriction();
+
+  @ConditionallyRequired
+  GtfsExitRestriction exitRestriction();
+
+  @ConditionallyRequired
+  GtfsSlot slot();
+
+  @ConditionallyRequired
+  GtfsSignalling signalling();
+
+  @ConditionallyRequired
+  GtfsShelter shelter();
+
+  @ConditionallyRequired
+  GtfsBench bench();
+
+  @ConditionallyRequired
+  GtfsNetworkMap networkMap();
+
+  @ConditionallyRequired
+  GtfsSchedule schedule();
+
+  @ConditionallyRequired
+  GtfsRealTimeInformation realTimeInformation();
+
+  @ConditionallyRequired
+  GtfsTariff tariff();
+
+  @ConditionallyRequired
+  GtfsPreservationState preservationState();
+
+  @ConditionallyRequired
+  String equipment();
+
+  @ConditionallyRequired
+  String observations();
+
+  @Required
+  GtfsRegion region();
+
+  @Required
+  GtfsMunicipality municipality();
+
+  @ConditionallyRequired
+  GtfsMunicipalityFare1 municipalityFare1();
+
+  @ConditionallyRequired
+  GtfsMunicipalityFare2 municipalityFare2();
+
 }

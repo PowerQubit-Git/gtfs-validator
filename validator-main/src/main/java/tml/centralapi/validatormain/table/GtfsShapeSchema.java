@@ -39,6 +39,7 @@ public interface GtfsShapeSchema extends GtfsEntity {
   @SequenceKey
   int shapePtSequence();
 
+  @Required
   @NonNegative
   double shapeDistTraveled();
 }

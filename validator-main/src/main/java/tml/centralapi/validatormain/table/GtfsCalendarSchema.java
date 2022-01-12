@@ -29,8 +29,10 @@ public interface GtfsCalendarSchema extends GtfsEntity {
   @Required
   String serviceId();
 
+  @ConditionallyRequired
   String calendarName();
 
+  @ConditionallyRequired
   String period();
 
   @Required

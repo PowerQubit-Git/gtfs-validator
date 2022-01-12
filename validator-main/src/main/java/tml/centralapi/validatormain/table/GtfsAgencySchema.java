@@ -26,4 +26,5 @@ public interface GtfsAgencySchema extends GtfsEntity {
   @PrimaryKey
   @Required
   String agencyId();
+
 }

@@ -41,19 +41,19 @@ public class RouteColorContrastValidator extends SingleEntityValidator<GtfsRoute
 
   @Override
   public void validate(GtfsRoute entity, NoticeContainer noticeContainer) {
-    if (!entity.hasRouteColor() || !entity.hasRouteTextColor()) {
-      // Some of the colors is not given explicitly.
-      return;
-    }
-    if (Math.abs(entity.routeColor().rec601Luma() - entity.routeTextColor().rec601Luma())
-        < MAX_ROUTE_COLOR_LUMA_DIFFERENCE) {
-      noticeContainer.addValidationNotice(
-          new RouteColorContrastNotice(
-              entity.routeId(),
-              entity.csvRowNumber(),
-              entity.routeColor(),
-              entity.routeTextColor()));
-    }
+//    if (!entity.hasRouteColor() || !entity.hasRouteTextColor()) {
+//      // Some of the colors is not given explicitly.
+//      return;
+//    }
+//    if (Math.abs(entity.routeColor().rec601Luma() - entity.routeTextColor().rec601Luma())
+//        < MAX_ROUTE_COLOR_LUMA_DIFFERENCE) {
+//      noticeContainer.addValidationNotice(
+//          new RouteColorContrastNotice(
+//              entity.routeId(),
+//              entity.csvRowNumber(),
+//              entity.routeColor(),
+//              entity.routeTextColor()));
+//    }
   }
 
   /**

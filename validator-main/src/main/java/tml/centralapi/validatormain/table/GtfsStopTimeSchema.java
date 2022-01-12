@@ -32,11 +32,11 @@ public interface GtfsStopTimeSchema extends GtfsEntity {
   @ForeignKey(table = "trips.txt", field = "trip_id")
   String tripId();
 
-  @ConditionallyRequired
+  @Required
   @EndRange(field = "departure_time", allowEqual = true)
   GtfsTime arrivalTime();
 
-  @ConditionallyRequired
+  @Required
   GtfsTime departureTime();
 
   @FieldType(FieldTypeEnum.ID)
@@ -50,22 +50,21 @@ public interface GtfsStopTimeSchema extends GtfsEntity {
   @NonNegative
   int stopSequence();
 
+  @ConditionallyRequired
   @CachedField
   String stopHeadsign();
 
-  GtfsPickupDropOff pickupType();
-
-  GtfsPickupDropOff dropOffType();
-
-  @DefaultValue("1")
+  @ConditionallyRequired
   GtfsContinuousPickupDropOff continuousPickup();
 
-  @DefaultValue("1")
+  @ConditionallyRequired
   GtfsContinuousPickupDropOff continuousDropOff();
 
+  @Required
   @NonNegative
   double shapeDistTraveled();
 
+  @Required
   @DefaultValue("1")
   GtfsStopTimeTimepoint timepoint();
 }

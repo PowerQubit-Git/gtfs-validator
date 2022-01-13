@@ -2,6 +2,7 @@ package tml.centralapi.validatormain.model;
 
 import org.bson.types.Binary;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 
@@ -11,7 +12,8 @@ public class UploadHistoricMongo {
     public static final String SEQUENCE_NAME = "raw_input_sequence";
 
     @Id
-    private Long id;
+    @Field("feedId")
+    private Long feedId;
 
     private String publisherName;
 
@@ -30,18 +32,18 @@ public class UploadHistoricMongo {
     }
 
     public UploadHistoricMongo(Long id, String publisherName, String uploadDate, String fileName) {
-        this.id = id;
+        this.feedId = id;
         this.publisherName = publisherName;
         this.uploadDate = uploadDate;
         this.fileName = fileName;
     }
 
-    public Long getId() {
-        return id;
+    public Long getFeedId() {
+        return feedId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setFeedId(Long id) {
+        this.feedId = id;
     }
 
     public String getPublisherName() {
@@ -87,7 +89,6 @@ public class UploadHistoricMongo {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
                 ", firstName='" + fileName + '\'' +
                 ", lastName='" + publisherName + '\'' +
                 ", email='" + notices + '\'' +

@@ -17,8 +17,8 @@ public class UploadHistoricMongoModelListener extends AbstractMongoEventListener
 
     @Override
     public void onBeforeConvert(BeforeConvertEvent<UploadHistoricMongo> event) {
-        if (event.getSource().getId() < 1) {
-            event.getSource().setId(sequenceGenerator.generateSequence(UploadHistoricMongo.SEQUENCE_NAME));
+        if (event.getSource().getFeedId() < 1) {
+            event.getSource().setFeedId(sequenceGenerator.generateSequence(UploadHistoricMongo.SEQUENCE_NAME));
         }
     }
 }

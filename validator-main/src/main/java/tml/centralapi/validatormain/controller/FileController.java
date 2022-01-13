@@ -2,22 +2,23 @@ package tml.centralapi.validatormain.controller;
 
 import com.google.common.flogger.FluentLogger;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.apache.commons.logging.Log;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.mobilitydata.gtfsvalidator.table.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tml.centralapi.validatormain.model.*;
 import tml.centralapi.validatormain.repository.*;
 import tml.centralapi.validatormain.services.FileStorageService;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -81,13 +82,15 @@ public class FileController {
                     ,false);
 
             ValidatorController vc = new ValidatorController();
-            ValidationResult vr = vc.loadFeed(arg);
+            JsonObject vr = vc.loadFeed(arg);
+            Gson gson = new Gson();
+            String jsonString = gson.toJson(vr);
 
 //            UploadHistoric uh = new UploadHistoric( "NameTeste", "2022-01-06 22:00", fName + ".zip",file.getBytes());
 //            uploadHistoricRepository.save(uh);
-            mongo
             try {
                 UploadHistoricMongo uhm = new UploadHistoricMongo((long)0, "NameTeste", "2022-01-06 22:00", fName + ".zip");
+                uhm.setNotices(gson.toJson(vr.getAsJsonArray("notices")));
                 uhm.setFile(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
                 mongoRepository.save(uhm);
             } catch(Exception e) {
@@ -281,13 +284,51 @@ public class FileController {
 //                }
 //            }
 
-            Gson gson = new Gson();
-            String jsonString = gson.toJson(vr);
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(jsonString));
+            ResponseMessage rm = new ResponseMessage("Sucesso!!!");
+
+            Notice n = gson.fromJson(vr, Notice.class);
+            rm.setValidationResult(n);
+
+            return ResponseEntity.status(HttpStatus.OK).body(rm);
         } catch (Exception e) {
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
         }
+    }
+
+
+    @GetMapping("/uploads")
+    List<UploadHistoricMongo> getUploads() {
+        List<UploadHistoricMongo> list = mongoRepository.findAll();
+        list.forEach(m -> {
+            m.setFile(null);
+        });
+        return list;
+    }
+
+    @GetMapping("/download")
+    List<UploadHistoricMongo> all() {
+        List<UploadHistoricMongo> list = mongoRepository.findAll();
+        list.forEach(m -> {
+            m.setFile(null);
+        });
+        return list;
+    }
+
+    @GetMapping("/download/{id}")
+    HttpEntity<byte[]> one(@PathVariable Long id) {
+        UploadHistoricMongo m = mongoRepository.findByfeedId(id);
+//                .orElseThrow(() -> new FileNotFoundException(id));
+        Binary file = m.getFile();
+        String name = m.getFileName();
+        byte[] documentBody = file.getData();
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.MULTIPART_RELATED);
+        header.set(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=" + name);
+        header.setContentLength(documentBody.length);
+
+        return new HttpEntity<byte[]>(documentBody, header);
     }
 
 }

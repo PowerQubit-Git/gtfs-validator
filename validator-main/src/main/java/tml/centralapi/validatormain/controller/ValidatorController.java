@@ -1,11 +1,9 @@
 package tml.centralapi.validatormain.controller;
 
-import com.google.common.base.Strings;
 import com.google.common.flogger.FluentLogger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
+import com.google.gson.JsonObject;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.compress.utils.SeekableInMemoryByteChannel;
 import org.mobilitydata.gtfsvalidator.input.CountryCode;
@@ -25,17 +23,14 @@ import org.mobilitydata.gtfsvalidator.validator.ValidatorLoaderException;
 import tml.centralapi.validatormain.model.Arguments;
 import tml.centralapi.validatormain.model.ValidationResult;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.zip.ZipOutputStream;
 
 public class ValidatorController {
     private static final FluentLogger logger = FluentLogger.forEnclosingClass();
@@ -46,7 +41,7 @@ public class ValidatorController {
 
     }
 
-    public ValidationResult loadFeed(Arguments arg) {
+    public JsonObject loadFeed(Arguments arg) {
         ValidatorLoader validatorLoader = null;
         try {
             validatorLoader = new ValidatorLoader();
@@ -96,15 +91,21 @@ public class ValidatorController {
         } catch (InterruptedException e) {
             String err3 = "Validation was interrupted";
             logger.atSevere().withCause(e).log(err3);
-            ValidationResult vr3 = new ValidationResult();
-            vr3.setErr(err3);
-            return vr3;
+//            ValidationResult vr3 = new ValidationResult();
+//            vr3.setErr(err3);
+            return new JsonObject();
         }
         closeGtfsInput(gtfsInput, noticeContainer);
 
         // Output
-        exportReport(noticeContainer, arg);
-        return printSummary(startNanos, feedContainer, noticeContainer);
+//        exportReport(noticeContainer, arg);
+        printSummary(startNanos, feedContainer, noticeContainer);
+        return jsonFromValidation(noticeContainer);
+    }
+
+
+    public JsonObject jsonFromValidation(final NoticeContainer noticeContainer) {
+        return noticeContainer.exportValidationNotices();
     }
 
 

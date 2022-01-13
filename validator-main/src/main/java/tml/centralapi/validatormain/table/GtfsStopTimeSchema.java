@@ -17,10 +17,7 @@
 package tml.centralapi.validatormain.table;
 
 import org.mobilitydata.gtfsvalidator.annotation.*;
-import org.mobilitydata.gtfsvalidator.table.GtfsContinuousPickupDropOff;
-import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
-import org.mobilitydata.gtfsvalidator.table.GtfsPickupDropOff;
-import org.mobilitydata.gtfsvalidator.table.GtfsStopTimeTimepoint;
+import org.mobilitydata.gtfsvalidator.table.*;
 import org.mobilitydata.gtfsvalidator.type.GtfsTime;
 
 @GtfsTable("stop_times.txt")
@@ -53,6 +50,14 @@ public interface GtfsStopTimeSchema extends GtfsEntity {
   @ConditionallyRequired
   @CachedField
   String stopHeadsign();
+
+  //OMITTED
+  @ConditionallyRequired
+  GtfsPickupType pickupType();
+
+  //OMITTED
+  @ConditionallyRequired
+  GtfsDropOffType dropOffType();
 
   @ConditionallyRequired
   GtfsContinuousPickupDropOff continuousPickup();

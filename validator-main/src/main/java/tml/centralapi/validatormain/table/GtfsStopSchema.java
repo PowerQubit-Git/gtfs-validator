@@ -18,6 +18,7 @@ package tml.centralapi.validatormain.table;
 
 import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.*;
+import org.mobilitydata.gtfsvalidator.type.GtfsDate;
 
 import java.time.ZoneId;
 
@@ -53,8 +54,18 @@ public interface GtfsStopSchema extends GtfsEntity {
   @Required
   double stopLon();
 
+  //OMITTED
+  @FieldType(FieldTypeEnum.ID)
+  @Index
+  @ConditionallyRequired
+  String zoneId();
+
   @ConditionallyRequired
   GtfsZoneShift zone_shift();
+
+  //OMITTED
+  @ConditionallyRequired
+  String stopUrl();
 
   @ConditionallyRequired
   GtfsLocationType locationType();
@@ -65,12 +76,22 @@ public interface GtfsStopSchema extends GtfsEntity {
   @ForeignKey(table = "stops.txt", field = "stop_id")
   String parentStation();
 
+  //OMITTED
+  @ConditionallyRequired
+  String stopTimezone();
+
   @ConditionallyRequired
   GtfsWheelchairBoarding wheelchairBoarding();
 
+  //OMITTED
+  @FieldType(FieldTypeEnum.ID)
+  @Index
+  @ConditionallyRequired
+  @ForeignKey(table = "levels.txt", field = "level_id")
+  String levelId();
+
   @ConditionallyRequired
   String platformCode();
-
 
   @ConditionallyRequired
   GtfsEntranceRestriction entranceRestriction();

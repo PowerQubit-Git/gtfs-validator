@@ -21,6 +21,7 @@ import org.mobilitydata.gtfsvalidator.table.GtfsBikesAllowed;
 import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
 import org.mobilitydata.gtfsvalidator.table.GtfsTripDirectionId;
 import org.mobilitydata.gtfsvalidator.table.GtfsWheelchairBoarding;
+import org.mobilitydata.gtfsvalidator.type.GtfsTime;
 
 @GtfsTable("trips.txt")
 @Required
@@ -35,17 +36,35 @@ public interface GtfsTripSchema extends GtfsEntity {
   @ForeignKey(table = "calendar.txt", field = "service_id")
   String serviceId();
 
-
   @FieldType(FieldTypeEnum.ID)
   @Required
   @PrimaryKey
   String tripId();
 
+  //OMITTED
+  @ConditionallyRequired
+  GtfsTime tripFirst();
+
+  //OMITTED
+  @ConditionallyRequired
+  GtfsTime tripLast();
+
   @ConditionallyRequired
   String tripHeadsign();
 
+  //OMITTED
+  @ConditionallyRequired
+  String tripShortName();
+
   @ConditionallyRequired
   GtfsTripDirectionId directionId();
+
+  //OMITTED
+  @FieldType(FieldTypeEnum.ID)
+  @Index
+  @ConditionallyRequired
+  String blockId();
+
 
   @FieldType(FieldTypeEnum.ID)
   @ForeignKey(table = "shapes.txt", field = "shape_id")

@@ -19,12 +19,40 @@ package tml.centralapi.validatormain.table;
 import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
 
+import java.time.ZoneId;
+import java.util.Locale;
+
 @GtfsTable("agency.txt")
 @Required
 public interface GtfsAgencySchema extends GtfsEntity {
   @FieldType(FieldTypeEnum.ID)
   @PrimaryKey
-  @Required
+  @ConditionallyRequired
   String agencyId();
+
+  @Required
+  String agencyName();
+
+  @FieldType(FieldTypeEnum.URL)
+  @Required
+  String agencyUrl();
+
+  @Required
+  ZoneId agencyTimezone();
+
+  @ConditionallyRequired
+  Locale agencyLang();
+
+  @FieldType(FieldTypeEnum.PHONE_NUMBER)
+  @ConditionallyRequired
+  String agencyPhone();
+
+  @FieldType(FieldTypeEnum.URL)
+  @ConditionallyRequired
+  String agencyFareUrl();
+
+  @FieldType(FieldTypeEnum.EMAIL)
+  @ConditionallyRequired
+  String agencyEmail();
 
 }

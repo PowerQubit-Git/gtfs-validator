@@ -20,6 +20,7 @@ import org.mobilitydata.gtfsvalidator.annotation.*;
 import org.mobilitydata.gtfsvalidator.table.GtfsEntity;
 
 @GtfsTable("shapes.txt")
+@ConditionallyRequired
 public interface GtfsShapeSchema extends GtfsEntity {
   @FieldType(FieldTypeEnum.ID)
   @Required
@@ -34,12 +35,12 @@ public interface GtfsShapeSchema extends GtfsEntity {
   @Required
   double shapePtLon();
 
-  @Required
   @NonNegative
   @SequenceKey
+  @Required
   int shapePtSequence();
 
-  @Required
   @NonNegative
+  @Required
   double shapeDistTraveled();
 }

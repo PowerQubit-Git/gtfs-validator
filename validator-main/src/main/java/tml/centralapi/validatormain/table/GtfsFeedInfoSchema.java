@@ -25,8 +25,26 @@ import java.util.Locale;
 @GtfsTable(value = "feed_info.txt", singleRow = true)
 public interface GtfsFeedInfoSchema extends GtfsEntity {
 
+  //OMITTED
   @ConditionallyRequired
+  String feedPublisherName();
+
+  //OMITTED
+  @FieldType(FieldTypeEnum.URL)
+  @ConditionallyRequired
+  String feedPublisherUrl();
+
+  //OMITTED
+  @ConditionallyRequired
+  Locale feedLang();
+
+  //OMITTED
+  @ConditionallyRequired
+  Locale defaultLang();
+
+
   @EndRange(field = "feed_end_date", allowEqual = true)
+  @ConditionallyRequired
   GtfsDate feedStartDate();
 
   @ConditionallyRequired
@@ -40,5 +58,15 @@ public interface GtfsFeedInfoSchema extends GtfsEntity {
 
   @ConditionallyRequired
   String feedRemarks();
+
+  //OMITTED
+  @FieldType(FieldTypeEnum.EMAIL)
+  @ConditionallyRequired
+  String feedContactEmail();
+
+  //OMITTED
+  @FieldType(FieldTypeEnum.URL)
+  @ConditionallyRequired
+  String feedContactUrl();
 
 }

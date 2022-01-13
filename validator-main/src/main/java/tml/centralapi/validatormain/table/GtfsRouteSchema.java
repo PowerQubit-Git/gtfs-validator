@@ -23,6 +23,7 @@ import org.mobilitydata.gtfsvalidator.type.GtfsColor;
 @GtfsTable("routes.txt")
 @Required
 public interface GtfsRouteSchema extends GtfsEntity {
+
   @Required
   String lineId();
 
@@ -47,7 +48,6 @@ public interface GtfsRouteSchema extends GtfsEntity {
 
   @Required
   String routeDestination();
-
 
   @ConditionallyRequired
   String routeShortName();
@@ -76,11 +76,31 @@ public interface GtfsRouteSchema extends GtfsEntity {
   @ConditionallyRequired
   GtfsSchool school();
 
+  //OMITTED
+  @FieldType(FieldTypeEnum.URL)
   @ConditionallyRequired
+  String routeUrl();
+
+  //OMITTED
+  @DefaultValue("FFFFFF")
+  @ConditionallyRequired
+  GtfsColor routeColor();
+
+  //OMITTED
+  @DefaultValue("000000")
+  @ConditionallyRequired
+  GtfsColor routeTextColor();
+
+  //OMITTED
+  @NonNegative
+  @ConditionallyRequired
+  int routeSortOrder();
+
   @DefaultValue("1")
+  @ConditionallyRequired
   GtfsContinuousPickupDropOff continuousPickup();
 
-  @ConditionallyRequired
   @DefaultValue("1")
+  @ConditionallyRequired
   GtfsContinuousPickupDropOff continuousDropOff();
 }

@@ -91,7 +91,7 @@ public class GtfsStopIntendedOffer {
     private String observations;
 
     @Column(name = "Region")
-    private GtfsRegion region;
+    private String region;
 
     @Column(name = "Municipality")
     private GtfsMunicipality municipality;
@@ -285,10 +285,10 @@ public class GtfsStopIntendedOffer {
         this.observations = observations;
     }
 
-    public GtfsRegion getRegion() {
+    public String getRegion() {
         return region;
     }
-    public void setRegion(GtfsRegion region) {
+    public void setRegion(String region) {
         this.region = region;
     }
 

@@ -112,7 +112,7 @@ public interface GtfsStopSchema extends GtfsEntity {
   String observations();
 
   @Required
-  GtfsRegion region();
+  String region();
 
   @Required
   GtfsMunicipality municipality();

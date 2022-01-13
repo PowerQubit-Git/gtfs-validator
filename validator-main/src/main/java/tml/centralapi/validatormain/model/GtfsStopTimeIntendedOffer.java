@@ -3,10 +3,7 @@ package tml.centralapi.validatormain.model;
 import org.mobilitydata.gtfsvalidator.table.GtfsContinuousPickupDropOff;
 import org.mobilitydata.gtfsvalidator.table.GtfsStopTimeTimepoint;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
@@ -14,6 +11,10 @@ import java.time.LocalTime;
 public class GtfsStopTimeIntendedOffer {
 
     @Id
+    @Column(name = "StopTimeId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String stopTimeId;
+
     @Column(name = "TripId")
     private String tripId;
 

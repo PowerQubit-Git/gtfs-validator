@@ -113,7 +113,7 @@ public class ValidatorAsyncService {
             feedContainer =
                     loadAndValidate(
                             validatorLoader, feedLoader, noticeContainer, gtfsInput, validationContext);
-            printSummary(startNanos, feedContainer, noticeContainer);
+            printSummary(startNanos, feedContainer);
         } catch (InterruptedException e) {
             String err3 = "Validation was interrupted";
             logger.atSevere().withCause(e).log(err3);
@@ -139,7 +139,7 @@ public class ValidatorAsyncService {
     }
 
     @Async
-    public static void printSummary(long startNanos, GtfsFeedContainer feedContainer, NoticeContainer noticeContainer) {
+    public static void printSummary(long startNanos, GtfsFeedContainer feedContainer) {
         final long endNanos = System.nanoTime();
         if (!feedContainer.isParsedSuccessfully()) {
             System.out.println(" ----------------------------------------- ");
@@ -151,9 +151,6 @@ public class ValidatorAsyncService {
         double t = (endNanos - startNanos) / 1e9;
         System.out.printf("Validation took %.3f seconds%n", t);
         System.out.println(feedContainer.tableTotals());
-
-//        ValidationResult vr = new ValidationResult(feedContainer.isParsedSuccessfully(), feedContainer.tableTotals(), t, feedContainer, noticeContainer);
-//        return vr;
     }
 
     @Async

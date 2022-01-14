@@ -32,7 +32,7 @@ public interface GtfsStopSchema extends GtfsEntity {
 
   @FieldType(FieldTypeEnum.ID)
   @ConditionallyRequired
-  String stop_id_stepp();
+  String stopIdStepp();
 
   @ConditionallyRequired
   String stopCode();
@@ -44,7 +44,7 @@ public interface GtfsStopSchema extends GtfsEntity {
   String stopDesc();
 
   @ConditionallyRequired
-  String stop_remarks();
+  String stopRemarks();
 
   @FieldType(FieldTypeEnum.LATITUDE)
   @Required

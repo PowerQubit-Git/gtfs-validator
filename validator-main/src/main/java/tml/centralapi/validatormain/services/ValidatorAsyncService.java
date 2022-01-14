@@ -33,6 +33,9 @@ public class ValidatorAsyncService {
     @Autowired
     IntendedOfferUploadRepository mongoRepository;
 
+    @Autowired
+    IntendedOfferPgService pgService;
+
     private static final FluentLogger logger = FluentLogger.forEnclosingClass();
     private static final int numberOfThreads = 1;
 
@@ -47,19 +50,11 @@ public class ValidatorAsyncService {
     private IntendedOfferUpload input;
 
     @Async
-    public void asyncMethod() throws InterruptedException {
-        Thread.sleep(5000);
-        System.out.println("Calling other service..");
-        System.out.println("Thread: " +
-                Thread.currentThread().getName());
-    }
-
-    @Async
     public void validateAsync() throws InterruptedException {
         String id = this.input.getId();
         IntendedOfferUpload upload = null;
         try {
-            upload = mongoRepository.findById(id).orElseThrow(() -> new Exception("Student not found - "));
+            upload = mongoRepository.findById(id).orElseThrow(() -> new Exception("not found"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,9 +109,17 @@ public class ValidatorAsyncService {
                     loadAndValidate(
                             validatorLoader, feedLoader, noticeContainer, gtfsInput, validationContext);
             printSummary(startNanos, feedContainer);
+
+            // POSTGRES
+//            IntendedOfferPgService pgService = new IntendedOfferPgService();
+            pgService.addToDatabase(feedContainer);
+            // POSTGRES
+
         } catch (InterruptedException e) {
             String err3 = "Validation was interrupted";
             logger.atSevere().withCause(e).log(err3);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         exportReport(noticeContainer);

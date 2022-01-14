@@ -3,12 +3,8 @@ package tml.centralapi.validatormain.controller;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tml.centralapi.validatormain.model.IntendedOfferUpload;
 import tml.centralapi.validatormain.model.ResponseMessage;
@@ -16,6 +12,7 @@ import tml.centralapi.validatormain.repository.IntendedOfferUploadRepository;
 import tml.centralapi.validatormain.services.ValidatorAsyncService;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -36,18 +33,35 @@ public class IntendedOfferUploadController {
             uhm.setPublisherName(publisher);
             uhm.setFile(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
             mongoRepository.save(uhm);
-
-            String id = uhm.getId();
-            System.out.println("Inserted ID: " + id);
-
             service.setInput(uhm);
             service.validateAsync();
-            service.asyncMethod();
-            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         } catch(Exception e) {
             e.printStackTrace(System.out);
         }
         ResponseMessage rm = new ResponseMessage("Sucesso!!!");
         return ResponseEntity.status(HttpStatus.OK).body(rm);
+    }
+
+    @GetMapping("/uploads")
+    List<IntendedOfferUpload> getUploads() {
+        List<IntendedOfferUpload> list = mongoRepository.findAll();
+        list.forEach(m -> {
+            m.setFile(null);
+        });
+        return list;
+    }
+
+    @GetMapping("/download/{id}")
+    HttpEntity<byte[]> one(@PathVariable String id) throws Exception {
+        IntendedOfferUpload m = mongoRepository.findById(id).orElseThrow(() -> new Exception("not found"));
+        Binary file = m.getFile();
+        byte[] documentBody = file.getData();
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.MULTIPART_RELATED);
+        header.set(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=" + id + ".zip");
+        header.setContentLength(documentBody.length);
+
+        return new HttpEntity<>(documentBody, header);
     }
 }

@@ -7,6 +7,6 @@ import tml.centralapi.validatormain.model.GtfsStopIntendedOffer;
 import java.util.List;
 
 public interface FeedInfoRepository extends JpaRepository<GtfsFeedInfoIntendedOffer, Long> {
-    List<GtfsFeedInfoIntendedOffer> findById(String id);
+    List<GtfsFeedInfoIntendedOffer> findByFeedId(String id);
     GtfsFeedInfoIntendedOffer findByFeedInfoId(String id);
 }

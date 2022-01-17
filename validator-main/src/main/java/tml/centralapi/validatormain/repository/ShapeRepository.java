@@ -7,6 +7,6 @@ import tml.centralapi.validatormain.model.GtfsShapeIntendedOffer;
 import java.util.List;
 
 public interface ShapeRepository extends JpaRepository<GtfsShapeIntendedOffer, Long> {
-    List<GtfsShapeIntendedOffer> findById(String id);
+    List<GtfsShapeIntendedOffer> findByFeedId(String id);
     GtfsShapeIntendedOffer findByShapeId(String id);
 }

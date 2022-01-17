@@ -22,7 +22,7 @@ public class FeedInfoController {
     @GetMapping("/feedInfo/{id}")
     HttpEntity<List<GtfsFeedInfoIntendedOffer>> get(@PathVariable String id) throws Exception {
         try {
-            List<GtfsFeedInfoIntendedOffer> list = feedInfoRepository.findById(id);
+            List<GtfsFeedInfoIntendedOffer> list = feedInfoRepository.findByFeedId(id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

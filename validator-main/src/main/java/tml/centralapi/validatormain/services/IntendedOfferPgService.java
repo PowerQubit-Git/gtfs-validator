@@ -232,24 +232,27 @@ public class IntendedOfferPgService {
 
         GtfsTableContainer calendarDateContainer = feedContainer.getTableForFilename("calendar_date.txt").orElseThrow(() -> new Exception("calendar_date.txt not found"));
         List<GtfsCalendarDate> calendarDatelist = calendarDateContainer.getEntities();
-        List<GtfsCalendarDateIntendedOffer> ioCalendarDate = new ArrayList<>();
-        calendarDatelist.forEach(calendarDate -> {
-            GtfsCalendarDateIntendedOffer newCalendarDate = new GtfsCalendarDateIntendedOffer();
-            newCalendarDate.setFeedId(feedId);
-            newCalendarDate.setServiceId(calendarDate.serviceId());
-            newCalendarDate.setCalendarName(calendarDate.calendarName());
-            newCalendarDate.setHoliday(calendarDate.holiday());
-            newCalendarDate.setPeriod(calendarDate.period());
-            //newCalendarDate.setDate(calendarDate.date());
-            newCalendarDate.setExceptionType(calendarDate.exceptionType());
-            ioCalendarDate.add(newCalendarDate);
-        });
+        if(calendarDatelist.size() > 0) {
+            List<GtfsCalendarDateIntendedOffer> ioCalendarDate = new ArrayList<>();
+            calendarDatelist.forEach(calendarDate -> {
+                GtfsCalendarDateIntendedOffer newCalendarDate = new GtfsCalendarDateIntendedOffer();
+                newCalendarDate.setFeedId(feedId);
+                newCalendarDate.setServiceId(calendarDate.serviceId());
+                newCalendarDate.setCalendarName(calendarDate.calendarName());
+                newCalendarDate.setHoliday(calendarDate.holiday());
+                newCalendarDate.setPeriod(calendarDate.period());
+                //newCalendarDate.setDate(calendarDate.date());
+                newCalendarDate.setExceptionType(calendarDate.exceptionType());
+                ioCalendarDate.add(newCalendarDate);
+            });
 
-        try {
-            ioCalendarDate.forEach(s -> { calendarDateRepository.save(s); });
-        } catch (Exception e) {
-            System.out.println(e);
+            try {
+                ioCalendarDate.forEach(s -> { calendarDateRepository.save(s); });
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
+
 
         GtfsTableContainer shapeContainer = feedContainer.getTableForFilename("shape.txt").orElseThrow(() -> new Exception("shape.txt not found"));
         List<GtfsShape> shapelist = shapeContainer.getEntities();

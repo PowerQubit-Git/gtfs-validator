@@ -19,7 +19,7 @@ public class FeedInfoController {
     @Autowired
     FeedInfoRepository feedInfoRepository;
 
-    @GetMapping("/feedInfo/{id}")
+    @GetMapping("/feed_info/{id}")
     HttpEntity<List<GtfsFeedInfoIntendedOffer>> get(@PathVariable String id) throws Exception {
         try {
             List<GtfsFeedInfoIntendedOffer> list = feedInfoRepository.findByFeedId(id);
@@ -29,12 +29,12 @@ public class FeedInfoController {
         }
     }
 
-    @PostMapping("/feedInfo")
+    @PostMapping("/feed_info")
     public GtfsFeedInfoIntendedOffer create(@Valid @RequestBody GtfsFeedInfoIntendedOffer FeedInfo) {
         return feedInfoRepository.save(FeedInfo);
     }
 
-    @PutMapping("/feedInfo/{id}")
+    @PutMapping("/feed_info/{id}")
     public ResponseEntity<GtfsFeedInfoIntendedOffer> update(@PathVariable(value = "id") String id,
                                                    @Valid @RequestBody GtfsFeedInfoIntendedOffer details) throws Exception {
         try {
@@ -55,7 +55,7 @@ public class FeedInfoController {
         }
     }
 
-    @DeleteMapping("/feedInfo/{id}")
+    @DeleteMapping("/feed_info/{id}")
     public Map<String, Boolean> deleteFeedInfo(@PathVariable(value = "id") Long id)
             throws Exception {
         GtfsFeedInfoIntendedOffer FeedInfo = feedInfoRepository.findById(id)

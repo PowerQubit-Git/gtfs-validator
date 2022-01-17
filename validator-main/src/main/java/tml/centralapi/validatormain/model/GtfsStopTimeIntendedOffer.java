@@ -49,6 +49,14 @@ public class GtfsStopTimeIntendedOffer {
     @Column(name = "Timepoint")
     private GtfsStopTimeTimepoint timepoint;
 
+    public String getStopTimeId() {
+        return stopTimeId;
+    }
+
+    public void setStopTimeId(String stopTimeId) {
+        this.stopTimeId = stopTimeId;
+    }
+
     public String getTripId() {
         return tripId;
     }

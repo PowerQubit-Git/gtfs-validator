@@ -7,6 +7,6 @@ import tml.centralapi.validatormain.model.GtfsTripIntendedOffer;
 import java.util.List;
 
 public interface TripRepository  extends JpaRepository<GtfsTripIntendedOffer, Long> {
-    List<GtfsTripIntendedOffer> findById(String id);
+    List<GtfsTripIntendedOffer> findByFeedId(String id);
     GtfsTripIntendedOffer findByTripId(String id);
 }

@@ -24,7 +24,7 @@ public class TripController {
     @GetMapping("/trips/{id}")
     HttpEntity<List<GtfsTripIntendedOffer>> get(@PathVariable String id) throws Exception {
         try {
-            List<GtfsTripIntendedOffer> list = tripRepository.findById(id);
+            List<GtfsTripIntendedOffer> list = tripRepository.findByFeedId(id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

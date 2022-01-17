@@ -21,7 +21,7 @@ public class StopTimesController {
     @Autowired
     StopTimeRepository stopTimeRepository;
 
-    @GetMapping("/stopTimes/{id}")
+    @GetMapping("/stop_times/{id}")
     HttpEntity<List<GtfsStopTimeIntendedOffer>> get(@PathVariable String id) throws Exception {
         try {
             List<GtfsStopTimeIntendedOffer> list = stopTimeRepository.findByFeedId(id);
@@ -31,16 +31,16 @@ public class StopTimesController {
         }
     }
 
-    @PostMapping("/stopTimes")
+    @PostMapping("/stop_times")
     public GtfsStopTimeIntendedOffer create(@Valid @RequestBody GtfsStopTimeIntendedOffer stopTimes) {
         return stopTimeRepository.save(stopTimes);
     }
 
-    @PutMapping("/stopTimes/{id}")
+    @PutMapping("/stop_times/{id}")
     public ResponseEntity<GtfsStopTimeIntendedOffer> update(@PathVariable(value = "id") String id,
                                                         @Valid @RequestBody GtfsStopTimeIntendedOffer details) throws Exception {
         try {
-            GtfsStopTimeIntendedOffer stopTimes = stopTimeRepository.findByStopTimesId(id);
+            GtfsStopTimeIntendedOffer stopTimes = stopTimeRepository.findByStopTimeId(id);
             stopTimes.setTripId(details.getTripId());
             stopTimes.setArrivalTime(details.getArrivalTime());
             stopTimes.setDepartureTime(details.getDepartureTime());
@@ -58,7 +58,7 @@ public class StopTimesController {
         }
     }
 
-    @DeleteMapping("/stopTimes/{id}")
+    @DeleteMapping("/stop_times/{id}")
     public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long id)
             throws Exception {
         GtfsStopTimeIntendedOffer stopTimes = stopTimeRepository.findById(id)

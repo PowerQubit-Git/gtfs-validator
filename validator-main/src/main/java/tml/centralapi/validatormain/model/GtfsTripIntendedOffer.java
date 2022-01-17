@@ -14,6 +14,9 @@ import java.time.LocalTime;
 @Table(name = "TripIntendedOffer")
 public class GtfsTripIntendedOffer {
 
+    @Column(name = "FeedId")
+    private String feedId;
+
     @Id
     @Column(name = "RouteId")
     private String routeId;
@@ -44,6 +47,7 @@ public class GtfsTripIntendedOffer {
 
     @Column(name = "BikesAllowed")
     private GtfsBikesAllowed bikesAllowed;
+
 
     public String getRouteId() {
         return routeId;
@@ -114,5 +118,8 @@ public class GtfsTripIntendedOffer {
     public void setBikesAllowed(GtfsBikesAllowed bikesAllowed) {
         this.bikesAllowed = bikesAllowed;
     }
+
+    public String getFeedId() { return feedId; }
+    public void setFeedId(String feedId) { this.feedId = feedId; }
 
 }

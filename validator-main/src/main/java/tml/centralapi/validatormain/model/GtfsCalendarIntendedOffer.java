@@ -12,6 +12,9 @@ import java.time.LocalDate;
 @Table(name = "CalendarIntendedOffer")
 public class GtfsCalendarIntendedOffer {
 
+    @Column(name = "FeedId")
+    private String feedId;
+
     @Id
     @Column(name = "ServiceId")
     private String serviceId;
@@ -144,4 +147,7 @@ public class GtfsCalendarIntendedOffer {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
+
+    public String getFeedId() { return feedId; }
+    public void setFeedId(String feedId) { this.feedId = feedId; }
 }

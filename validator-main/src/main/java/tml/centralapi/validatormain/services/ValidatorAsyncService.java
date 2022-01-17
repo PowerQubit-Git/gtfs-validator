@@ -2,7 +2,6 @@ package tml.centralapi.validatormain.services;
 
 import com.google.common.flogger.FluentLogger;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.compress.utils.SeekableInMemoryByteChannel;
 import org.mobilitydata.gtfsvalidator.input.CountryCode;
@@ -12,7 +11,6 @@ import org.mobilitydata.gtfsvalidator.input.GtfsZipFileInput;
 import org.mobilitydata.gtfsvalidator.notice.IOError;
 import org.mobilitydata.gtfsvalidator.notice.NoticeContainer;
 import org.mobilitydata.gtfsvalidator.notice.URISyntaxError;
-import org.mobilitydata.gtfsvalidator.notice.ValidationNotice;
 import org.mobilitydata.gtfsvalidator.table.GtfsFeedContainer;
 import org.mobilitydata.gtfsvalidator.table.GtfsFeedLoader;
 import org.mobilitydata.gtfsvalidator.table.GtfsTableContainer;
@@ -24,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import tml.centralapi.validatormain.model.IntendedOfferUpload;
-import tml.centralapi.validatormain.model.NoticeType;
 import tml.centralapi.validatormain.model.TableResume;
 import tml.centralapi.validatormain.repository.IntendedOfferUploadRepository;
 import tml.centralapi.validatormain.model.Notices;
@@ -102,11 +99,6 @@ public class ValidatorAsyncService {
             logger.atSevere().withCause(e).log(err2);
             noticeContainer.addSystemError(new URISyntaxError(e));
         }
-
-//        if (gtfsInput == null) {
-//            exportReport(noticeContainer, feedContainer);
-//            System.exit(1);
-//        }
 
         ValidationContext validationContext =
                 ValidationContext.builder()

@@ -42,7 +42,12 @@ public class ShapesController {
         try {
             GtfsShapeIntendedOffer shapes = shapeRepository.findByShapeId(id);
             shapes.setShapeId(details.getShapeId());
-            final GtfsShapeIntendedOffer updatedShapes = shapeRepository.save(feedInfo);
+            shapes.setShapeDistTraveled(details.getShapeDistTraveled());
+            shapes.setShapePtSequence(details.getShapePtSequence());
+            shapes.setShapePtLon(details.getShapePtLon());
+            shapes.setShapePtLat(details.getShapePtLat());
+            shapes.setFeedId(details.getFeedId());
+            final GtfsShapeIntendedOffer updatedShapes = shapeRepository.save(shapes);
             return ResponseEntity.ok(updatedShapes);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

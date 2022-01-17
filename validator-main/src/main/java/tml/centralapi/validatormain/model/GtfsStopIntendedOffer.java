@@ -102,6 +102,8 @@ public class GtfsStopIntendedOffer {
     @Column(name = "MunicipalityFare2")
     private GtfsMunicipalityFare2 municipalityFare2;
 
+    @Column(name = "FeedId")
+    private String feedId;
 
     public String getStopId() {
         return stopId;
@@ -313,5 +315,6 @@ public class GtfsStopIntendedOffer {
         this.municipalityFare2 = municipalityFare2;
     }
 
-
+    public String getFeedId() { return feedId; }
+    public void setFeedId(String feedId) { this.feedId = feedId; }
 }

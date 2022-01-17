@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import tml.centralapi.validatormain.model.IntendedOfferUpload;
-import tml.centralapi.validatormain.model.ResponseMessage;
+import tml.centralapi.validatormain.model.*;
 import tml.centralapi.validatormain.repository.IntendedOfferUploadRepository;
 import tml.centralapi.validatormain.services.ValidatorAsyncService;
 
@@ -64,4 +63,23 @@ public class IntendedOfferUploadController {
 
         return new HttpEntity<>(documentBody, header);
     }
+
+    @GetMapping("validations/{id}")
+    Notices GetValidationsReport(@PathVariable String id) throws Exception {
+        IntendedOfferUpload m = mongoRepository.findById(id).orElseThrow(() -> new Exception("not found"));
+        return m.getValidationReport();
+    }
+
+    @GetMapping("errors/{id}")
+    Notices GetErrorsReport(@PathVariable String id) throws Exception {
+        IntendedOfferUpload m = mongoRepository.findById(id).orElseThrow(() -> new Exception("not found"));
+        return m.getErrorsReport();
+    }
+
+    @GetMapping("explorer/{id}")
+    List<TableResume> GetFilesResume(@PathVariable String id) throws Exception {
+        IntendedOfferUpload m = mongoRepository.findById(id).orElseThrow(() -> new Exception("not found"));
+        return m.getTableResumeList();
+    }
+
 }

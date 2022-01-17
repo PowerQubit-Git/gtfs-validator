@@ -2,6 +2,7 @@ package tml.centralapi.validatormain.services;
 
 import com.google.common.flogger.FluentLogger;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.compress.utils.SeekableInMemoryByteChannel;
 import org.mobilitydata.gtfsvalidator.input.CountryCode;
@@ -11,8 +12,10 @@ import org.mobilitydata.gtfsvalidator.input.GtfsZipFileInput;
 import org.mobilitydata.gtfsvalidator.notice.IOError;
 import org.mobilitydata.gtfsvalidator.notice.NoticeContainer;
 import org.mobilitydata.gtfsvalidator.notice.URISyntaxError;
+import org.mobilitydata.gtfsvalidator.notice.ValidationNotice;
 import org.mobilitydata.gtfsvalidator.table.GtfsFeedContainer;
 import org.mobilitydata.gtfsvalidator.table.GtfsFeedLoader;
+import org.mobilitydata.gtfsvalidator.table.GtfsTableContainer;
 import org.mobilitydata.gtfsvalidator.validator.DefaultValidatorProvider;
 import org.mobilitydata.gtfsvalidator.validator.ValidationContext;
 import org.mobilitydata.gtfsvalidator.validator.ValidatorLoader;
@@ -21,12 +24,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import tml.centralapi.validatormain.model.IntendedOfferUpload;
+import tml.centralapi.validatormain.model.NoticeType;
+import tml.centralapi.validatormain.model.TableResume;
 import tml.centralapi.validatormain.repository.IntendedOfferUploadRepository;
+import tml.centralapi.validatormain.model.Notices;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class ValidatorAsyncService {
@@ -93,10 +103,10 @@ public class ValidatorAsyncService {
             noticeContainer.addSystemError(new URISyntaxError(e));
         }
 
-        if (gtfsInput == null) {
-            exportReport(noticeContainer);
-            System.exit(1);
-        }
+//        if (gtfsInput == null) {
+//            exportReport(noticeContainer, feedContainer);
+//            System.exit(1);
+//        }
 
         ValidationContext validationContext =
                 ValidationContext.builder()
@@ -110,8 +120,10 @@ public class ValidatorAsyncService {
                             validatorLoader, feedLoader, noticeContainer, gtfsInput, validationContext);
             printSummary(startNanos, feedContainer);
 
+            exportReport(noticeContainer, feedContainer);
+
             // POSTGRES
-//            IntendedOfferPgService pgService = new IntendedOfferPgService();
+            pgService.setFeedId(id);
             pgService.addToDatabase(feedContainer);
             // POSTGRES
 
@@ -122,17 +134,27 @@ public class ValidatorAsyncService {
             e.printStackTrace();
         }
 
-        exportReport(noticeContainer);
+
     }
 
     /** Generates and exports reports for both validation notices and system errors reports. */
     @Async
-    public void exportReport(final NoticeContainer noticeContainer) {
+    public void exportReport(final NoticeContainer noticeContainer, GtfsFeedContainer feedContainer) {
         Gson gson = new Gson();
-        String validations = gson.toJson(noticeContainer.exportValidationNotices());
-        String errors = gson.toJson(noticeContainer.exportSystemErrors());
+        Notices validations = gson.fromJson(noticeContainer.exportValidationNotices(), Notices.class);
+        Notices errors = gson.fromJson(noticeContainer.exportSystemErrors(), Notices.class);
         this.input.setValidationReport(validations);
         this.input.setErrorsReport(errors);
+
+        Map<String, GtfsTableContainer<?>> map = feedContainer.getTables();
+        Iterator<Map.Entry<String, GtfsTableContainer<?>>> it = map.entrySet().iterator();
+        List<TableResume> resumeList = new ArrayList<>();
+        while(it.hasNext()) {
+            Map.Entry<String, GtfsTableContainer<?>> pair = it.next();
+            String x = pair.getKey() + " - " + pair.getValue().getTableStatus();
+            resumeList.add(new TableResume(pair.getKey(), pair.getValue().getTableStatus().toString()));
+        }
+        this.input.setTableResumeList(resumeList);
         mongoRepository.save(this.input);
     }
 

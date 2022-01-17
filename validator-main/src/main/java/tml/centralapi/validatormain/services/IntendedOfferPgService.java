@@ -21,16 +21,23 @@ public class IntendedOfferPgService {
     @Autowired
     StopRepository stopRepository;
 
+    private String feedId;
+
+    public String getFeedId() { return feedId; }
+
+    public void setFeedId(String feedId) { this.feedId = feedId; }
+
     public IntendedOfferPgService() {
     }
 
     @Async()
     public void addToDatabase(GtfsFeedContainer feedContainer) throws Exception {
-        GtfsTableContainer stopsContainer = feedContainer.getTableForFilename("stops.txt").orElseThrow(() -> new Exception("Yo yo"));
+        GtfsTableContainer stopsContainer = feedContainer.getTableForFilename("stops.txt").orElseThrow(() -> new Exception("stops.txt not found"));
         List<GtfsStop> list = stopsContainer.getEntities();
         List<GtfsStopIntendedOffer> ioStops = new ArrayList<>();
         list.forEach(stop -> {
             GtfsStopIntendedOffer newStop = new GtfsStopIntendedOffer();
+            newStop.setFeedId(feedId);
             newStop.setStopId(stop.stopId());
             newStop.setStopCode(stop.stopCode());
             newStop.setStopName(stop.stopName());
@@ -45,11 +52,7 @@ public class IntendedOfferPgService {
         });
 
         try {
-//            stopRepository.saveAll(ioStops);
-            ioStops.forEach(s -> {
-                stopRepository.save(s);
-                System.out.println("adicionou");
-            });
+            ioStops.forEach(s -> { stopRepository.save(s); });
         } catch (Exception e) {
             System.out.println(e);
         }

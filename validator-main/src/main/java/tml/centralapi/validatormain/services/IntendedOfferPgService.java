@@ -105,7 +105,7 @@ public class IntendedOfferPgService {
             newStop.setPreservationState(stop.preservationState());
             newStop.setEquipment(stop.equipment());
             newStop.setObservations(stop.observations());
-            newStop.setRegion(stop.region());
+            //newStop.setRegion(stop.region());
             newStop.setMunicipality(stop.municipality());
             newStop.setMunicipalityFare1(stop.municipalityFare1());
             newStop.setMunicipalityFare2(stop.municipalityFare2());

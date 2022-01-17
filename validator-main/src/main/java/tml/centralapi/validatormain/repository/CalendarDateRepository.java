@@ -7,6 +7,6 @@ import tml.centralapi.validatormain.model.GtfsFeedInfoIntendedOffer;
 import java.util.List;
 
 public interface CalendarDateRepository extends JpaRepository<GtfsCalendarDateIntendedOffer, Long> {
-    List<GtfsCalendarDateIntendedOffer> findById(String id);
-    GtfsCalendarDateIntendedOffer findByCalendarDateId(String id);
+    List<GtfsCalendarDateIntendedOffer> findByFeedId(String id);
+    GtfsCalendarDateIntendedOffer findByServiceId(String id);
 }

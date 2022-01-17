@@ -24,7 +24,7 @@ public class CalendarDateController {
     @GetMapping("/calendarDates/{id}")
     HttpEntity<List<GtfsCalendarDateIntendedOffer>> get(@PathVariable String id) throws Exception {
         try {
-            List<GtfsCalendarDateIntendedOffer> list = calendarDateRepository.findById(id);
+            List<GtfsCalendarDateIntendedOffer> list = calendarDateRepository.findByFeedId(id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -40,7 +40,7 @@ public class CalendarDateController {
     public ResponseEntity<GtfsCalendarDateIntendedOffer> update(@PathVariable(value = "id") String id,
                                                         @Valid @RequestBody GtfsCalendarDateIntendedOffer details) throws Exception {
         try {
-            GtfsCalendarDateIntendedOffer calendarDate = calendarDateRepository.findByCalendarDateId(id);
+            GtfsCalendarDateIntendedOffer calendarDate = calendarDateRepository.findByServiceId(id);
             calendarDate.setDate(details.getDate());
             calendarDate.setCalendarName(details.getCalendarName());
             calendarDate.setPeriod(details.getPeriod());

@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/pg-api/")
 @CrossOrigin("*")
 public class AgencyController {
 
@@ -25,7 +24,7 @@ public class AgencyController {
     @GetMapping("/agency/{id}")
     HttpEntity<List<GtfsAgencyIntendedOffer>> get(@PathVariable String id) throws Exception {
         try {
-            List<GtfsAgencyIntendedOffer> list = (List<GtfsAgencyIntendedOffer>) agencyRepository.findByAgencyId(id);
+            List<GtfsAgencyIntendedOffer> list = agencyRepository.findByFeedId(id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -55,10 +54,9 @@ public class AgencyController {
     }
 
     @DeleteMapping("/agency/{id}")
-    public Map<String, Boolean> deleteAgency(@PathVariable(value = "id") Long id)
+    public Map<String, Boolean> deleteAgency(@PathVariable(value = "id") String id)
             throws Exception {
-        GtfsAgencyIntendedOffer employee = agencyRepository.findById(id)
-                .orElseThrow(() -> new Exception("not found"));
+        GtfsAgencyIntendedOffer employee = agencyRepository.findByAgencyId(id);
 
         agencyRepository.delete(employee);
         Map<String, Boolean> response = new HashMap<>();

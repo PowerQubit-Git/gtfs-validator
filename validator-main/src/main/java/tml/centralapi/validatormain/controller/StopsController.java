@@ -14,7 +14,6 @@ import java.util.Map;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/pg-api/")
 @CrossOrigin("*")
 public class StopsController {
     @Autowired

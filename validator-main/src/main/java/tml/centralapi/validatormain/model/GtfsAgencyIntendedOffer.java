@@ -27,7 +27,7 @@ public class GtfsAgencyIntendedOffer {
     private Locale agencyLang;
 
     @Column(name = "FeedId")
-    private String FeedId;
+    private String feedId;
 
     public String getAgencyName() {
         return agencyName;
@@ -64,6 +64,6 @@ public class GtfsAgencyIntendedOffer {
         this.agencyId = agencyId;
     }
 
-    public String getFeedId() { return FeedId; }
-    public void setFeedId(String feedId) { FeedId = feedId; }
+    public String getFeedId() { return feedId; }
+    public void setFeedId(String feedId) { feedId = feedId; }
 }

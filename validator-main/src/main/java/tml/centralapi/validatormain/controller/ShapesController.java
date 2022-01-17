@@ -24,7 +24,7 @@ public class ShapesController {
     @GetMapping("/shapes/{id}")
     HttpEntity<List<GtfsShapeIntendedOffer>> get(@PathVariable String id) throws Exception {
         try {
-            List<GtfsShapeIntendedOffer> list = shapeRepository.findByFeedId(id);
+            List<GtfsShapeIntendedOffer> list = shapeRepository.findById(id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -42,6 +42,11 @@ public class ShapesController {
         try {
             GtfsShapeIntendedOffer shapes = shapeRepository.findByShapeId(id);
             shapes.setShapeId(details.getShapeId());
+            shapes.setShapeDistTraveled(details.getShapeDistTraveled());
+            shapes.setShapePtSequence(details.getShapePtSequence());
+            shapes.setShapePtLon(details.getShapePtLon());
+            shapes.setShapePtLat(details.getShapePtLat());
+            shapes.setFeedId(details.getFeedId());
             final GtfsShapeIntendedOffer updatedShapes = shapeRepository.save(shapes);
             return ResponseEntity.ok(updatedShapes);
         } catch (Exception e) {

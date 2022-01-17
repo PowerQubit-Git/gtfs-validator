@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import tml.centralapi.validatormain.model.*;
 import tml.centralapi.validatormain.repository.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +42,9 @@ public class IntendedOfferPgService {
 
     @Autowired
     FeedInfoRepository feedInfoRepository;
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     private String feedId;
 

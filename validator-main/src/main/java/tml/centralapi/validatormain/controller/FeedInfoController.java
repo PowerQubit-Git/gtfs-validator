@@ -6,9 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tml.centralapi.validatormain.model.GtfsFeedInfoIntendedOffer;
-import tml.centralapi.validatormain.model.GtfsStopIntendedOffer;
 import tml.centralapi.validatormain.repository.FeedInfoRepository;
-import tml.centralapi.validatormain.repository.StopRepository;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -16,9 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/pg-api/")
 @CrossOrigin("*")
-public class feedInfoController {
+public class FeedInfoController {
     @Autowired
     FeedInfoRepository feedInfoRepository;
 
@@ -33,8 +30,8 @@ public class feedInfoController {
     }
 
     @PostMapping("/feedInfo")
-    public GtfsFeedInfoIntendedOffer create(@Valid @RequestBody GtfsFeedInfoIntendedOffer employee) {
-        return feedInfoRepository.save(employee);
+    public GtfsFeedInfoIntendedOffer create(@Valid @RequestBody GtfsFeedInfoIntendedOffer FeedInfo) {
+        return feedInfoRepository.save(FeedInfo);
     }
 
     @PutMapping("/feedInfo/{id}")
@@ -51,8 +48,8 @@ public class feedInfoController {
             feedInfo.setFeedPublisherUrl(details.getFeedPublisherUrl());
             feedInfo.setFeedLang(details.getFeedLang());
             feedInfo.setFeedInfoId(details.getFeedInfoId());
-            final GtfsFeedInfoIntendedOffer updatedStop = feedInfoRepository.save(feedInfo);
-            return ResponseEntity.ok(updatedStop);
+            final GtfsFeedInfoIntendedOffer updatedFeedInfo = feedInfoRepository.save(feedInfo);
+            return ResponseEntity.ok(updatedFeedInfo);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -25,7 +25,7 @@ public class AgencyController {
     @GetMapping("/agency/{id}")
     HttpEntity<List<GtfsAgencyIntendedOffer>> get(@PathVariable String id) throws Exception {
         try {
-            List<GtfsAgencyIntendedOffer> list = (List<GtfsAgencyIntendedOffer>) agencyRepository.findByAgencyId(id);
+            List<GtfsAgencyIntendedOffer> list = agencyRepository.findByFeedId(id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

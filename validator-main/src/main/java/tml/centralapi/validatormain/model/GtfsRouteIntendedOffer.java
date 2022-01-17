@@ -11,6 +11,9 @@ import javax.persistence.Table;
 @Table(name = "RouteIntendedOffer")
 public class GtfsRouteIntendedOffer {
 
+    @Column(name = "FeedId")
+    private String feedId;
+
     @Column(name = "LineId")
     private String lineId;
 
@@ -65,6 +68,9 @@ public class GtfsRouteIntendedOffer {
 
     @Column(name = "ContinuousDropOff")
     private GtfsContinuousPickupDropOff continuousDropOff;
+
+    public GtfsRouteIntendedOffer() {
+    }
 
     public String getLineId() {
         return lineId;
@@ -177,6 +183,9 @@ public class GtfsRouteIntendedOffer {
     public void setSchool(GtfsSchool school) {
         this.school = school;
     }
+
+    public String getFeedId() { return feedId; }
+    public void setFeedId(String feedId) { this.feedId = feedId; }
 
     public GtfsContinuousPickupDropOff getContinuousPickup() {
         return continuousPickup;

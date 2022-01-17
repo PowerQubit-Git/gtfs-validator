@@ -11,6 +11,9 @@ import java.util.Locale;
 @Table(name = "FeedInfoIntendedOffer")
 public class GtfsFeedInfoIntendedOffer {
 
+    @Column(name = "FeedId")
+    private String feedId;
+
     @Id
     @Column(name = "FeedInfoId")
     private Long feedInfoId;
@@ -111,4 +114,6 @@ public class GtfsFeedInfoIntendedOffer {
         this.feedInfoId = feedInfoId;
     }
 
+    public String getFeedId() { return feedId; }
+    public void setFeedId(String feedId) { this.feedId = feedId; }
 }

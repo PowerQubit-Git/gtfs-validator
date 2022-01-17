@@ -10,6 +10,9 @@ import java.time.LocalTime;
 @Table(name = "StopTimeIntendedOffer")
 public class GtfsStopTimeIntendedOffer {
 
+    @Column(name = "FeedId")
+    private String feedId;
+
     @Id
     @Column(name = "StopTimeId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -116,4 +119,6 @@ public class GtfsStopTimeIntendedOffer {
         this.timepoint = timepoint;
     }
 
+    public String getFeedId() { return feedId; }
+    public void setFeedId(String feedId) { this.feedId = feedId; }
 }

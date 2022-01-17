@@ -9,6 +9,9 @@ import javax.persistence.Table;
 @Table(name = "ShapeIntendedOffer")
 public class GtfsShapeIntendedOffer {
 
+    @Column(name = "FeedId")
+    private String feedId;
+
     @Id
     @Column(name = "LineId")
     private String shapeId;
@@ -64,4 +67,7 @@ public class GtfsShapeIntendedOffer {
     public void setShapeDistTraveled(double shapeDistTraveled) {
         this.shapeDistTraveled = shapeDistTraveled;
     }
+
+    public String getFeedId() { return feedId; }
+    public void setFeedId(String feedId) { this.feedId = feedId; }
 }

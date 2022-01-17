@@ -14,6 +14,9 @@ import java.time.LocalDate;
 @Table(name = "CalendarDateIntendedOffer")
 public class GtfsCalendarDateIntendedOffer {
 
+    @Column(name = "FeedId")
+    private String feedId;
+
     @Id
     @Column(name = "ServiceId")
     private String serviceId;
@@ -80,4 +83,6 @@ public class GtfsCalendarDateIntendedOffer {
         this.exceptionType = exceptionType;
     }
 
+    public String getFeedId() { return feedId; }
+    public void setFeedId(String feedId) { this.feedId = feedId; }
 }

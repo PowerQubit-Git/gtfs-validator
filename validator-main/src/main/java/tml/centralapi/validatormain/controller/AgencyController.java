@@ -54,10 +54,9 @@ public class AgencyController {
     }
 
     @DeleteMapping("/agency/{id}")
-    public Map<String, Boolean> deleteAgency(@PathVariable(value = "id") Long id)
+    public Map<String, Boolean> deleteAgency(@PathVariable(value = "id") String id)
             throws Exception {
-        GtfsAgencyIntendedOffer employee = agencyRepository.findById(id)
-                .orElseThrow(() -> new Exception("not found"));
+        GtfsAgencyIntendedOffer employee = agencyRepository.findByAgencyId(id);
 
         agencyRepository.delete(employee);
         Map<String, Boolean> response = new HashMap<>();

@@ -34,10 +34,10 @@ public interface GtfsAgencySchema extends GtfsEntity {
   String agencyName();
 
   @FieldType(FieldTypeEnum.URL)
-  @Required
+//  @Required
   String agencyUrl();
 
-  @Required
+//  @Required
   ZoneId agencyTimezone();
 
   @ConditionallyRequired

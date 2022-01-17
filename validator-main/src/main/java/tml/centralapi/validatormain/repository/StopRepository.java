@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface StopRepository  extends JpaRepository<GtfsStopIntendedOffer, Long> {
     List<GtfsStopIntendedOffer> findByFeedId(String id);
+    GtfsStopIntendedOffer findByStopId(String id);
 }

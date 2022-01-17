@@ -80,7 +80,7 @@ public class IntendedOfferPgService {
             GtfsStopIntendedOffer newStop = new GtfsStopIntendedOffer();
             newStop.setFeedId(feedId);
             newStop.setStopId(stop.stopId());
-            newStop.setStopIdSteep(stop.stop_id_stepp());
+            newStop.setStopIdSteep(stop.stopIdStepp());
             newStop.setStopCode(stop.stopCode());
             newStop.setStopName(stop.stopName());
             newStop.setStopDesc(stop.stopDesc());
@@ -105,7 +105,7 @@ public class IntendedOfferPgService {
             newStop.setPreservationState(stop.preservationState());
             newStop.setEquipment(stop.equipment());
             newStop.setObservations(stop.observations());
-            newStop.setRegion(stop.region().toString());
+            newStop.setRegion(stop.region());
             newStop.setMunicipality(stop.municipality());
             newStop.setMunicipalityFare1(stop.municipalityFare1());
             newStop.setMunicipalityFare2(stop.municipalityFare2());

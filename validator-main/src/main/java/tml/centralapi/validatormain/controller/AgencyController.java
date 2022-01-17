@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/pg-api/")
 @CrossOrigin("*")
 public class AgencyController {
 
@@ -47,8 +46,8 @@ public class AgencyController {
             agency.setAgencyUrl(details.getAgencyUrl());
             agency.setAgencyTimezone(details.getAgencyTimezone());
             agency.setAgencyLang(details.getAgencyLang());
-            final GtfsAgencyIntendedOffer updatedStop = agencyRepository.save(agency);
-            return ResponseEntity.ok(updatedStop);
+            final GtfsAgencyIntendedOffer updatedAgency = agencyRepository.save(agency);
+            return ResponseEntity.ok(updatedAgency);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

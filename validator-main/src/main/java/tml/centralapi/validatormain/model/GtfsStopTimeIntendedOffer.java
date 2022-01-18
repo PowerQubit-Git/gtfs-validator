@@ -7,17 +7,19 @@ import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "StopTimeIntendedOffer")
+@Table(name = "stop_times")
+@IdClass(GtfsStopTimeCompositeKey.class)
 public class GtfsStopTimeIntendedOffer {
 
     @Column(name = "FeedId")
     private String feedId;
 
-    @Id
-    @Column(name = "StopTimeId")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String stopTimeId;
+//    @Id
+//    @Column(name = "StopTimeId")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private String stopTimeId;
 
+    @Id
     @Column(name = "TripId")
     private String tripId;
 
@@ -27,6 +29,7 @@ public class GtfsStopTimeIntendedOffer {
     @Column(name = "DepartureTime")
     private String departureTime;
 
+    @Id
     @Column(name = "StopId")
     private String stopId;
 
@@ -48,13 +51,13 @@ public class GtfsStopTimeIntendedOffer {
     @Column(name = "Timepoint")
     private GtfsStopTimeTimepoint timepoint;
 
-    public String getStopTimeId() {
-        return stopTimeId;
-    }
+//    public String getStopTimeId() {
+//        return stopTimeId;
+//    }
 
-    public void setStopTimeId(String stopTimeId) {
-        this.stopTimeId = stopTimeId;
-    }
+  //  public void setStopTimeId(String stopTimeId) {
+//        this.stopTimeId = stopTimeId;
+//    }
 
     public String getTripId() {
         return tripId;

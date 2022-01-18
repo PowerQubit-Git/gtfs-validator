@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "StopIntendedOffer")
+@Table(name = "stops")
 public class GtfsStopIntendedOffer {
 
     @Id

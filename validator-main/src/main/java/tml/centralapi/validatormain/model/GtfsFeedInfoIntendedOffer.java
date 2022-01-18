@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.Locale;
 
 @Entity
-@Table(name = "FeedInfoIntendedOffer")
+@Table(name = "feed_info")
 public class GtfsFeedInfoIntendedOffer {
 
     @Column(name = "FeedId")

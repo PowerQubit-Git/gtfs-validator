@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "CalendarIntendedOffer")
+@Table(name = "calendar")
 public class GtfsCalendarIntendedOffer {
 
     @Column(name = "FeedId")

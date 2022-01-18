@@ -7,7 +7,7 @@ import java.time.ZoneId;
 import java.util.Locale;
 
 @Entity
-@Table(name = "AgencyIntendedOffer")
+@Table(name = "agency")
 public class GtfsAgencyIntendedOffer {
 
     @Id

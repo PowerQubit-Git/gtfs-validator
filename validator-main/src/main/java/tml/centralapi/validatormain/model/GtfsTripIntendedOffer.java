@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "TripIntendedOffer")
+@Table(name = "trips")
 public class GtfsTripIntendedOffer {
 
     @Column(name = "FeedId")

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "FrequencyIntendedOffer")
+@Table(name = "frequencies")
 public class GtfsFrequencyIntendedOffer {
 
     @Id

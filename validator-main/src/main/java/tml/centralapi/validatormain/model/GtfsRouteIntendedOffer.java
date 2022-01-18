@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "RouteIntendedOffer")
+@Table(name = "routes")
 public class GtfsRouteIntendedOffer {
 
     @Column(name = "FeedId")

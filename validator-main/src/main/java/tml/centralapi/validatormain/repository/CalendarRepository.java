@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface CalendarRepository  extends JpaRepository<GtfsCalendarIntendedOffer, Long> {
     List<GtfsCalendarIntendedOffer> findByFeedId(String id);
-    GtfsCalendarIntendedOffer findByCalendarId(String id);
+    GtfsCalendarIntendedOffer findByServiceId(String id);
 }

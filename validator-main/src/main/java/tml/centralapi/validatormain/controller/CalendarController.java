@@ -40,7 +40,7 @@ public class CalendarController {
     public ResponseEntity<GtfsCalendarIntendedOffer> update(@PathVariable(value = "id") String id,
                                                         @Valid @RequestBody GtfsCalendarIntendedOffer details) throws Exception {
         try {
-            GtfsCalendarIntendedOffer calendar = calendarRepository.findByCalendarId(id);
+            GtfsCalendarIntendedOffer calendar = calendarRepository.findByServiceId(id);
             calendar.setServiceId(details.getServiceId());
             calendar.setCalendarName(details.getCalendarName());
             calendar.setPeriod(details.getPeriod());

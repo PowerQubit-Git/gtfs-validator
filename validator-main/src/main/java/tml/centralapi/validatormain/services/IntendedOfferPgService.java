@@ -55,8 +55,8 @@ public class IntendedOfferPgService {
     public IntendedOfferPgService() {
     }
 
-    @Async()
-    public void addToDatabase(GtfsFeedContainer feedContainer) throws Exception {
+    //@Async()
+    public void addAgencyToDatabase(GtfsFeedContainer feedContainer) throws Exception {
         GtfsTableContainer agencyContainer = feedContainer.getTableForFilename("agency.txt").orElseThrow(() -> new Exception("agency.txt not found"));
         List<GtfsAgency> agencyList = agencyContainer.getEntities();
         List<GtfsAgencyIntendedOffer> ioAgency = new ArrayList<>();
@@ -66,18 +66,21 @@ public class IntendedOfferPgService {
             newAgency.setAgencyId(agency.agencyId());
             newAgency.setAgencyName(agency.agencyName());
             newAgency.setAgencyUrl(agency.agencyUrl());
-            newAgency.setAgencyTimezone(agency.agencyTimezone());
+//            newAgency.setAgencyTimezone(agency.agencyTimezone());
             newAgency.setAgencyLang(agency.agencyLang());
             ioAgency.add(newAgency);
         });
 
         try {
-            ioAgency.forEach(s -> { agencyRepository.save(s); });
+//            ioAgency.forEach(s -> { agencyRepository.save(s); });
+            agencyRepository.saveAllAndFlush(ioAgency);
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
 
-
+//    @Async()
+    public void addStopsToDatabase(GtfsFeedContainer feedContainer) throws Exception {
         GtfsTableContainer stopsContainer = feedContainer.getTableForFilename("stops.txt").orElseThrow(() -> new Exception("stops.txt not found"));
         List<GtfsStop> list = stopsContainer.getEntities();
         List<GtfsStopIntendedOffer> ioStops = new ArrayList<>();
@@ -118,11 +121,15 @@ public class IntendedOfferPgService {
         });
 
         try {
-            ioStops.forEach(s -> { stopRepository.save(s); });
+//            ioStops.forEach(s -> { stopRepository.save(s); });
+            stopRepository.saveAllAndFlush(ioStops);
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
 
+//    @Async()
+    public void addRoutesToDatabase(GtfsFeedContainer feedContainer) throws Exception {
         GtfsTableContainer routesContainer = feedContainer.getTableForFilename("routes.txt").orElseThrow(() -> new Exception("routes.txt not found"));
         List<GtfsRoute> routeslist = routesContainer.getEntities();
         List<GtfsRouteIntendedOffer> ioRoutes = new ArrayList<>();
@@ -151,11 +158,15 @@ public class IntendedOfferPgService {
         });
 
         try {
-            ioRoutes.forEach(s -> { routeRepository.save(s); });
+//            ioRoutes.forEach(s -> { routeRepository.save(s); });
+            routeRepository.saveAllAndFlush(ioRoutes);
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
 
+//    @Async()
+    public void addTripsToDatabase(GtfsFeedContainer feedContainer) throws Exception {
         GtfsTableContainer tripsContainer = feedContainer.getTableForFilename("trips.txt").orElseThrow(() -> new Exception("trips.txt not found"));
         List<GtfsTrip> tripslist = tripsContainer.getEntities();
         List<GtfsTripIntendedOffer> ioTrips = new ArrayList<>();
@@ -177,11 +188,15 @@ public class IntendedOfferPgService {
         });
 
         try {
-            ioTrips.forEach(s -> { tripRepository.save(s); });
+//            ioTrips.forEach(s -> { tripRepository.save(s); });
+            tripRepository.saveAllAndFlush(ioTrips);
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
 
+//    @Async()
+    public void addStopTimesToDatabase(GtfsFeedContainer feedContainer) throws Exception {
         GtfsTableContainer stopTimeContainer = feedContainer.getTableForFilename("stop_times.txt").orElseThrow(() -> new Exception("stop_times.txt not found"));
         List<GtfsStopTime> stopTimelist = stopTimeContainer.getEntities();
         List<GtfsStopTimeIntendedOffer> ioStopTime = new ArrayList<>();
@@ -189,8 +204,8 @@ public class IntendedOfferPgService {
             GtfsStopTimeIntendedOffer newStopTime = new GtfsStopTimeIntendedOffer();
             newStopTime.setFeedId(feedId);
             newStopTime.setTripId(stopTime.tripId());
-            //newStopTime.setArrivalTime(stopTime.arrivalTime());
-            //newStopTime.setDepartureTime(stopTime.departureTime());
+            newStopTime.setArrivalTime(stopTime.arrivalTime().toHHMMSS());
+            newStopTime.setDepartureTime(stopTime.departureTime().toHHMMSS());
             newStopTime.setStopId(stopTime.stopId());
             newStopTime.setStopSequence(stopTime.stopSequence());
             newStopTime.setStopHeadsign(stopTime.stopHeadsign());
@@ -202,12 +217,15 @@ public class IntendedOfferPgService {
         });
 
         try {
-            ioStopTime.forEach(s -> { stopTimeRepository.save(s); });
+//            ioStopTime.forEach(s -> { stopTimeRepository.save(s); });
+            stopTimeRepository.saveAllAndFlush(ioStopTime);
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
 
-
+//    @Async()
+    public void addCalendarToDatabase(GtfsFeedContainer feedContainer) throws Exception {
         GtfsTableContainer calendarContainer = feedContainer.getTableForFilename("calendar.txt").orElseThrow(() -> new Exception("calendar.txt not found"));
         List<GtfsCalendar> calendarlist = calendarContainer.getEntities();
         List<GtfsCalendarIntendedOffer> ioCalendar = new ArrayList<>();
@@ -230,11 +248,15 @@ public class IntendedOfferPgService {
         });
 
         try {
-            ioCalendar.forEach(s -> { calendarRepository.save(s); });
+//            ioCalendar.forEach(s -> { calendarRepository.save(s); });
+            calendarRepository.saveAllAndFlush(ioCalendar);
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
 
+//    @Async()
+    public void addCalendarDateToDatabase(GtfsFeedContainer feedContainer) throws Exception {
         GtfsTableContainer calendarDateContainer = feedContainer.getTableForFilename("calendar_date.txt").orElseThrow(() -> new Exception("calendar_date.txt not found"));
         List<GtfsCalendarDate> calendarDatelist = calendarDateContainer.getEntities();
         if(calendarDatelist.size() > 0) {
@@ -252,14 +274,18 @@ public class IntendedOfferPgService {
             });
 
             try {
-                ioCalendarDate.forEach(s -> { calendarDateRepository.save(s); });
+//                ioCalendarDate.forEach(s -> { calendarDateRepository.save(s); });
+                calendarDateRepository.saveAllAndFlush(ioCalendarDate);
             } catch (Exception e) {
                 System.out.println(e);
             }
         }
+    }
 
 
-        GtfsTableContainer shapeContainer = feedContainer.getTableForFilename("shape.txt").orElseThrow(() -> new Exception("shape.txt not found"));
+//    @Async()
+    public void addShapesToDatabase(GtfsFeedContainer feedContainer) throws Exception {
+        GtfsTableContainer shapeContainer = feedContainer.getTableForFilename("shapes.txt").orElseThrow(() -> new Exception("shape.txt not found"));
         List<GtfsShape> shapelist = shapeContainer.getEntities();
         List<GtfsShapeIntendedOffer> ioShape = new ArrayList<>();
         shapelist.forEach(shape -> {
@@ -274,7 +300,8 @@ public class IntendedOfferPgService {
         });
 
         try {
-            ioShape.forEach(s -> { shapeRepository.save(s); });
+//            ioShape.forEach(s -> { shapeRepository.save(s); });
+            shapeRepository.saveAllAndFlush(ioShape);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -297,7 +324,8 @@ public class IntendedOfferPgService {
         });
 
         try {
-            ioFeedInfo.forEach(s -> { feedInfoRepository.save(s); });
+//            ioFeedInfo.forEach(s -> { feedInfoRepository.save(s); });
+            feedInfoRepository.saveAllAndFlush(ioFeedInfo);
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -32,8 +32,8 @@ public interface GtfsTripSchema extends GtfsEntity {
   String routeId();
 
   @FieldType(FieldTypeEnum.ID)
-  @Required
-  @ForeignKey(table = "calendar.txt", field = "service_id")
+//  @Required
+//  @ForeignKey(table = "calendar.txt", field = "service_id")
   String serviceId();
 
   @FieldType(FieldTypeEnum.ID)

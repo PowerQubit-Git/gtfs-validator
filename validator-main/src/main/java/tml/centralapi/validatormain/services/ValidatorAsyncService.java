@@ -115,8 +115,27 @@ public class ValidatorAsyncService {
             exportReport(noticeContainer, feedContainer);
 
             // POSTGRES
+            final long startNanosPg = System.nanoTime();
             pgService.setFeedId(id);
-            pgService.addToDatabase(feedContainer);
+            System.out.println("Postgres started");
+            pgService.addAgencyToDatabase(feedContainer);
+            System.out.println("Postgres started 1");
+            pgService.addStopsToDatabase(feedContainer);
+            System.out.println("Postgres started 2");
+            pgService.addRoutesToDatabase(feedContainer);
+            System.out.println("Postgres started 3");
+            pgService.addTripsToDatabase(feedContainer);
+            System.out.println("Postgres started 4");
+            pgService.addStopTimesToDatabase(feedContainer);
+            System.out.println("Postgres started 5");
+//            pgService.addCalendarToDatabase(feedContainer);
+//            pgService.addCalendarDateToDatabase(feedContainer);
+            pgService.addShapesToDatabase(feedContainer);
+            System.out.println("Postgres started 6");
+            final long endNanos = System.nanoTime();
+            double t = (endNanos - startNanosPg) / 1e9;
+            System.out.printf("Postgres took %.3f seconds%n", t);
+//            System.out.println(feedContainer.tableTotals());
             // POSTGRES
 
         } catch (InterruptedException e) {

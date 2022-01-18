@@ -36,7 +36,7 @@ public class CalendarController {
         return calendarRepository.save(calendar);
     }
 
-    @PutMapping("/stops/{id}")
+    @PutMapping("/calendar/{id}")
     public ResponseEntity<GtfsCalendarIntendedOffer> update(@PathVariable(value = "id") String id,
                                                         @Valid @RequestBody GtfsCalendarIntendedOffer details) throws Exception {
         try {

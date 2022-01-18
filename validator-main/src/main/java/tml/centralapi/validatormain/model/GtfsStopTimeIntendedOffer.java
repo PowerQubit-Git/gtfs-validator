@@ -22,11 +22,10 @@ public class GtfsStopTimeIntendedOffer {
     private String tripId;
 
     @Column(name = "ArrivalTime")
-//    private GtfsTime arrivalTime;
-    private LocalTime arrivalTime;
+    private String arrivalTime;
 
     @Column(name = "DepartureTime")
-    private LocalTime departureTime;
+    private String departureTime;
 
     @Column(name = "StopId")
     private String stopId;
@@ -49,6 +48,14 @@ public class GtfsStopTimeIntendedOffer {
     @Column(name = "Timepoint")
     private GtfsStopTimeTimepoint timepoint;
 
+    public String getStopTimeId() {
+        return stopTimeId;
+    }
+
+    public void setStopTimeId(String stopTimeId) {
+        this.stopTimeId = stopTimeId;
+    }
+
     public String getTripId() {
         return tripId;
     }
@@ -56,17 +63,17 @@ public class GtfsStopTimeIntendedOffer {
         this.tripId = tripId;
     }
 
-    public LocalTime getArrivalTime() {
+    public String getArrivalTime() {
         return arrivalTime;
     }
-    public void setArrivalTime(LocalTime arrivalTime) {
+    public void setArrivalTime(String arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
-    public LocalTime getDepartureTime() {
+    public String getDepartureTime() {
         return departureTime;
     }
-    public void setDepartureTime(LocalTime departureTime) {
+    public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
 

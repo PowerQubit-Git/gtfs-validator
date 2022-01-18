@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface StopTimeRepository extends JpaRepository<GtfsStopTimeIntendedOffer, Long> {
     List<GtfsStopTimeIntendedOffer> findByFeedId(String id);
-    GtfsStopTimeIntendedOffer findByStopTimesId(String id);
+    GtfsStopTimeIntendedOffer findByStopTimeId(String id);
 }

@@ -1,6 +1,10 @@
 package tml.centralapi.validatormain.model;
 
 public class NoticeType {
+    private String childFilename;
+    private String childFieldName;
+    private String parentFilename;
+    private String parentFieldName;
     private String filename;
     private String fieldName;
     private String csvRowNumber;
@@ -46,5 +50,37 @@ public class NoticeType {
 
     public void setFieldValue(String fieldValue) {
         this.fieldValue = fieldValue;
+    }
+
+    public String getChildFilename() {
+        return childFilename;
+    }
+
+    public void setChildFilename(String childFilename) {
+        this.childFilename = childFilename;
+    }
+
+    public String getChildFieldName() {
+        return childFieldName;
+    }
+
+    public void setChildFieldName(String childFieldName) {
+        this.childFieldName = childFieldName;
+    }
+
+    public String getParentFilename() {
+        return parentFilename;
+    }
+
+    public void setParentFilename(String parentFilename) {
+        this.parentFilename = parentFilename;
+    }
+
+    public String getParentFieldName() {
+        return parentFieldName;
+    }
+
+    public void setParentFieldName(String parentFieldName) {
+        this.parentFieldName = parentFieldName;
     }
 }

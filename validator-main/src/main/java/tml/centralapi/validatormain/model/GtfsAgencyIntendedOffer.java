@@ -65,5 +65,5 @@ public class GtfsAgencyIntendedOffer {
     }
 
     public String getFeedId() { return feedId; }
-    public void setFeedId(String feedId) { feedId = feedId; }
+    public void setFeedId(String feedId) { this.feedId = feedId; }
 }

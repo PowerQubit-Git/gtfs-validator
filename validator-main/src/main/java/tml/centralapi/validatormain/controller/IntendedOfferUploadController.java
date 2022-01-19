@@ -12,9 +12,7 @@ import tml.centralapi.validatormain.repository.IntendedOfferUploadRepository;
 import tml.centralapi.validatormain.repository.SpGetTripsByLineRepository;
 import tml.centralapi.validatormain.services.ValidatorAsyncService;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 @RestController
@@ -91,10 +89,13 @@ public class IntendedOfferUploadController {
 
     @GetMapping("trips-by-line")
     @Transactional(readOnly = true)
-    Stream<SpGetTripsByLine> GetSpNumberOfTripsByLine() throws Exception {
-        try (Stream<SpGetTripsByLine> customers = spGetTripsByLineRepository.getSpNumberOfTripsByLine()) {
-            return customers;
+    List<SpGetTripsByLine> GetSpNumberOfTripsByLine() throws Exception {
+        try {
+            return spGetTripsByLineRepository.spNumberOfTripsByLines();
+        } catch (Exception e) {
+            System.out.println(e);
         }
+        return new ArrayList<>();
     }
 
 }

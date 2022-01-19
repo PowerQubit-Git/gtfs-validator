@@ -4,12 +4,11 @@ import org.mobilitydata.gtfsvalidator.table.GtfsContinuousPickupDropOff;
 import org.mobilitydata.gtfsvalidator.table.GtfsStopTimeTimepoint;
 
 import javax.persistence.*;
-import java.time.LocalTime;
 
 @Entity
 @Table(name = "stop_times")
-@IdClass(GtfsStopTimeCompositeKey.class)
-public class GtfsStopTimeIntendedOffer {
+@IdClass(StopTimeCompositeKey.class)
+public class StopTime {
 
     @Column(name = "FeedId")
     private String feedId;

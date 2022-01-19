@@ -5,7 +5,7 @@ import org.hibernate.Hibernate;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class GtfsStopTimeCompositeKey implements Serializable
+public class StopTimeCompositeKey implements Serializable
 {
 
     private static final long serialVersionUID = 1L;
@@ -14,10 +14,10 @@ public class GtfsStopTimeCompositeKey implements Serializable
 
     private String stopId;
 
-    public GtfsStopTimeCompositeKey() {}
+    public StopTimeCompositeKey() {}
 
 
-    public GtfsStopTimeCompositeKey(String tripId, String stopId)
+    public StopTimeCompositeKey(String tripId, String stopId)
     {
         this.tripId = tripId;
         this.stopId = stopId;
@@ -34,7 +34,7 @@ public class GtfsStopTimeCompositeKey implements Serializable
     {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        GtfsStopTimeCompositeKey entity = (GtfsStopTimeCompositeKey) o;
+        StopTimeCompositeKey entity = (StopTimeCompositeKey) o;
         return Objects.equals(this.stopId, entity.stopId) && Objects.equals(this.tripId, entity.tripId);
     }
 }

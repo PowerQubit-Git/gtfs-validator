@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "routes")
-public class GtfsRouteIntendedOffer {
+public class Route {
 
     @Column(name = "FeedId")
     private String feedId;
@@ -69,7 +69,7 @@ public class GtfsRouteIntendedOffer {
     @Column(name = "ContinuousDropOff")
     private GtfsContinuousPickupDropOff continuousDropOff;
 
-    public GtfsRouteIntendedOffer() {
+    public Route() {
     }
 
     public String getLineId() {

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "calendar")
-public class GtfsCalendarIntendedOffer {
+public class Calendar {
 
     @Column(name = "FeedId")
     private String feedId;

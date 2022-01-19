@@ -1,11 +1,9 @@
 package tml.centralapi.validatormain.controller;
 
-import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import tml.centralapi.validatormain.model.GtfsStopIntendedOffer;
-import tml.centralapi.validatormain.model.IntendedOfferUpload;
+import tml.centralapi.validatormain.model.Stop;
 import tml.centralapi.validatormain.repository.StopRepository;
 
 import java.util.HashMap;
@@ -20,9 +18,9 @@ public class StopsController {
     StopRepository stopRepository;
 
     @GetMapping("/stops/{id}")
-    HttpEntity<List<GtfsStopIntendedOffer>> get(@PathVariable String id) throws Exception {
+    HttpEntity<List<Stop>> get(@PathVariable String id) throws Exception {
         try {
-            List<GtfsStopIntendedOffer> list = stopRepository.findByFeedId(id);
+            List<Stop> list = stopRepository.findByFeedId(id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -30,15 +28,15 @@ public class StopsController {
     }
 
     @PostMapping("/stops")
-    public GtfsStopIntendedOffer create(@Valid @RequestBody GtfsStopIntendedOffer employee) {
+    public Stop create(@Valid @RequestBody Stop employee) {
         return stopRepository.save(employee);
     }
 
     @PutMapping("/stops/{id}")
-    public ResponseEntity<GtfsStopIntendedOffer> update(@PathVariable(value = "id") String id,
-                                                   @Valid @RequestBody GtfsStopIntendedOffer details) throws Exception {
+    public ResponseEntity<Stop> update(@PathVariable(value = "id") String id,
+                                       @Valid @RequestBody Stop details) throws Exception {
         try {
-            GtfsStopIntendedOffer stop = stopRepository.findByStopId(id);
+            Stop stop = stopRepository.findByStopId(id);
             stop.setStopCode(details.getStopCode());
             stop.setStopDesc(details.getStopDesc());
             stop.setStopName(details.getStopName());
@@ -67,7 +65,7 @@ public class StopsController {
             stop.setMunicipality(details.getMunicipality());
             stop.setMunicipalityFare1(details.getMunicipalityFare1());
             stop.setMunicipalityFare2(details.getMunicipalityFare2());
-            final GtfsStopIntendedOffer updatedStop = stopRepository.save(stop);
+            final Stop updatedStop = stopRepository.save(stop);
             return ResponseEntity.ok(updatedStop);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -77,7 +75,7 @@ public class StopsController {
     @DeleteMapping("/stops/{id}")
     public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long id)
             throws Exception {
-        GtfsStopIntendedOffer employee = stopRepository.findById(id)
+        Stop employee = stopRepository.findById(id)
                 .orElseThrow(() -> new Exception("not found"));
 
         stopRepository.delete(employee);

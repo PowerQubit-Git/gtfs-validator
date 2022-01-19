@@ -1,30 +1,28 @@
 package tml.centralapi.validatormain.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class SpGetTripsByLine {
-    private int Number;
-    private String LineId;
+
+    @Id
+    @Column(name="total")
+    private Long total;
+
+    public SpGetTripsByLine(Long total) {
+        this.total = total;
+    }
 
     public SpGetTripsByLine() {
     }
 
-    public SpGetTripsByLine(int number, String lineId) {
-        Number = number;
-        LineId = lineId;
+    public Long getTotal() {
+        return total;
     }
 
-    public int getNumber() {
-        return Number;
-    }
-
-    public void setNumber(int number) {
-        Number = number;
-    }
-
-    public String getLineId() {
-        return LineId;
-    }
-
-    public void setLineId(String lineId) {
-        LineId = lineId;
+    public void setTotal(Long total) {
+        this.total = total;
     }
 }

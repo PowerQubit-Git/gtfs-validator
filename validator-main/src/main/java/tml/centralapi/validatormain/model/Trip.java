@@ -12,7 +12,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "trips")
-public class GtfsTripIntendedOffer {
+public class Trip {
 
     @Column(name = "FeedId")
     private String feedId;

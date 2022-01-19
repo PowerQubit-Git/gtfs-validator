@@ -9,7 +9,7 @@ import java.util.Locale;
 
 @Entity
 @Table(name = "feed_info")
-public class GtfsFeedInfoIntendedOffer {
+public class FeedInfo {
 
     @Column(name = "FeedId")
     private String feedId;

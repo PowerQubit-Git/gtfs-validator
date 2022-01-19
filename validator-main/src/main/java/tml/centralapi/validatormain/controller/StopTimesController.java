@@ -5,15 +5,11 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tml.centralapi.validatormain.model.GtfsStopIntendedOffer;
-import tml.centralapi.validatormain.model.GtfsStopTimeIntendedOffer;
-import tml.centralapi.validatormain.repository.StopRepository;
+import tml.centralapi.validatormain.model.StopTime;
 import tml.centralapi.validatormain.repository.StopTimeRepository;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -22,9 +18,9 @@ public class StopTimesController {
     StopTimeRepository stopTimeRepository;
 
     @GetMapping("/stop_times/{id}")
-    HttpEntity<List<GtfsStopTimeIntendedOffer>> get(@PathVariable String id) throws Exception {
+    HttpEntity<List<StopTime>> get(@PathVariable String id) throws Exception {
         try {
-            List<GtfsStopTimeIntendedOffer> list = stopTimeRepository.findByFeedId(id);
+            List<StopTime> list = stopTimeRepository.findByFeedId(id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -32,7 +28,7 @@ public class StopTimesController {
     }
 
     @PostMapping("/stop_times")
-    public GtfsStopTimeIntendedOffer create(@Valid @RequestBody GtfsStopTimeIntendedOffer stopTimes) {
+    public StopTime create(@Valid @RequestBody StopTime stopTimes) {
         return stopTimeRepository.save(stopTimes);
     }
 

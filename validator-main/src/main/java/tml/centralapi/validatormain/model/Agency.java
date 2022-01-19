@@ -8,7 +8,7 @@ import java.util.Locale;
 
 @Entity
 @Table(name = "agency")
-public class GtfsAgencyIntendedOffer {
+public class Agency {
 
     @Id
     @Column(name = "AgencyId")

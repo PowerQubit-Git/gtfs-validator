@@ -5,7 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tml.centralapi.validatormain.model.GtfsFeedInfoIntendedOffer;
+import tml.centralapi.validatormain.model.FeedInfo;
 import tml.centralapi.validatormain.repository.FeedInfoRepository;
 
 import javax.validation.Valid;
@@ -20,9 +20,9 @@ public class FeedInfoController {
     FeedInfoRepository feedInfoRepository;
 
     @GetMapping("/feed_info/{id}")
-    HttpEntity<List<GtfsFeedInfoIntendedOffer>> get(@PathVariable String id) throws Exception {
+    HttpEntity<List<FeedInfo>> get(@PathVariable String id) throws Exception {
         try {
-            List<GtfsFeedInfoIntendedOffer> list = feedInfoRepository.findByFeedId(id);
+            List<FeedInfo> list = feedInfoRepository.findByFeedId(id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -30,15 +30,15 @@ public class FeedInfoController {
     }
 
     @PostMapping("/feed_info")
-    public GtfsFeedInfoIntendedOffer create(@Valid @RequestBody GtfsFeedInfoIntendedOffer FeedInfo) {
+    public FeedInfo create(@Valid @RequestBody FeedInfo FeedInfo) {
         return feedInfoRepository.save(FeedInfo);
     }
 
     @PutMapping("/feed_info/{id}")
-    public ResponseEntity<GtfsFeedInfoIntendedOffer> update(@PathVariable(value = "id") String id,
-                                                   @Valid @RequestBody GtfsFeedInfoIntendedOffer details) throws Exception {
+    public ResponseEntity<FeedInfo> update(@PathVariable(value = "id") String id,
+                                           @Valid @RequestBody FeedInfo details) throws Exception {
         try {
-            GtfsFeedInfoIntendedOffer feedInfo = feedInfoRepository.findByFeedInfoId(id);
+            FeedInfo feedInfo = feedInfoRepository.findByFeedInfoId(id);
             feedInfo.setFeedId(details.getFeedId());
             feedInfo.setFeedDesc(details.getFeedDesc());
             feedInfo.setFeedRemarks(details.getFeedRemarks());
@@ -48,7 +48,7 @@ public class FeedInfoController {
             feedInfo.setFeedPublisherUrl(details.getFeedPublisherUrl());
             feedInfo.setFeedLang(details.getFeedLang());
             feedInfo.setFeedInfoId(details.getFeedInfoId());
-            final GtfsFeedInfoIntendedOffer updatedFeedInfo = feedInfoRepository.save(feedInfo);
+            final FeedInfo updatedFeedInfo = feedInfoRepository.save(feedInfo);
             return ResponseEntity.ok(updatedFeedInfo);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -58,7 +58,7 @@ public class FeedInfoController {
     @DeleteMapping("/feed_info/{id}")
     public Map<String, Boolean> deleteFeedInfo(@PathVariable(value = "id") Long id)
             throws Exception {
-        GtfsFeedInfoIntendedOffer FeedInfo = feedInfoRepository.findById(id)
+        FeedInfo FeedInfo = feedInfoRepository.findById(id)
                 .orElseThrow(() -> new Exception("not found"));
 
         feedInfoRepository.delete(FeedInfo);

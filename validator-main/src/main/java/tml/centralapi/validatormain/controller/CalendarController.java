@@ -5,10 +5,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tml.centralapi.validatormain.model.GtfsCalendarIntendedOffer;
-import tml.centralapi.validatormain.model.GtfsStopIntendedOffer;
+import tml.centralapi.validatormain.model.Calendar;
 import tml.centralapi.validatormain.repository.CalendarRepository;
-import tml.centralapi.validatormain.repository.StopRepository;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -22,9 +20,9 @@ public class CalendarController {
     CalendarRepository calendarRepository;
 
     @GetMapping("/calendar/{id}")
-    HttpEntity<List<GtfsCalendarIntendedOffer>> get(@PathVariable String id) throws Exception {
+    HttpEntity<List<Calendar>> get(@PathVariable String id) throws Exception {
         try {
-            List<GtfsCalendarIntendedOffer> list = calendarRepository.findByFeedId(id);
+            List<Calendar> list = calendarRepository.findByFeedId(id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -32,15 +30,15 @@ public class CalendarController {
     }
 
     @PostMapping("/calendar")
-    public GtfsCalendarIntendedOffer create(@Valid @RequestBody GtfsCalendarIntendedOffer calendar) {
+    public Calendar create(@Valid @RequestBody Calendar calendar) {
         return calendarRepository.save(calendar);
     }
 
     @PutMapping("/calendar/{id}")
-    public ResponseEntity<GtfsCalendarIntendedOffer> update(@PathVariable(value = "id") String id,
-                                                        @Valid @RequestBody GtfsCalendarIntendedOffer details) throws Exception {
+    public ResponseEntity<Calendar> update(@PathVariable(value = "id") String id,
+                                           @Valid @RequestBody Calendar details) throws Exception {
         try {
-            GtfsCalendarIntendedOffer calendar = calendarRepository.findByServiceId(id);
+            Calendar calendar = calendarRepository.findByServiceId(id);
             calendar.setServiceId(details.getServiceId());
             calendar.setCalendarName(details.getCalendarName());
             calendar.setPeriod(details.getPeriod());
@@ -53,7 +51,7 @@ public class CalendarController {
             calendar.setSunday(details.getSunday());
             calendar.setStartDate(details.getStartDate());
             calendar.setEndDate(details.getEndDate());
-            final GtfsCalendarIntendedOffer updatedCalendar = calendarRepository.save(calendar);
+            final Calendar updatedCalendar = calendarRepository.save(calendar);
             return ResponseEntity.ok(updatedCalendar);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -63,7 +61,7 @@ public class CalendarController {
     @DeleteMapping("/calendar/{id}")
     public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long id)
             throws Exception {
-        GtfsCalendarIntendedOffer calendar = calendarRepository.findById(id)
+        Calendar calendar = calendarRepository.findById(id)
                 .orElseThrow(() -> new Exception("not found"));
 
         calendarRepository.delete(calendar);

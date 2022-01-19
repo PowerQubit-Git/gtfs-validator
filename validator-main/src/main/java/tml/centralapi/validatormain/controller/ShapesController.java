@@ -5,9 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tml.centralapi.validatormain.model.GtfsFeedInfoIntendedOffer;
-import tml.centralapi.validatormain.model.GtfsShapeIntendedOffer;
-import tml.centralapi.validatormain.repository.FeedInfoRepository;
+import tml.centralapi.validatormain.model.Shape;
 import tml.centralapi.validatormain.repository.ShapeRepository;
 
 import javax.validation.Valid;
@@ -22,9 +20,9 @@ public class ShapesController {
     ShapeRepository shapeRepository;
 
     @GetMapping("/shapes/{id}")
-    HttpEntity<List<GtfsShapeIntendedOffer>> get(@PathVariable String id) throws Exception {
+    HttpEntity<List<Shape>> get(@PathVariable String id) throws Exception {
         try {
-            List<GtfsShapeIntendedOffer> list = shapeRepository.findByFeedId(id);
+            List<Shape> list = shapeRepository.findByFeedId(id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -32,22 +30,22 @@ public class ShapesController {
     }
 
     @PostMapping("/shapes")
-    public GtfsShapeIntendedOffer create(@Valid @RequestBody GtfsShapeIntendedOffer employee) {
+    public Shape create(@Valid @RequestBody Shape employee) {
         return shapeRepository.save(employee);
     }
 
     @PutMapping("/shapes/{id}")
-    public ResponseEntity<GtfsShapeIntendedOffer> update(@PathVariable(value = "id") String id,
-                                                   @Valid @RequestBody GtfsShapeIntendedOffer details) throws Exception {
+    public ResponseEntity<Shape> update(@PathVariable(value = "id") String id,
+                                        @Valid @RequestBody Shape details) throws Exception {
         try {
-            GtfsShapeIntendedOffer shapes = shapeRepository.findByShapeId(id);
+            Shape shapes = shapeRepository.findByShapeId(id);
             shapes.setShapeId(details.getShapeId());
             shapes.setShapeDistTraveled(details.getShapeDistTraveled());
             shapes.setShapePtSequence(details.getShapePtSequence());
             shapes.setShapePtLon(details.getShapePtLon());
             shapes.setShapePtLat(details.getShapePtLat());
             shapes.setFeedId(details.getFeedId());
-            final GtfsShapeIntendedOffer updatedShapes = shapeRepository.save(shapes);
+            final Shape updatedShapes = shapeRepository.save(shapes);
             return ResponseEntity.ok(updatedShapes);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -57,7 +55,7 @@ public class ShapesController {
     @DeleteMapping("/shapes/{id}")
     public Map<String, Boolean> deleteShapes(@PathVariable(value = "id") Long id)
             throws Exception {
-        GtfsShapeIntendedOffer Shapes = shapeRepository.findById(id)
+        Shape Shapes = shapeRepository.findById(id)
                 .orElseThrow(() -> new Exception("not found"));
 
         shapeRepository.delete(Shapes);

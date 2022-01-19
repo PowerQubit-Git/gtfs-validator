@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "stops")
-public class GtfsStopIntendedOffer {
+public class Stop {
 
     @Id
     @Column(name = "StopId")

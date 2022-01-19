@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "shapes")
-public class GtfsShapeIntendedOffer {
+public class Shape {
 
     @Column(name = "FeedId")
     private String feedId;

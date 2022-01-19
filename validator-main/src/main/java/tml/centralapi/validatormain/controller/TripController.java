@@ -5,9 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tml.centralapi.validatormain.model.GtfsShapeIntendedOffer;
-import tml.centralapi.validatormain.model.GtfsTripIntendedOffer;
-import tml.centralapi.validatormain.repository.ShapeRepository;
+import tml.centralapi.validatormain.model.Trip;
 import tml.centralapi.validatormain.repository.TripRepository;
 
 import javax.validation.Valid;
@@ -22,9 +20,9 @@ public class TripController {
     TripRepository tripRepository;
 
     @GetMapping("/trips/{id}")
-    HttpEntity<List<GtfsTripIntendedOffer>> get(@PathVariable String id) throws Exception {
+    HttpEntity<List<Trip>> get(@PathVariable String id) throws Exception {
         try {
-            List<GtfsTripIntendedOffer> list = tripRepository.findByFeedId(id);
+            List<Trip> list = tripRepository.findByFeedId(id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -32,15 +30,15 @@ public class TripController {
     }
 
     @PostMapping("/trips")
-    public GtfsTripIntendedOffer create(@Valid @RequestBody GtfsTripIntendedOffer Trip) {
+    public Trip create(@Valid @RequestBody Trip Trip) {
         return tripRepository.save(Trip);
     }
 
     @PutMapping("/trips/{id}")
-    public ResponseEntity<GtfsTripIntendedOffer> update(@PathVariable(value = "id") String id,
-                                                   @Valid @RequestBody GtfsTripIntendedOffer details) throws Exception {
+    public ResponseEntity<Trip> update(@PathVariable(value = "id") String id,
+                                       @Valid @RequestBody Trip details) throws Exception {
         try {
-            GtfsTripIntendedOffer trip = tripRepository.findByTripId(id);
+            Trip trip = tripRepository.findByTripId(id);
             trip.setShapeId(details.getShapeId());
             trip.setBikesAllowed(details.getBikesAllowed());
             trip.setTripId(details.getTripId());
@@ -52,7 +50,7 @@ public class TripController {
             trip.setTripHeadsign(details.getTripHeadsign());
             trip.setFeedId(details.getFeedId());
             trip.setDirectionId(details.getDirectionId());
-            final GtfsTripIntendedOffer updatedTrip = tripRepository.save(trip);
+            final Trip updatedTrip = tripRepository.save(trip);
             return ResponseEntity.ok(updatedTrip);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -62,7 +60,7 @@ public class TripController {
     @DeleteMapping("/trips/{id}")
     public Map<String, Boolean> deleteTrip(@PathVariable(value = "id") Long id)
             throws Exception {
-        GtfsTripIntendedOffer Trip = tripRepository.findById(id)
+        Trip Trip = tripRepository.findById(id)
                 .orElseThrow(() -> new Exception("not found"));
 
         tripRepository.delete(Trip);

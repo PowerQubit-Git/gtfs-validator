@@ -13,7 +13,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "frequencies")
-public class GtfsFrequencyIntendedOffer {
+public class Frequency {
 
     @Id
     @Column(name = "TripId")

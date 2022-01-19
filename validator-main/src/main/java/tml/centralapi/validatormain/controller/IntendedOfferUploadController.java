@@ -81,6 +81,7 @@ public class IntendedOfferUploadController {
         return m.getTableResumeList();
     }
 
+//    está no controller PostGresFunctionsController
 //    @GetMapping("trips-by-line")
 //    @Transactional(readOnly = true)
 //    List<SpGetTripsByLine> GetSpNumberOfTripsByLine() throws Exception {

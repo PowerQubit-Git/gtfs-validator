@@ -4,20 +4,14 @@ import org.mobilitydata.gtfsvalidator.table.GtfsBikesAllowed;
 import org.mobilitydata.gtfsvalidator.table.GtfsTripDirectionId;
 import org.mobilitydata.gtfsvalidator.table.GtfsWheelchairBoarding;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "trips")
+@IdClass(CsvRowFeedIdCompositeKey.class)
 public class Trip {
 
-    @Column(name = "FeedId")
-    private String feedId;
-
-    @Id
     @Column(name = "RouteId")
     private String routeId;
 
@@ -48,6 +42,13 @@ public class Trip {
     @Column(name = "BikesAllowed")
     private GtfsBikesAllowed bikesAllowed;
 
+    @Id
+    @Column(name = "FeedId")
+    private String feedId;
+
+    @Id
+    @Column(name = "CsvRowNumber")
+    private long csvRowNumber;
 
     public String getRouteId() {
         return routeId;
@@ -121,5 +122,8 @@ public class Trip {
 
     public String getFeedId() { return feedId; }
     public void setFeedId(String feedId) { this.feedId = feedId; }
+
+    public long getCsvRowNumber() { return csvRowNumber; }
+    public void setCsvRowNumber(long csvRowNumber) { this.csvRowNumber = csvRowNumber; }
 
 }

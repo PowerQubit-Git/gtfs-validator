@@ -4,16 +4,13 @@ import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tml.centralapi.validatormain.model.*;
 import tml.centralapi.validatormain.repository.IntendedOfferUploadRepository;
-import tml.centralapi.validatormain.repository.SpGetTripsByLineRepository;
 import tml.centralapi.validatormain.services.ValidatorAsyncService;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 @RestController
 @CrossOrigin("*")
@@ -21,9 +18,6 @@ public class IntendedOfferUploadController {
 
     @Autowired
     IntendedOfferUploadRepository mongoRepository;
-
-    @Autowired
-    SpGetTripsByLineRepository spGetTripsByLineRepository;
 
     @Autowired
     ValidatorAsyncService service;
@@ -87,15 +81,15 @@ public class IntendedOfferUploadController {
         return m.getTableResumeList();
     }
 
-    @GetMapping("trips-by-line")
-    @Transactional(readOnly = true)
-    List<SpGetTripsByLine> GetSpNumberOfTripsByLine() throws Exception {
-        try {
-            return spGetTripsByLineRepository.spNumberOfTripsByLines();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return new ArrayList<>();
-    }
+//    @GetMapping("trips-by-line")
+//    @Transactional(readOnly = true)
+//    List<SpGetTripsByLine> GetSpNumberOfTripsByLine() throws Exception {
+//        try {
+//            return spGetTripsByLineRepository.spNumberOfTripsByLines();
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//        return new ArrayList<>();
+//    }
 
 }

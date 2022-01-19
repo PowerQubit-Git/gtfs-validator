@@ -2,16 +2,13 @@ package tml.centralapi.validatormain.model;
 
 import org.mobilitydata.gtfsvalidator.table.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "stops")
+@IdClass(CsvRowFeedIdCompositeKey.class)
 public class Stop {
 
-    @Id
     @Column(name = "StopId")
     private String stopId;
 
@@ -102,8 +99,13 @@ public class Stop {
     @Column(name = "MunicipalityFare2")
     private GtfsMunicipalityFare2 municipalityFare2;
 
+    @Id
     @Column(name = "FeedId")
     private String feedId;
+
+    @Id
+    @Column(name = "CsvRowNumber")
+    private long csvRowNumber;
 
     public String getStopId() {
         return stopId;
@@ -317,4 +319,7 @@ public class Stop {
 
     public String getFeedId() { return feedId; }
     public void setFeedId(String feedId) { this.feedId = feedId; }
+
+    public long getCsvRowNumber() { return csvRowNumber; }
+    public void setCsvRowNumber(long csvRowNumber) { this.csvRowNumber = csvRowNumber; }
 }

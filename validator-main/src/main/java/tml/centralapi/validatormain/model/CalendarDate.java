@@ -4,20 +4,14 @@ import org.mobilitydata.gtfsvalidator.table.GtfsCalendarDateExceptionType;
 import org.mobilitydata.gtfsvalidator.table.GtfsHoliday;
 import org.mobilitydata.gtfsvalidator.table.GtfsPeriod;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "calendar_dates")
-public class CalendarDates {
+@IdClass(CsvRowFeedIdCompositeKey.class)
+public class CalendarDate {
 
-    @Column(name = "FeedId")
-    private String feedId;
-
-    @Id
     @Column(name = "ServiceId")
     private String serviceId;
 
@@ -32,6 +26,14 @@ public class CalendarDates {
 
     @Column(name = "Date")
     private LocalDate date;
+
+    @Id
+    @Column(name = "FeedId")
+    private String feedId;
+
+    @Id
+    @Column(name = "CsvRowNumber")
+    private long csvRowNumber;
 
     private GtfsCalendarDateExceptionType exceptionType;
 
@@ -85,4 +87,7 @@ public class CalendarDates {
 
     public String getFeedId() { return feedId; }
     public void setFeedId(String feedId) { this.feedId = feedId; }
+
+    public long getCsvRowNumber() { return csvRowNumber; }
+    public void setCsvRowNumber(long csvRowNumber) { this.csvRowNumber = csvRowNumber; }
 }

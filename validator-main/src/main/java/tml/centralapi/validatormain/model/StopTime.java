@@ -7,18 +7,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "stop_times")
-@IdClass(StopTimeCompositeKey.class)
+@IdClass(CsvRowFeedIdCompositeKey.class)
 public class StopTime {
 
-    @Column(name = "FeedId")
-    private String feedId;
-
-//    @Id
-//    @Column(name = "StopTimeId")
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private String stopTimeId;
-
-    @Id
     @Column(name = "TripId")
     private String tripId;
 
@@ -28,7 +19,6 @@ public class StopTime {
     @Column(name = "DepartureTime")
     private String departureTime;
 
-    @Id
     @Column(name = "StopId")
     private String stopId;
 
@@ -50,13 +40,13 @@ public class StopTime {
     @Column(name = "Timepoint")
     private GtfsStopTimeTimepoint timepoint;
 
-//    public String getStopTimeId() {
-//        return stopTimeId;
-//    }
+    @Id
+    @Column(name = "FeedId")
+    private String feedId;
 
-  //  public void setStopTimeId(String stopTimeId) {
-//        this.stopTimeId = stopTimeId;
-//    }
+    @Id
+    @Column(name = "CsvRowNumber")
+    private long csvRowNumber;
 
     public String getTripId() {
         return tripId;
@@ -130,4 +120,7 @@ public class StopTime {
 
     public String getFeedId() { return feedId; }
     public void setFeedId(String feedId) { this.feedId = feedId; }
+
+    public long getCsvRowNumber() { return csvRowNumber; }
+    public void setCsvRowNumber(long csvRowNumber) { this.csvRowNumber = csvRowNumber; }
 }

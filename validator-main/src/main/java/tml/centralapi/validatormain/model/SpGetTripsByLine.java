@@ -4,11 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
 public class SpGetTripsByLine {
 
-    @Id
-    @Column(name="total")
     private Long total;
 
     public SpGetTripsByLine(Long total) {

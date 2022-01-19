@@ -1,18 +1,12 @@
 package tml.centralapi.validatormain.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "shapes")
+@IdClass(CsvRowFeedIdCompositeKey.class)
 public class Shape {
 
-    @Column(name = "FeedId")
-    private String feedId;
-
-    @Id
     @Column(name = "LineId")
     private String shapeId;
 
@@ -27,6 +21,14 @@ public class Shape {
 
     @Column(name = "ShapeDistTraveled")
     private double shapeDistTraveled;
+
+    @Id
+    @Column(name = "FeedId")
+    private String feedId;
+
+    @Id
+    @Column(name = "CsvRowNumber")
+    private long csvRowNumber;
 
     public String getShapeId() {
         return shapeId;
@@ -70,4 +72,7 @@ public class Shape {
 
     public String getFeedId() { return feedId; }
     public void setFeedId(String feedId) { this.feedId = feedId; }
+
+    public long getCsvRowNumber() { return csvRowNumber; }
+    public void setCsvRowNumber(long csvRowNumber) { this.csvRowNumber = csvRowNumber; }
 }

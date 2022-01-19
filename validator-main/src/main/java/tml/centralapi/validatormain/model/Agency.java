@@ -1,16 +1,13 @@
 package tml.centralapi.validatormain.model;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.ZoneId;
 import java.util.Locale;
 
 @Entity
 @Table(name = "agency")
+@IdClass(CsvRowFeedIdCompositeKey.class)
 public class Agency {
 
-    @Id
     @Column(name = "AgencyId")
     private String agencyId;
 
@@ -26,8 +23,13 @@ public class Agency {
     @Column(name = "AgencyLang")
     private Locale agencyLang;
 
+    @Id
     @Column(name = "FeedId")
     private String feedId;
+
+    @Id
+    @Column(name = "CsvRowNumber")
+    private long csvRowNumber;
 
     public String getAgencyName() {
         return agencyName;
@@ -66,4 +68,7 @@ public class Agency {
 
     public String getFeedId() { return feedId; }
     public void setFeedId(String feedId) { this.feedId = feedId; }
+
+    public long getCsvRowNumber() { return csvRowNumber; }
+    public void setCsvRowNumber(long csvRowNumber) { this.csvRowNumber = csvRowNumber; }
 }

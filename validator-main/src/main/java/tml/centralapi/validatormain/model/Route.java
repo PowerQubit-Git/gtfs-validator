@@ -2,17 +2,12 @@ package tml.centralapi.validatormain.model;
 
 import org.mobilitydata.gtfsvalidator.table.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "routes")
+@IdClass(CsvRowFeedIdCompositeKey.class)
 public class Route {
-
-    @Column(name = "FeedId")
-    private String feedId;
 
     @Column(name = "LineId")
     private String lineId;
@@ -23,7 +18,6 @@ public class Route {
     @Column(name = "LineLongName")
     private String lineLongName;
 
-    @Id
     @Column(name = "RouteId")
     private String routeId;
 
@@ -68,6 +62,14 @@ public class Route {
 
     @Column(name = "ContinuousDropOff")
     private GtfsContinuousPickupDropOff continuousDropOff;
+
+    @Id
+    @Column(name = "FeedId")
+    private String feedId;
+
+    @Id
+    @Column(name = "CsvRowNumber")
+    private long csvRowNumber;
 
     public Route() {
     }
@@ -200,5 +202,8 @@ public class Route {
     public void setContinuousDropOff(GtfsContinuousPickupDropOff continuousDropOff) {
         this.continuousDropOff = continuousDropOff;
     }
+
+    public long getCsvRowNumber() { return csvRowNumber; }
+    public void setCsvRowNumber(long csvRowNumber) { this.csvRowNumber = csvRowNumber; }
 
 }

@@ -5,7 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tml.centralapi.validatormain.model.CalendarDates;
+import tml.centralapi.validatormain.model.CalendarDate;
 import tml.centralapi.validatormain.repository.CalendarDateRepository;
 
 import javax.validation.Valid;
@@ -20,9 +20,9 @@ public class CalendarDateController {
     CalendarDateRepository calendarDateRepository;
 
     @GetMapping("/calendarDates/{id}")
-    HttpEntity<List<CalendarDates>> get(@PathVariable String id) throws Exception {
+    HttpEntity<List<CalendarDate>> get(@PathVariable String id) throws Exception {
         try {
-            List<CalendarDates> list = calendarDateRepository.findByFeedId(id);
+            List<CalendarDate> list = calendarDateRepository.findByFeedId(id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -30,22 +30,22 @@ public class CalendarDateController {
     }
 
     @PostMapping("/calendarDates")
-    public CalendarDates create(@Valid @RequestBody CalendarDates calendardate) {
+    public CalendarDate create(@Valid @RequestBody CalendarDate calendardate) {
         return calendarDateRepository.save(calendardate);
     }
 
     @PutMapping("/calendarDates/{id}")
-    public ResponseEntity<CalendarDates> update(@PathVariable(value = "id") String id,
-                                                @Valid @RequestBody CalendarDates details) throws Exception {
+    public ResponseEntity<CalendarDate> update(@PathVariable(value = "id") String id,
+                                               @Valid @RequestBody CalendarDate details) throws Exception {
         try {
-            CalendarDates calendarDate = calendarDateRepository.findByServiceId(id);
+            CalendarDate calendarDate = calendarDateRepository.findByServiceId(id);
             calendarDate.setDate(details.getDate());
             calendarDate.setCalendarName(details.getCalendarName());
             calendarDate.setPeriod(details.getPeriod());
             calendarDate.setHoliday(details.getHoliday());
             calendarDate.setExceptionType(details.getExceptionType());
             calendarDate.setServiceId(details.getServiceId());
-            final CalendarDates updatedCalendarDate = calendarDateRepository.save(calendarDate);
+            final CalendarDate updatedCalendarDate = calendarDateRepository.save(calendarDate);
             return ResponseEntity.ok(updatedCalendarDate);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -55,7 +55,7 @@ public class CalendarDateController {
     @DeleteMapping("/calendarDates/{id}")
     public Map<String, Boolean> deleteCalendarDate(@PathVariable(value = "id") Long id)
             throws Exception {
-        CalendarDates calendarDate = calendarDateRepository.findById(id)
+        CalendarDate calendarDate = calendarDateRepository.findById(id)
                 .orElseThrow(() -> new Exception("not found"));
 
         calendarDateRepository.delete(calendarDate);

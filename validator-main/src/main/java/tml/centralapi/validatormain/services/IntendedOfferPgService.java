@@ -66,6 +66,7 @@ public class IntendedOfferPgService {
             newAgency.setAgencyUrl(agency.agencyUrl());
 //            newAgency.setAgencyTimezone(agency.agencyTimezone());
             newAgency.setAgencyLang(agency.agencyLang());
+            newAgency.setCsvRowNumber(agency.csvRowNumber());
             ioAgency.add(newAgency);
         });
 
@@ -85,6 +86,7 @@ public class IntendedOfferPgService {
         list.forEach(stop -> {
             Stop newStop = new Stop();
             newStop.setFeedId(feedId);
+            newStop.setCsvRowNumber(stop.csvRowNumber());
             newStop.setStopId(stop.stopId());
             newStop.setStopIdSteep(stop.stopIdStepp());
             newStop.setStopCode(stop.stopCode());
@@ -134,6 +136,7 @@ public class IntendedOfferPgService {
         routeslist.forEach(route -> {
             Route newRoute = new Route();
             newRoute.setFeedId(feedId);
+            newRoute.setCsvRowNumber(route.csvRowNumber());
             newRoute.setLineId(route.lineId());
             newRoute.setLineShortName(route.LineShortName());
             newRoute.setRouteLongName(route.routeLongName());
@@ -171,6 +174,7 @@ public class IntendedOfferPgService {
         tripslist.forEach(trips -> {
             Trip newTrips = new Trip();
             newTrips.setFeedId(feedId);
+            newTrips.setCsvRowNumber(trips.csvRowNumber());
             newTrips.setRouteId(trips.routeId());
             newTrips.setServiceId(trips.serviceId());
             newTrips.setTripId(trips.tripId());
@@ -201,6 +205,7 @@ public class IntendedOfferPgService {
         stopTimelist.forEach(stopTime -> {
             StopTime newStopTime = new StopTime();
             newStopTime.setFeedId(feedId);
+            newStopTime.setCsvRowNumber(stopTime.csvRowNumber());
             newStopTime.setTripId(stopTime.tripId());
             newStopTime.setArrivalTime(stopTime.arrivalTime().toHHMMSS());
             newStopTime.setDepartureTime(stopTime.departureTime().toHHMMSS());
@@ -230,6 +235,7 @@ public class IntendedOfferPgService {
         calendarlist.forEach(calendar -> {
             Calendar newCalendar = new Calendar();
             newCalendar.setFeedId(feedId);
+            newCalendar.setCsvRowNumber(calendar.csvRowNumber());
             newCalendar.setServiceId(calendar.serviceId());
             newCalendar.setCalendarName(calendar.calendarName());
             newCalendar.setPeriod(calendar.period());
@@ -258,10 +264,11 @@ public class IntendedOfferPgService {
         GtfsTableContainer calendarDateContainer = feedContainer.getTableForFilename("calendar_date.txt").orElseThrow(() -> new Exception("calendar_date.txt not found"));
         List<GtfsCalendarDate> calendarDatelist = calendarDateContainer.getEntities();
         if(calendarDatelist.size() > 0) {
-            List<CalendarDates> ioCalendarDate = new ArrayList<>();
+            List<CalendarDate> ioCalendarDate = new ArrayList<>();
             calendarDatelist.forEach(calendarDate -> {
-                CalendarDates newCalendarDate = new CalendarDates();
+                CalendarDate newCalendarDate = new CalendarDate();
                 newCalendarDate.setFeedId(feedId);
+                newCalendarDate.setCsvRowNumber(calendarDate.csvRowNumber());
                 newCalendarDate.setServiceId(calendarDate.serviceId());
                 newCalendarDate.setCalendarName(calendarDate.calendarName());
                 newCalendarDate.setHoliday(calendarDate.holiday());
@@ -289,6 +296,7 @@ public class IntendedOfferPgService {
         shapelist.forEach(shape -> {
             Shape newShape = new Shape();
             newShape.setFeedId(feedId);
+            newShape.setCsvRowNumber(shape.csvRowNumber());
             newShape.setShapeId(shape.shapeId());
             newShape.setShapePtLat(shape.shapePtLat());
             newShape.setShapePtLon(shape.shapePtLon());
@@ -310,11 +318,12 @@ public class IntendedOfferPgService {
         feedInfolist.forEach(feedInfo -> {
             FeedInfo newFeedInfo = new FeedInfo();
             newFeedInfo.setFeedId(feedId);
+            newFeedInfo.setCsvRowNumber(feedInfo.csvRowNumber());
             newFeedInfo.setFeedPublisherName(feedInfo.feedPublisherName());
             newFeedInfo.setFeedPublisherUrl(feedInfo.feedPublisherUrl());
             newFeedInfo.setFeedLang(feedInfo.feedLang());
-            //newFeedInfo.setFeedStartDate(feedInfo.feedStartDate());
-            //newFeedInfo.setFeedEndDate(feedInfo.feedEndDate());
+            newFeedInfo.setFeedStartDate(feedInfo.feedStartDate().toYYYYMMDD());
+            newFeedInfo.setFeedEndDate(feedInfo.feedEndDate().toYYYYMMDD());
             newFeedInfo.setFeedVersion(feedInfo.feedVersion());
             newFeedInfo.setFeedDesc(feedInfo.feedDesc());
             newFeedInfo.setFeedRemarks(feedInfo.feedRemarks());

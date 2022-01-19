@@ -5,17 +5,14 @@ import org.mobilitydata.gtfsvalidator.table.GtfsPropulsion;
 import org.mobilitydata.gtfsvalidator.table.GtfsTypology;
 import org.mobilitydata.gtfsvalidator.table.GtfsVideoSurveillance;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "frequencies")
+@IdClass(CsvRowFeedIdCompositeKey.class)
 public class Frequency {
 
-    @Id
     @Column(name = "TripId")
     private String tripId;
 
@@ -40,12 +37,18 @@ public class Frequency {
     @Column(name = "VideoSurveillance")
     private GtfsVideoSurveillance videoSurveillance;
 
+    @Id
+    @Column(name = "FeedId")
+    private String feedId;
+
+    @Id
+    @Column(name = "CsvRowNumber")
+    private long csvRowNumber;
 
 
     public String getTripId() {
         return tripId;
     }
-
     public void setTripId(String tripId) {
         this.tripId = tripId;
     }
@@ -53,7 +56,6 @@ public class Frequency {
     public LocalTime getStartTime() {
         return startTime;
     }
-
     public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
@@ -61,7 +63,6 @@ public class Frequency {
     public LocalTime getEndTime() {
         return endTime;
     }
-
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
@@ -69,7 +70,6 @@ public class Frequency {
     public int getFrequency() {
         return frequency;
     }
-
     public void setFrequency(int frequency) {
         this.frequency = frequency;
     }
@@ -77,7 +77,6 @@ public class Frequency {
     public GtfsTypology getTypology() {
         return typology;
     }
-
     public void setTypology(GtfsTypology typology) {
         this.typology = typology;
     }
@@ -85,7 +84,6 @@ public class Frequency {
     public GtfsPropulsion getPropulsion() {
         return propulsion;
     }
-
     public void setPropulsion(GtfsPropulsion propulsion) {
         this.propulsion = propulsion;
     }
@@ -93,17 +91,17 @@ public class Frequency {
     public GtfsPassengerCounting getPassengerCounting() {
         return passengerCounting;
     }
-
-    public void setPassengerCounting(GtfsPassengerCounting passengerCounting) {
-        this.passengerCounting = passengerCounting;
-    }
+    public void setPassengerCounting(GtfsPassengerCounting passengerCounting) { this.passengerCounting = passengerCounting; }
 
     public GtfsVideoSurveillance getVideoSurveillance() {
         return videoSurveillance;
     }
+    public void setVideoSurveillance(GtfsVideoSurveillance videoSurveillance) { this.videoSurveillance = videoSurveillance; }
 
-    public void setVideoSurveillance(GtfsVideoSurveillance videoSurveillance) {
-        this.videoSurveillance = videoSurveillance;
-    }
+    public String getFeedId() { return feedId; }
+    public void setFeedId(String feedId) { this.feedId = feedId; }
+
+    public long getCsvRowNumber() { return csvRowNumber; }
+    public void setCsvRowNumber(long csvRowNumber) { this.csvRowNumber = csvRowNumber; }
 
 }

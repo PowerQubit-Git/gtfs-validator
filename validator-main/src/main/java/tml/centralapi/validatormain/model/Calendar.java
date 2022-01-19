@@ -2,20 +2,14 @@ package tml.centralapi.validatormain.model;
 
 import org.mobilitydata.gtfsvalidator.table.GtfsCalendarService;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "calendar")
+@IdClass(CsvRowFeedIdCompositeKey.class)
 public class Calendar {
 
-    @Column(name = "FeedId")
-    private String feedId;
-
-    @Id
     @Column(name = "ServiceId")
     private String serviceId;
 
@@ -52,10 +46,17 @@ public class Calendar {
     @Column(name = "EndDate")
     private LocalDate endDate;
 
+    @Id
+    @Column(name = "FeedId")
+    private String feedId;
+
+    @Id
+    @Column(name = "CsvRowNumber")
+    private long csvRowNumber;
+
     public String getServiceId() {
         return serviceId;
     }
-
     public void setServiceId(String serviceId) {
         this.serviceId = serviceId;
     }
@@ -63,7 +64,6 @@ public class Calendar {
     public String getCalendarName() {
         return calendarName;
     }
-
     public void setCalendarName(String calendarName) {
         this.calendarName = calendarName;
     }
@@ -71,7 +71,6 @@ public class Calendar {
     public String getPeriod() {
         return period;
     }
-
     public void setPeriod(String period) {
         this.period = period;
     }
@@ -79,7 +78,6 @@ public class Calendar {
     public GtfsCalendarService getMonday() {
         return monday;
     }
-
     public void setMonday(GtfsCalendarService monday) {
         this.monday = monday;
     }
@@ -87,7 +85,6 @@ public class Calendar {
     public GtfsCalendarService getTuesday() {
         return tuesday;
     }
-
     public void setTuesday(GtfsCalendarService tuesday) {
         this.tuesday = tuesday;
     }
@@ -95,7 +92,6 @@ public class Calendar {
     public GtfsCalendarService getWednesday() {
         return wednesday;
     }
-
     public void setWednesday(GtfsCalendarService wednesday) {
         this.wednesday = wednesday;
     }
@@ -103,7 +99,6 @@ public class Calendar {
     public GtfsCalendarService getThursday() {
         return thursday;
     }
-
     public void setThursday(GtfsCalendarService thursday) {
         this.thursday = thursday;
     }
@@ -111,7 +106,6 @@ public class Calendar {
     public GtfsCalendarService getFriday() {
         return friday;
     }
-
     public void setFriday(GtfsCalendarService friday) {
         this.friday = friday;
     }
@@ -119,7 +113,6 @@ public class Calendar {
     public GtfsCalendarService getSaturday() {
         return saturday;
     }
-
     public void setSaturday(GtfsCalendarService saturday) {
         this.saturday = saturday;
     }
@@ -127,7 +120,6 @@ public class Calendar {
     public GtfsCalendarService getSunday() {
         return sunday;
     }
-
     public void setSunday(GtfsCalendarService sunday) {
         this.sunday = sunday;
     }
@@ -135,7 +127,6 @@ public class Calendar {
     public LocalDate getStartDate() {
         return startDate;
     }
-
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
@@ -143,11 +134,13 @@ public class Calendar {
     public LocalDate getEndDate() {
         return endDate;
     }
-
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
     public String getFeedId() { return feedId; }
     public void setFeedId(String feedId) { this.feedId = feedId; }
+
+    public long getCsvRowNumber() { return csvRowNumber; }
+    public void setCsvRowNumber(long csvRowNumber) { this.csvRowNumber = csvRowNumber; }
 }

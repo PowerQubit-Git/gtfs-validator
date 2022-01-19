@@ -1,20 +1,14 @@
 package tml.centralapi.validatormain.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Locale;
 
 @Entity
 @Table(name = "feed_info")
+@IdClass(CsvRowFeedIdCompositeKey.class)
 public class FeedInfo {
 
-    @Column(name = "FeedId")
-    private String feedId;
-
-    @Id
     @Column(name = "FeedInfoId")
     private Long feedInfoId;
 
@@ -28,10 +22,10 @@ public class FeedInfo {
     private Locale feedLang;
 
     @Column(name = "FeedStartDate")
-    private LocalDate feedStartDate;
+    private String feedStartDate;
 
     @Column(name = "FeedEndDate")
-    private LocalDate feedEndDate;
+    private String feedEndDate;
 
     @Column(name = "FeedVersion")
     private String feedVersion;
@@ -41,6 +35,14 @@ public class FeedInfo {
 
     @Column(name = "FeedRemarks")
     private String feedRemarks;
+
+    @Id
+    @Column(name = "FeedId")
+    private String feedId;
+
+    @Id
+    @Column(name = "CsvRowNumber")
+    private long csvRowNumber;
 
     public String getFeedPublisherName() {
         return feedPublisherName;
@@ -66,19 +68,19 @@ public class FeedInfo {
         this.feedLang = feedLang;
     }
 
-    public LocalDate getFeedStartDate() {
+    public String getFeedStartDate() {
         return feedStartDate;
     }
 
-    public void setFeedStartDate(LocalDate feedStartDate) {
+    public void setFeedStartDate(String feedStartDate) {
         this.feedStartDate = feedStartDate;
     }
 
-    public LocalDate getFeedEndDate() {
+    public String getFeedEndDate() {
         return feedEndDate;
     }
 
-    public void setFeedEndDate(LocalDate feedEndDate) {
+    public void setFeedEndDate(String feedEndDate) {
         this.feedEndDate = feedEndDate;
     }
 
@@ -116,4 +118,7 @@ public class FeedInfo {
 
     public String getFeedId() { return feedId; }
     public void setFeedId(String feedId) { this.feedId = feedId; }
+
+    public long getCsvRowNumber() { return csvRowNumber; }
+    public void setCsvRowNumber(long csvRowNumber) { this.csvRowNumber = csvRowNumber; }
 }

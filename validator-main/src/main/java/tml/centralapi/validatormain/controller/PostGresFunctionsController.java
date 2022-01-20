@@ -1,15 +1,13 @@
 package tml.centralapi.validatormain.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tml.centralapi.validatormain.model.SpRowsByTable;
+import tml.centralapi.validatormain.model.RowsByTable;
 import tml.centralapi.validatormain.model.SpTripsByLine;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -28,11 +26,11 @@ public class PostGresFunctionsController {
         return new ArrayList<>();
     }
 
-    @GetMapping("count-rows-by-table")
-    public List<SpRowsByTable> countRowsTable() {
+    @GetMapping("count-rows-by-table/{feedId}")
+    public List<RowsByTable> countRowsTable(@PathVariable String feedId) {
         try {
-            List<SpRowsByTable> list = entityManager
-                    .createStoredProcedureQuery("sp_get_rows_by_table", SpRowsByTable.class).getResultList();
+            List<RowsByTable> list = entityManager
+                    .createStoredProcedureQuery("sp_get_rows_by_table", RowsByTable.class).getResultList();
             return list;
         } catch (Exception e) {
             System.out.println(e);

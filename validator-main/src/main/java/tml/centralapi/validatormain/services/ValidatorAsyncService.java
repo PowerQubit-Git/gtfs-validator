@@ -23,12 +23,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import tml.centralapi.validatormain.controller.AgencyController;
 import tml.centralapi.validatormain.controller.IntendedOfferUploadController;
-import tml.centralapi.validatormain.model.Agency;
-import tml.centralapi.validatormain.model.IntendedOfferUpload;
-import tml.centralapi.validatormain.model.TableResume;
+import tml.centralapi.validatormain.model.*;
 import tml.centralapi.validatormain.repository.AgencyRepository;
 import tml.centralapi.validatormain.repository.IntendedOfferUploadRepository;
-import tml.centralapi.validatormain.model.Notices;
 import tml.centralapi.validatormain.table.GtfsAgencySchema;
 
 import java.io.IOException;
@@ -136,12 +133,11 @@ public class ValidatorAsyncService extends GtfsFeedContainer{
             pgService.addTripsToDatabase(feedContainer);
             System.out.println("Postgres started stop_times");
             pgService.addStopTimesToDatabase(feedContainer);
-            System.out.println("Postgres started stop_times 5");
-            pgService.addCalendarToDatabase(feedContainer);
-            pgService.addCalendarDateToDatabase(feedContainer);
-
+//            pgService.addCalendarToDatabase(feedContainer);
+//            pgService.addCalendarDateToDatabase(feedContainer);
             System.out.println("Postgres started shapes");
-            //pgService.addShapesToDatabase(feedContainer);
+            pgService.addShapesToDatabase(feedContainer);
+
             final long endNanos = System.nanoTime();
             double t = (endNanos - startNanosPg) / 1e9;
             System.out.printf("Postgres took %.3f seconds%n", t);
@@ -172,17 +168,28 @@ public class ValidatorAsyncService extends GtfsFeedContainer{
         GtfsTableContainer stopTimes = feedContainer.getTableForFilename("stop_times.txt").orElseThrow(() -> new Exception("stop_times.txt not found"));
         GtfsTableContainer trip = feedContainer.getTableForFilename("trips.txt").orElseThrow(() -> new Exception("trips.txt not found"));
 
+        List<RowsByTable> rowsByTables = new ArrayList<>();
+        rowsByTables.add(new RowsByTable("agency", agency.getEntities().size()));
+        rowsByTables.add(new RowsByTable("calendar", calendar.getEntities().size()));
+        rowsByTables.add(new RowsByTable("calendar_dates", calendarDates.getEntities().size()));
+        rowsByTables.add(new RowsByTable("feed_info", feedInfo.getEntities().size()));
+        rowsByTables.add(new RowsByTable("frequencies", 0));
+        rowsByTables.add(new RowsByTable("routes", routes.getEntities().size()));
+        rowsByTables.add(new RowsByTable("shapes", shapes.getEntities().size()));
+        rowsByTables.add(new RowsByTable("stops", stops.getEntities().size()));
+        rowsByTables.add(new RowsByTable("stop_times", stopTimes.getEntities().size()));
+        rowsByTables.add(new RowsByTable("trips", trip.getEntities().size()));
+        this.input.setCsvRows(rowsByTables);
 
-        this.input.setCsvAgency(agency.getEntities().size());
-        this.input.setCsvCalendar(calendar.getEntities().size());
-        this.input.setCsvCalendarDates(calendarDates.getEntities().size());
-        this.input.setCsvFeedInfo( feedInfo.getEntities().size());
-        this.input.setCsvRoutes(routes.getEntities().size());
-        this.input.setCsvShapes(shapes.getEntities().size());
-        this.input.setCsvStops(stops.getEntities().size());
-        this.input.setCsvStopTimes(stopTimes.getEntities().size());
-        this.input.setCsvTrips(trip.getEntities().size());
-
+//        this.input.setCsvAgency(agency.getEntities().size());
+//        this.input.setCsvCalendar(calendar.getEntities().size());
+//        this.input.setCsvCalendarDates(calendarDates.getEntities().size());
+//        this.input.setCsvFeedInfo( feedInfo.getEntities().size());
+//        this.input.setCsvRoutes(routes.getEntities().size());
+//        this.input.setCsvShapes(shapes.getEntities().size());
+//        this.input.setCsvStops(stops.getEntities().size());
+//        this.input.setCsvStopTimes(stopTimes.getEntities().size());
+//        this.input.setCsvTrips(trip.getEntities().size());
 
         Gson gson = new Gson();
         Notices validations = gson.fromJson(noticeContainer.exportValidationNotices(), Notices.class);

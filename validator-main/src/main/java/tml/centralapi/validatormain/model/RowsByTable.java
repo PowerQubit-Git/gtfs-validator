@@ -5,18 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class SpRowsByTable {
+public class RowsByTable {
     @Id
     @Column(name="gtfs_table")
     private String gtfsTable;
     private int counter;
 
-    public SpRowsByTable(String gtfs_table, int counter) {
+    public RowsByTable(String gtfs_table, int counter) {
         this.gtfsTable = gtfs_table;
         this.counter = counter;
     }
 
-    public SpRowsByTable() {
+    public RowsByTable() {
     }
 
     public String getGtfsTable() {

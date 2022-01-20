@@ -91,16 +91,4 @@ public class IntendedOfferUploadController extends GtfsFeedContainer {
         return m.getTableResumeList();
     }
 
-//    está no controller PostGresFunctionsController
-//    @GetMapping("trips-by-line")
-//    @Transactional(readOnly = true)
-//    List<SpGetTripsByLine> GetSpNumberOfTripsByLine() throws Exception {
-//        try {
-//            return spGetTripsByLineRepository.spNumberOfTripsByLines();
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//        return new ArrayList<>();
-//    }
-
 }

@@ -85,6 +85,7 @@ public class GtfsFeedContainer {
                   : table.getTableStatus().toString()));
     }
     Collections.sort(totalList);
+
     return String.join("\n", totalList);
   }
 

@@ -2,29 +2,39 @@ package tml.centralapi.validatormain.controller;
 
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
+import org.mobilitydata.gtfsvalidator.table.GtfsFeedContainer;
+import org.mobilitydata.gtfsvalidator.table.GtfsTableContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tml.centralapi.validatormain.model.*;
+import tml.centralapi.validatormain.repository.AgencyRepository;
 import tml.centralapi.validatormain.repository.IntendedOfferUploadRepository;
 import tml.centralapi.validatormain.services.ValidatorAsyncService;
+import tml.centralapi.validatormain.table.GtfsAgencySchema;
 
 import java.util.*;
 
 @RestController
 @CrossOrigin("*")
-public class IntendedOfferUploadController {
-
+public class IntendedOfferUploadController extends GtfsFeedContainer {
+    
     @Autowired
     IntendedOfferUploadRepository mongoRepository;
 
     @Autowired
     ValidatorAsyncService service;
 
+    public IntendedOfferUploadController(List<GtfsTableContainer<?>> tableContainerList) {
+        super(tableContainerList);
+    }
+
     @PostMapping("/intended-offer-upload")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("user") String publisher) {
         try {
+//            csvAgency = super.getTable(Agency).getEntities().size();
+//            ValidatorAsyncService valid = new ValidatorAsyncService();
             IntendedOfferUpload uhm = new IntendedOfferUpload();
             Date date = new Date();
             uhm.setUploadDate(date);

@@ -21,10 +21,15 @@ import org.mobilitydata.gtfsvalidator.validator.ValidatorLoaderException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import tml.centralapi.validatormain.controller.AgencyController;
+import tml.centralapi.validatormain.controller.IntendedOfferUploadController;
+import tml.centralapi.validatormain.model.Agency;
 import tml.centralapi.validatormain.model.IntendedOfferUpload;
 import tml.centralapi.validatormain.model.TableResume;
+import tml.centralapi.validatormain.repository.AgencyRepository;
 import tml.centralapi.validatormain.repository.IntendedOfferUploadRepository;
 import tml.centralapi.validatormain.model.Notices;
+import tml.centralapi.validatormain.table.GtfsAgencySchema;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -36,7 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class ValidatorAsyncService {
+public class ValidatorAsyncService extends GtfsFeedContainer{
     @Autowired
     IntendedOfferUploadRepository mongoRepository;
 
@@ -45,6 +50,10 @@ public class ValidatorAsyncService {
 
     private static final FluentLogger logger = FluentLogger.forEnclosingClass();
     private static final int numberOfThreads = 1;
+
+    public ValidatorAsyncService(List<GtfsTableContainer<?>> tableContainerList) {
+        super(tableContainerList);
+    }
 
     public IntendedOfferUpload getInput() {
         return input;
@@ -127,17 +136,17 @@ public class ValidatorAsyncService {
             pgService.addTripsToDatabase(feedContainer);
             System.out.println("Postgres started stop_times");
             pgService.addStopTimesToDatabase(feedContainer);
-//            System.out.println("Postgres started stop_times 5");
-//            pgService.addCalendarToDatabase(feedContainer);
-//            pgService.addCalendarDateToDatabase(feedContainer);
+            System.out.println("Postgres started stop_times 5");
+            pgService.addCalendarToDatabase(feedContainer);
+            pgService.addCalendarDateToDatabase(feedContainer);
 
             System.out.println("Postgres started shapes");
-            pgService.addShapesToDatabase(feedContainer);
+            //pgService.addShapesToDatabase(feedContainer);
             final long endNanos = System.nanoTime();
             double t = (endNanos - startNanosPg) / 1e9;
             System.out.printf("Postgres took %.3f seconds%n", t);
 
-            //            System.out.println(feedContainer.tableTotals());
+            //System.out.println(feedContainer.tableTotals());
             // POSTGRES
 
         } catch (InterruptedException e) {
@@ -147,17 +156,40 @@ public class ValidatorAsyncService {
             e.printStackTrace();
         }
 
-
     }
 
     /** Generates and exports reports for both validation notices and system errors reports. */
     @Async
-    public void exportReport(final NoticeContainer noticeContainer, GtfsFeedContainer feedContainer) {
+    public void exportReport(final NoticeContainer noticeContainer, GtfsFeedContainer feedContainer) throws Exception {
+
+        GtfsTableContainer agency = feedContainer.getTableForFilename("agency.txt").orElseThrow(() -> new Exception("agency.txt not found"));
+        GtfsTableContainer calendar = feedContainer.getTableForFilename("calendar.txt").orElseThrow(() -> new Exception("calendar.txt not found"));
+        GtfsTableContainer calendarDates = feedContainer.getTableForFilename("calendar_dates.txt").orElseThrow(() -> new Exception("calendar_dates.txt not found"));
+        GtfsTableContainer feedInfo = feedContainer.getTableForFilename("feed_info.txt").orElseThrow(() -> new Exception("feed_info.txt not found"));
+        GtfsTableContainer routes = feedContainer.getTableForFilename("routes.txt").orElseThrow(() -> new Exception("routes.txt not found"));
+        GtfsTableContainer shapes = feedContainer.getTableForFilename("shapes.txt").orElseThrow(() -> new Exception("shapes.txt not found"));
+        GtfsTableContainer stops = feedContainer.getTableForFilename("stops.txt").orElseThrow(() -> new Exception("stops.txt not found"));
+        GtfsTableContainer stopTimes = feedContainer.getTableForFilename("stop_times.txt").orElseThrow(() -> new Exception("stop_times.txt not found"));
+        GtfsTableContainer trip = feedContainer.getTableForFilename("trips.txt").orElseThrow(() -> new Exception("trips.txt not found"));
+
+
+        this.input.setCsvAgency(agency.getEntities().size());
+        this.input.setCsvCalendar(calendar.getEntities().size());
+        this.input.setCsvCalendarDates(calendarDates.getEntities().size());
+        this.input.setCsvFeedInfo( feedInfo.getEntities().size());
+        this.input.setCsvRoutes(routes.getEntities().size());
+        this.input.setCsvShapes(shapes.getEntities().size());
+        this.input.setCsvStops(stops.getEntities().size());
+        this.input.setCsvStopTimes(stopTimes.getEntities().size());
+        this.input.setCsvTrips(trip.getEntities().size());
+
+
         Gson gson = new Gson();
         Notices validations = gson.fromJson(noticeContainer.exportValidationNotices(), Notices.class);
         Notices errors = gson.fromJson(noticeContainer.exportSystemErrors(), Notices.class);
         this.input.setValidationReport(validations);
         this.input.setErrorsReport(errors);
+
 
         Map<String, GtfsTableContainer<?>> map = feedContainer.getTables();
         Iterator<Map.Entry<String, GtfsTableContainer<?>>> it = map.entrySet().iterator();

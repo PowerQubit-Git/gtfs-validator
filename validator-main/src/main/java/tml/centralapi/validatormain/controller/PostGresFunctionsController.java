@@ -32,31 +32,14 @@ public class PostGresFunctionsController {
     @GetMapping("count-rows-by-table/{feedId}")
     public List<RowsByTable> countRowsTable(@PathVariable String feedId) {
         try {
-            StoredProcedureQuery query = entityManager.createStoredProcedureQuery( "sp_get_rows_by_table" );
-            List<RowsByTable> list = query.registerStoredProcedureParameter( feedId,  RowsByTable.class, ParameterMode.IN ).getResultList();
-            query.setParameter( 1, 1L );
+            StoredProcedureQuery query = entityManager.createStoredProcedureQuery("sp_get_rows_by_table", RowsByTable.class);
+            query.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);
+            query.setParameter(1, feedId);
             query.execute();
-            return list;
+            return query.getResultList();
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        finally {
-            entityManager.close();
-            return new ArrayList<>();
-        }
-
+        return new ArrayList<>();
     }
-
-//    @GetMapping("count-rows-by-table/{feedId}")
-//    public List<RowsByTable> countRowsTable(@PathVariable String feedId) {
-//        try {
-//            List<RowsByTable> list = entityManager
-//                    .createStoredProcedureQuery("sp_get_rows_by_table", RowsByTable.class).getResultList();
-//            return list;
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//        return new ArrayList<>();
-//    }
-
-
-
 }

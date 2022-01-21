@@ -31,27 +31,19 @@ public class IntendedOfferUpload {
 
     private List<RowsByTable> csvRows;
 
-//    private int csvAgency;
-//    private int csvCalendar;
-//    private int csvCalendarDates;
-//    private int csvFeedInfo;
-//    private int csvFrequencies;
-//    private int csvRoutes;
-//    private int csvShapes;
-//    private int csvStopTimes;
-//    private int csvStops;
-//    private int csvTrips;
+    private Date lastEditDate;
 
-//    private int pgAgency;
-//    private int pgCalendar;
-//    private int pgCalendarDates;
-//    private int pgFeedInfo;
-//    private int pgFrequencies;
-//    private int pgRoutes;
-//    private int pgShapes;
-//    private int pgStopTimes;
-//    private int pgStops;
-//    private int pgTrips;
+    private String lastEditUser;
+
+    private Date lastValidationDate;
+
+    private String lastValidationUser;
+
+    private Date lastPublicationDate;
+
+    private String lastPublicationUser;
+
+    private String state;
 
     public Binary getFile() {
         return file;
@@ -96,11 +88,27 @@ public class IntendedOfferUpload {
     public List<TableResume> getTableResumeList() { return tableResumeList; }
     public void setTableResumeList(List<TableResume> tableResumeList) { this.tableResumeList = tableResumeList; }
 
-    public List<RowsByTable> getCsvRows() {
-        return csvRows;
-    }
+    public List<RowsByTable> getCsvRows() { return csvRows; }
+    public void setCsvRows(List<RowsByTable> csvRows) { this.csvRows = csvRows; }
 
-    public void setCsvRows(List<RowsByTable> csvRows) {
-        this.csvRows = csvRows;
-    }
+    public Date getLastEditDate() { return lastEditDate; }
+    public void setLastEditDate(Date lastEditDate) { this.lastEditDate = lastEditDate; }
+
+    public String getLastEditUser() { return lastEditUser; }
+    public void setLastEditUser(String lastEditUser) { this.lastEditUser = lastEditUser; }
+
+    public Date getLastValidationDate() { return lastValidationDate; }
+    public void setLastValidationDate(Date lastValidationDate) { this.lastValidationDate = lastValidationDate; }
+
+    public String getLastValidationUser() { return lastValidationUser; }
+    public void setLastValidationUser(String lastValidationUser) { this.lastValidationUser = lastValidationUser; }
+
+    public Date getLastPublicationDate() { return lastPublicationDate; }
+    public void setLastPublicationDate(Date lastPublicationDate) { this.lastPublicationDate = lastPublicationDate; }
+
+    public String getLastPublicationUser() { return lastPublicationUser; }
+    public void setLastPublicationUser(String lastPublicationUser) { this.lastPublicationUser = lastPublicationUser; }
+
+    public String getState() { return state; }
+    public void setState(String state) { this.state = state; }
 }

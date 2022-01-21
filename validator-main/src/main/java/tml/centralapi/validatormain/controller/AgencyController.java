@@ -35,17 +35,10 @@ public class AgencyController {
         return agencyRepository.save(agency);
     }
 
-    @PutMapping("/agency/{id}")
-    public ResponseEntity<Agency> update(@PathVariable(value = "id") String id,
-                                         @Valid @RequestBody Agency details) throws Exception {
+    @PutMapping("agency")
+    public ResponseEntity<Agency> update(@Valid @RequestBody Agency details) throws Exception {
         try {
-            Agency agency = agencyRepository.findByAgencyId(id);
-            agency.setAgencyId(details.getAgencyId());
-            agency.setAgencyName(details.getAgencyName());
-            agency.setAgencyUrl(details.getAgencyUrl());
-            agency.setAgencyTimezone(details.getAgencyTimezone());
-            agency.setAgencyLang(details.getAgencyLang());
-            final Agency updatedAgency = agencyRepository.save(agency);
+            final Agency updatedAgency = agencyRepository.save(details);
             return ResponseEntity.ok(updatedAgency);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -56,7 +49,6 @@ public class AgencyController {
     public Map<String, Boolean> deleteAgency(@PathVariable(value = "id") String id)
             throws Exception {
         Agency employee = agencyRepository.findByAgencyId(id);
-
         agencyRepository.delete(employee);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
